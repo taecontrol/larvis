@@ -1,0 +1,26 @@
+{
+    "name": "taecontrol/larvis",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Taecontrol\\Larvis\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.15"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Taecontrol\\Larvis\\Providers\\LarvisServiceProvider"
+            ],
+            "aliases": {
+                "Larvis": "Taecontrol\\Larvis\\Facades\\Larvis"
+            }
+        }
+    }
+}
