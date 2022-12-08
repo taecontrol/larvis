@@ -3,7 +3,7 @@
 namespace Taecontrol\Larvis\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use  Taecontrol\Larvis\LarvisServiceProvider;
+use  Taecontrol\Larvis\Providers\LarvisServiceProvider;
 
 class TestCase extends Orchestra
 {

@@ -24,7 +24,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Taecontrol\\Larvis\\LarvisServiceProvider"
+                "Taecontrol\\Larvis\\Providers\\LarvisServiceProvider"
             ],
             "aliases": {
                 "Larvis": "Taecontrol\\Larvis\\Facades\\Larvis"
