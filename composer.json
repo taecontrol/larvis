@@ -12,7 +12,7 @@
         "psr-4": {
             "Taecontrol\\Larvis\\Tests\\": "tests/"
         }
-    },
+    },  
     "require": {
         "php": "^8.1"
     },
