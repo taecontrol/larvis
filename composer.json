@@ -1,5 +1,6 @@
 {
     "name": "taecontrol/larvis",
+    "description": "Larastats assistant package",
     "type": "library",
     "license": "MIT",
     "autoload": {
