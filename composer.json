@@ -23,5 +23,8 @@
                 "Larvis": "Taecontrol\\Larvis\\Facades\\Larvis"
             }
         }
-    }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }   
 }
