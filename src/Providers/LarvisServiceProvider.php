@@ -2,8 +2,8 @@
 
 namespace Taecontrol\Larvis\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Taecontrol\Larvis\Larvis;
+use Illuminate\Support\ServiceProvider;
 
 class LarvisServiceProvider extends ServiceProvider
 {

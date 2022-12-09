@@ -2,8 +2,8 @@
 
 namespace Taecontrol\Larvis;
 
-use Taecontrol\Larvis\Handlers\ExceptionHandler;
 use Throwable;
+use Taecontrol\Larvis\Handlers\ExceptionHandler;
 
 class Larvis
 {

@@ -2,10 +2,10 @@
 
 namespace Taecontrol\Larvis\ValueObjects;
 
-use Illuminate\Contracts\Support\Arrayable;
+use Throwable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Throwable;
+use Illuminate\Contracts\Support\Arrayable;
 
 class ExceptionData implements Arrayable
 {
