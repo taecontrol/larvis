@@ -1,17 +1,24 @@
 {
     "name": "taecontrol/larvis",
+    "description": "Larastats assistant package",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Taecontrol\\Larvis\\": "src/"
+            "Taecontrol\\Larvis\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Taecontrol\\Larvis\\Tests\\": "tests"
+        }
+    },  
     "require": {
         "php": "^8.1"
     },
     "require-dev": {
-        "orchestra/testbench": "^7.15"
+        "orchestra/testbench": "^7.15",
+        "phpunit/phpunit": "^9.5"
     },
     "extra": {
         "laravel": {
@@ -22,5 +29,10 @@
                 "Larvis": "Taecontrol\\Larvis\\Facades\\Larvis"
             }
         }
-    }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true   
 }
