@@ -2,8 +2,8 @@
 
 namespace Taecontrol\Larvis\Facades;
 
-use Illuminate\Support\Facades\Facade;
 use Throwable;
+use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static void captureException(Throwable $exception)
