@@ -7,7 +7,6 @@ Larvis is a laravel package to push site monitoring data to Larastats.
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/taecontrol/larvis/Run%20tests?label=tests)](https://github.com/taecontrol/larvis/actions?query=workflow%3Arun-tests+branch%3Amain) [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/taecontrol/larvis/Run%20Php-cs-fixer%20%28dry%29?label=code%20style)](https://github.com/taecontrol/larvis/actions?query=workflow%3A"Run+Php-cs-fixer+(dry)"+branch%3Amain)
 
 <!-- [![Total Downloads](https://img.shields.io/packagist/dt/taecontrol/larastats-wingman.svg?style=flat-square)](https://packagist.org/packages/taecontrol/larastats-wingman) -->
-Run Php-cs-fixer
 
 ## Installation
 
