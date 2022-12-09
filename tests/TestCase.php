@@ -9,13 +9,11 @@ class TestCase extends Orchestra
 {
     public function getEnvironmentSetUp($app)
     {
-
     }
 
     protected function setUp(): void
     {
         parent::setUp();
-
     }
 
     protected function getPackageProviders($app)
