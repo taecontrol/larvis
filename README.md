@@ -4,9 +4,9 @@ Larvis is a laravel package to push site monitoring data to Larastats.
 
 <!-- [![Latest Version on Packagist](https://img.shields.io/packagist/v/taecontrol/larastats-wingman.svg?style=flat-square)](https://packagist.org/packages/taecontrol/larastats-wingman) -->
 
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/taecontrol/larvis/run-tests?label=tests)](https://github.com/taecontrol/larvis/actions?query=workflow%3Arun-tests+branch%3Amain)
+<!-- [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/taecontrol/larvis/run-tests?label=tests)](https://github.com/taecontrol/larvis/actions?query=workflow%3Arun-tests+branch%3Amain) -->
 
-<!-- [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/taecontrol/larastats-wingman/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/taecontrol/larastats-wingman/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain) -->
+<!-- [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/taecontrol/larvis/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/taecontrol/larvis/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain) -->
 
 <!-- [![Total Downloads](https://img.shields.io/packagist/dt/taecontrol/larastats-wingman.svg?style=flat-square)](https://packagist.org/packages/taecontrol/larastats-wingman) -->
 
@@ -31,10 +31,10 @@ public function register()
 {
     if (! app()->environment('testing')) {
         $this->reportable(function (Throwable $e) {
-            /** @var LarastatsWingman $wingman */
-            $wingman = app(LarastatsWingman::class);
+            /** @var Larvis $larvis */
+            $larvis = app(Larvis::class);
 
-            $wingman->captureException($e);
+            $larvis->captureException($e);
         });
     }
 }
@@ -66,7 +66,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 - [ ] add version status
 - [ ] add github test action status
-- [ ] add github code stylle action status
+- [ ] add github code style action status
 - [ ] add total downloads
-- [ x ] add License
-- [ x ] add credits
+- [x] add License
+- [x] add credits
