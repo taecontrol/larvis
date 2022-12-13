@@ -15,7 +15,8 @@
     },  
     "require": {
         "php": "^8.1",
-        "friendsofphp/php-cs-fixer": "^3.13"
+        "friendsofphp/php-cs-fixer": "^3.13",
+        "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
         "orchestra/testbench": "^7.15",
