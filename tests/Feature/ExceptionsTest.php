@@ -3,8 +3,8 @@
 namespace Taecontrol\Larvis\Tests;
 
 use Exception;
-use Illuminate\Http\Client\Request;
 use Taecontrol\Larvis\Larvis;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 
 class ExceptionsTest extends TestCase
@@ -14,16 +14,16 @@ class ExceptionsTest extends TestCase
         $larvis = app(Larvis::class);
         $exception = new Exception('exception');
         $data = [
-            'name' => "test",
-            "key" => "akdflasjdfl"
+            'name' => 'test',
+            'key' => 'akdflasjdfl',
         ];
-        
-        config()->set("larvis.larastats.domain", "https://larastats.test");
+
+        config()->set('larvis.larastats.domain', 'https://larastats.test');
 
         Http::fake([
             'https://larastats.test/*' => Http::response([], 200, []),
         ]);
-        
+
         $response = $larvis->captureException($exception, $data);
         ray($response);
 
