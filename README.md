@@ -27,11 +27,11 @@ On the `Handler.php` class, add the next code to capture all exceptions:
 public function register()
 {
     if (! app()->environment('testing')) {
-        $this->reportable(function (Throwable $e) {
+        $this->reportable(function (Throwable $e, array $args) {
             /** @var Larvis $larvis */
             $larvis = app(Larvis::class);
 
-            $larvis->captureException($e);
+            $larvis->captureException($e, $args);
         });
     }
 }
