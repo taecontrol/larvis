@@ -27,11 +27,16 @@ class ExceptionsTest extends TestCase
         ]);
 
         $response = $larvis->captureException($exception, $data);
-        ray($response);
 
         Http::assertSent(function (Request $request) use ($data) {
             return $request['name'] == $data['name'] &&
                    $request['key'] == $data['key'];
         });
     }
+    
+    // /** @test */
+    // public function check_if_exception_data_exists()
+    // {
+
+    // } 
 }
