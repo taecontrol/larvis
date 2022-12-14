@@ -7,9 +7,9 @@ use Taecontrol\Larvis\Handlers\ExceptionHandler;
 
 class Larvis
 {
-    public function captureException(Throwable $exception): void
+    public function captureException(Throwable $exception, array $data): void
     {
         $handler = new ExceptionHandler();
-        $handler->handle($exception);
+        $handler->handle($exception, $data);
     }
 }
