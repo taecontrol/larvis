@@ -10,7 +10,6 @@ use Taecontrol\Larvis\ValueObjects\ExceptionData;
 
 class ExceptionsTest extends TestCase
 {
-
     /** @test */
     public function it_check_if_handler_function_post_extra_data()
     {
@@ -34,7 +33,7 @@ class ExceptionsTest extends TestCase
                    $request['key'] == $data['key'];
         });
     }
-    
+
     /** @test */
     public function check_if_exception_data_exists()
     {
@@ -50,14 +49,13 @@ class ExceptionsTest extends TestCase
 
         $larvis->captureException($exception, []);
 
-        Http::assertSent(function (Request $request) use($exceptionData) {
-            return $request["message"] == $exceptionData["message"] &&
-                   $request["type"] == $exceptionData["type"] &&
-                   $request["file"] == $exceptionData["file"] &&
-                   $request["line"] == $exceptionData["line"] &&
-                   $request["trace"] == $exceptionData["trace"] &&
-                   $request["request"] == $exceptionData["request"];
+        Http::assertSent(function (Request $request) use ($exceptionData) {
+            return $request['message'] == $exceptionData['message'] &&
+                   $request['type'] == $exceptionData['type'] &&
+                   $request['file'] == $exceptionData['file'] &&
+                   $request['line'] == $exceptionData['line'] &&
+                   $request['trace'] == $exceptionData['trace'] &&
+                   $request['request'] == $exceptionData['request'];
         });
-    } 
+    }
 }
-
