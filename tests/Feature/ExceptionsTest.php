@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Http;
 
 class ExceptionsTest extends TestCase
 {
-    public function test_it_check_if_handler_function_post_extra_data()
+
+    /** @test */
+    public function it_check_if_handler_function_post_extra_data()
     {
         $larvis = app(Larvis::class);
         $exception = new Exception('exception');
