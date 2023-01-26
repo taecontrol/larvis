@@ -8,17 +8,17 @@ use Taecontrol\Larvis\ValueObjects\ExceptionData;
 
 class ExceptionHandler
 {
-    public function handle(Throwable $exception, array $extraData): void
+    public function handle(Throwable $exception, array $data = []): void
     {
         $exceptionLoggerUrl = config('larvis.larastats.domain') . config('larvis.larastats.exception_logger.endpoint');
         $exceptionData = ExceptionData::from($exception);
 
-        $data = array_merge(
+        $finalData = array_merge(
             $exceptionData->toArray(),
             ['api_token' => config('larvis.site.api_token')],
-            $extraData,
+            $data,
         );
 
-        Http::post($exceptionLoggerUrl, $data);
+        Http::post($exceptionLoggerUrl, $finalData);
     }
 }
