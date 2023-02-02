@@ -1,6 +1,6 @@
 {
     "name": "taecontrol/larvis",
-    "description": "Larastats assistant package",
+    "description": "Moonguard assistant package",
     "type": "library",
     "license": "MIT",
     "autoload": {

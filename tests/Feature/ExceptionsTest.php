@@ -20,10 +20,10 @@ class ExceptionsTest extends TestCase
             'key' => 'akdflasjdfl',
         ];
 
-        config()->set('larvis.larastats.domain', 'https://larastats.test');
+        config()->set('larvis.moonguard.domain', 'https://moonguard.test');
 
         Http::fake([
-            'https://larastats.test/*' => Http::response([], 200, []),
+            'https://moonguard.test/*' => Http::response([], 200, []),
         ]);
 
         $larvis->captureException($exception, $data);
@@ -41,10 +41,10 @@ class ExceptionsTest extends TestCase
         $exception = new Exception('test exception');
         $exceptionData = ExceptionData::from($exception)->toArray();
 
-        config()->set('larvis.larastats.domain', 'https://larastats.test');
+        config()->set('larvis.moonguard.domain', 'https://moonguard.test');
 
         Http::fake([
-            'https://larastats.test/*' => Http::response([], 200, []),
+            'https://moonguard.test/*' => Http::response([], 200, []),
         ]);
 
         $larvis->captureException($exception, []);

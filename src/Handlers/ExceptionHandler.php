@@ -10,7 +10,7 @@ class ExceptionHandler
 {
     public function handle(Throwable $exception, array $data = []): void
     {
-        $exceptionLoggerUrl = config('larvis.larastats.domain') . config('larvis.larastats.exception_logger.endpoint');
+        $exceptionLoggerUrl = config('larvis.moonguard.domain') . config('larvis.moonguard.exception_logger.endpoint');
         $exceptionData = ExceptionData::from($exception);
 
         $finalData = array_merge(
