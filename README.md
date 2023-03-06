@@ -1,66 +1,28 @@
-# Larvis
+# About Larvis
 
-Larvis is a Laravel package to push site monitoring data to Moonguard.
+Larvis is a Laravel package to push site monitoring data to MoonGuard.
 
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/taecontrol/larvis/Run%20tests?label=tests)](https://github.com/taecontrol/larvis/actions?query=workflow%3Arun-tests+branch%3Amain) [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/taecontrol/larvis/Run%20Php-cs-fixer%20%28dry%29?label=code%20style)](https://github.com/taecontrol/larvis/actions?query=workflow%3A"Run+Php-cs-fixer+(dry)"+branch%3Amain)
+## Documentation
 
-## Installation
-
-You can install the package via composer:
-
-```bash
-composer require taecontrol/larvis
-```
-On the `Handler.php` class, add the next code to capture all exceptions:
-
-```php
-...
-/**
- * Register the exception handling callbacks for the application.
- *
- * @return void
- */
-public function register()
-{
-    if (! app()->environment('testing')) {
-        $this->reportable(function (Throwable $e) {
-            /** @var Larvis $larvis */
-            $larvis = app(Larvis::class);
-
-            $larvis->captureException($e);
-        });
-    }
-}
-...
-```
-
-Define the next `.env` vars:
-```dotenv
-MOONGUARD_DOMAIN=https://moonguard.test
-MOONGUARD_SITE_API_TOKEN=********************
-```
+You can find the full documentation on the [documentation site](https://docs.moonguard.dev/larvis)
 
 ## Testing
 
 ```bash
 composer test
 ```
+## Contributing
+
+Thanks for consider contributing to Larvis, The contribution guide can be
+found in the [MoonGuard documentation](https://docs.moonguard.dev/contributions)
 
 ## Credits
 
 - [Luis Güette](https://github.com/guetteman)
-- [Alexis Fraudita](https://github.com/alefram)
 - [Ronald Pereira](https://github.com/rpereira-tae)
+- [wilson Velasco](https://github.com/w1ls0nv3l)
+- [Alexis Fraudita](https://github.com/alefram)
 
-## Changelog
+## License
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## TODO
-
-- [ ] add version status
-- [x] add github test action status
-- [x] add github code style action status
-- [ ] add total downloads
-- [x] add License
-- [x] add credits
+The Larvis package is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT)
