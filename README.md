@@ -25,4 +25,4 @@ found in the [MoonGuard documentation](https://docs.moonguard.dev/contributions)
 
 ## License
 
-The Larvis package is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT)
+The Larvis package is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
