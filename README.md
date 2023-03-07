@@ -4,7 +4,7 @@ Larvis is a Laravel package to push site monitoring data to MoonGuard.
 
 ## Documentation
 
-You can find the full documentation on the [documentation site](https://docs.moonguard.dev/larvis)
+You can find the full documentation on the [documentation site](https://docs.moonguard.dev/larvis).
 
 ## Testing
 
@@ -14,7 +14,7 @@ composer test
 ## Contributing
 
 Thanks for consider contributing to Larvis, The contribution guide can be
-found in the [MoonGuard documentation](https://docs.moonguard.dev/contributions)
+found in the [MoonGuard documentation](https://docs.moonguard.dev/contributions).
 
 ## Credits
 
