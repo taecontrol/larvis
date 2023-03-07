@@ -20,7 +20,7 @@ found in the [MoonGuard documentation](https://docs.moonguard.dev/contributions)
 
 - [Luis Güette](https://github.com/guetteman)
 - [Ronald Pereira](https://github.com/rpereira-tae)
-- [wilson Velasco](https://github.com/w1ls0nv3l)
+- [Wilson Velasco](https://github.com/w1ls0nv3l)
 - [Alexis Fraudita](https://github.com/alefram)
 
 ## License
