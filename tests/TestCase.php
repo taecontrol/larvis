@@ -7,9 +7,7 @@ use Taecontrol\Larvis\Providers\LarvisServiceProvider;
 
 class TestCase extends Orchestra
 {
-    public function getEnvironmentSetUp($app)
-    {
-    }
+    protected $loadEnvironmentVariables = true;
 
     protected function setUp(): void
     {
