@@ -54,7 +54,7 @@ class AppData implements Arrayable
 
         $composerFileInJson = file_get_contents(base_path('composer.json'));
 
-        if(! $composerFileInJson) {
+        if (! $composerFileInJson) {
             return [
                 'name' => $framework,
                 'version' => $version,
@@ -63,13 +63,13 @@ class AppData implements Arrayable
 
         $composerFile = json_decode($composerFileInJson, true);
 
-        if($composerFile) {
-            if(key_exists('laravel/framework', $composerFile['require'])) {
+        if ($composerFile) {
+            if (key_exists('laravel/framework', $composerFile['require'])) {
                 $framework = 'Laravel';
                 $version = app()->version();
             }
 
-            if(key_exists('symfony/framework-bundle', $composerFile['require'])) {
+            if (key_exists('symfony/framework-bundle', $composerFile['require'])) {
                 $framework = 'Symphony';
                 $version = Kernel::VERSION;
             }

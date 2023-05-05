@@ -3,7 +3,9 @@
 namespace Taecontrol\Larvis\Tests\Unit;
 
 use Taecontrol\Larvis\Tests\TestCase;
+use Taecontrol\Larvis\Tests\Mock\Test;
 use Taecontrol\Larvis\ValueObjects\Backtrace;
+use Taecontrol\Larvis\ValueObjects\ObjectData;
 use Taecontrol\Larvis\ValueObjects\MessageData;
 
 class MessageTest extends TestCase
@@ -47,19 +49,38 @@ class MessageTest extends TestCase
     }
 
     /** @test */
+    public function it_cast_null_data_into_string()
+    {
+        $backtrace = Backtrace::from(
+            debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2)[0]
+        );
+
+        $messageData = MessageData::from(null, $backtrace);
+
+        $expected = [
+            'data' => 'null',
+            'kind' => 'NULL',
+            'file' => $backtrace->file,
+            'line' => $backtrace->line,
+        ];
+
+        $this->assertEquals($expected, $messageData->toArray());
+    }
+
+    /** @test */
     public function it_cast_string_data_into_string()
     {
         $backtrace = Backtrace::from(
             debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2)[0]
         );
 
-        $messageData = MessageData::from("hello", $backtrace);
+        $messageData = MessageData::from('hello', $backtrace);
 
         $expected = [
-          'data' => 'hello',
-          'kind' => 'string',
-          'file' => $backtrace->file,
-          'line' => $backtrace->line,
+            'data' => 'hello',
+            'kind' => 'string',
+            'file' => $backtrace->file,
+            'line' => $backtrace->line,
         ];
 
         $this->assertEquals($expected, $messageData->toArray());
@@ -75,12 +96,87 @@ class MessageTest extends TestCase
         $messageData = MessageData::from(30.2, $backtrace);
 
         $expected = [
-          'data' => '30.2',
-          'kind' => 'double',
-          'file' => $backtrace->file,
-          'line' => $backtrace->line,
+            'data' => '30.2',
+            'kind' => 'double',
+            'file' => $backtrace->file,
+            'line' => $backtrace->line,
         ];
 
         $this->assertEquals($expected, $messageData->toArray());
+    }
+
+    /** @test */
+    public function it_cast_array_data_into_string()
+    {
+        $backtrace = Backtrace::from(
+            debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2)[0]
+        );
+
+        $messageData = MessageData::from(['a', 'b', 'c'], $backtrace);
+
+        $expected = [
+            'data' => '["a","b","c"]',
+            'kind' => 'array',
+            'file' => $backtrace->file,
+            'line' => $backtrace->line,
+        ];
+
+        $this->assertEquals($expected, $messageData->toArray());
+    }
+
+    /** @test */
+    public function it_cast_a_resource_into_string()
+    {
+        $backtrace = Backtrace::from(
+            debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2)[0]
+        );
+
+        $path = realpath(dirname(__FILE__) . '/..') . '/Mock/Test.txt';
+
+        $data = fopen($path, 'r');
+
+        $messageData = MessageData::from($data, $backtrace);
+
+        $expected = [
+            'data' => 'This is a file for test purposes.',
+            'kind' => 'resource',
+            'file' => $backtrace->file,
+            'line' => $backtrace->line,
+        ];
+
+        $this->assertEquals($expected, $messageData->toArray());
+    }
+
+    /** @test */
+    public function it_cast_an_object_data_into_string()
+    {
+        $backtrace = Backtrace::from(
+            debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2)[0]
+        );
+
+        $testObject = new Test();
+
+        $messageData = MessageData::from($testObject, $backtrace);
+
+        $testObject = ObjectData::from($testObject);
+
+        $expected = [
+            'data' => $testObject->data,
+            'kind' => 'object',
+            'file' => $backtrace->file,
+            'line' => $backtrace->line,
+        ];
+
+        $this->assertEquals($expected, $messageData->toArray());
+
+        $testObject = json_decode($messageData->data);
+
+        $this->assertEquals($testObject->properties->propA->value, 'Hi');
+        $this->assertEquals($testObject->properties->propA->modifiers, 'private');
+        $this->assertEquals($testObject->properties->propB->value, 'World');
+        $this->assertEquals($testObject->properties->propB->modifiers, 'public');
+        $this->assertEquals($testObject->properties->propC->value, 'Ok');
+        $this->assertEquals($testObject->properties->propC->modifiers, 'protected');
+        $this->assertEquals($testObject->constants->A, 'HELLO WORLD');
     }
 }

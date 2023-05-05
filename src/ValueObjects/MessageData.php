@@ -25,7 +25,7 @@ class MessageData implements Arrayable
             'double' => self::formatDouble($data),
             'object' => self::formatObject($data),
             'array' => self::formatArray($data),
-            'NULL' => self::formatNull($data),
+            'NULL' => self::formatNull(),
             'resource' => self::formatResource($data),
             default => self::formatUnknown($data),
         };
@@ -79,16 +79,22 @@ class MessageData implements Arrayable
 
     private static function formatResource(mixed $data): array
     {
+        $type = get_resource_type($data);
+
+        if ($type === 'stream') {
+            $data = stream_get_contents($data);
+        }
+
         return [
-            'data' => json_encode($data),
+            'data' => (string) $data,
             'type' => 'resource',
         ];
     }
 
-    private static function formatNull(mixed $data): array
+    private static function formatNull(): array
     {
         return [
-            'data' => strval($data),
+            'data' => 'null',
             'type' => 'NULL',
         ];
     }
@@ -119,17 +125,11 @@ class MessageData implements Arrayable
 
     private static function formatObject(object $data): array
     {
-        $class = get_class($data);
-        $parent = get_parent_class($class);
-        $type = json_encode([
-            'object' => 'object',
-            'class' => $class,
-            'parent' => $parent,
-        ]);
+        $objectData = ObjectData::from($data);
 
         return [
-            'data' => json_encode($data),
-            'type' => $type,
+            'data' => $objectData->data,
+            'type' => 'object',
         ];
     }
 }
