@@ -26,5 +26,6 @@
         <env name="APP_ENV" value="testing"/>
         <env name="APP_NAME" value="Demo"/>
         <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
+        <env name="LARVIS_DEBUG_ENABLED" value="true"/>
     </php>
 </phpunit>

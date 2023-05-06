@@ -11,11 +11,14 @@ return [
     'site' => [
         'api_token' => env('MOONGUARD_SITE_API_TOKEN'),
     ],
-    'krater' => [
-        'url' => env('KRATER_DOMAIN', 'http://localhost:55555'),
+    'debug' => [
+        'enabled' => env('LARVIS_DEBUG_ENABLED', false),
+
+        'url' => env('LARVIS_DEBUG_CLIENT_DOMAIN', 'http://localhost:55555'),
 
         'api' => [
             'message' => '/api/message',
+            'exception' => '/api/exception',
         ],
     ],
 ];

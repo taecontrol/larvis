@@ -41,12 +41,21 @@ class ExceptionData implements Arrayable
             'file' => $this->file,
             'trace' => $this->trace,
             'line' => $this->line,
-            'request' => [
-                'url' => $this->request->url(),
-                'params' => $this->request->all(),
-                'headers' => $this->request->headers->all(),
-            ],
+            'request' => $this->request,
             'thrown_at' => $this->thrown_at->utc(),
+        ];
+    }
+
+    public function debugFormat(): array
+    {
+        return [
+            'message' => $this->message,
+            'type' => $this->type,
+            'file' => $this->file,
+            'trace' => json_encode($this->trace),
+            'line' => $this->line,
+            'request' => json_encode($this->request),
+            'thrown_at' => (string) $this->thrown_at->format('Y-m-d H:i:s'),
         ];
     }
 }
