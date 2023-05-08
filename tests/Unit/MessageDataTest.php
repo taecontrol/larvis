@@ -3,7 +3,7 @@
 namespace Taecontrol\Larvis\Tests\Unit;
 
 use Taecontrol\Larvis\Tests\TestCase;
-use Taecontrol\Larvis\Tests\Mock\Test;
+use Taecontrol\Larvis\Tests\Mock\TestObject;
 use Taecontrol\Larvis\ValueObjects\Backtrace;
 use Taecontrol\Larvis\ValueObjects\ObjectData;
 use Taecontrol\Larvis\ValueObjects\MessageData;
@@ -154,7 +154,7 @@ class MessageTest extends TestCase
             debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2)[0]
         );
 
-        $testObject = new Test();
+        $testObject = new TestObject();
 
         $messageData = MessageData::from($testObject, $backtrace);
 

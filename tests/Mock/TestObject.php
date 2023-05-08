@@ -2,7 +2,7 @@
 
 namespace Taecontrol\Larvis\Tests\Mock;
 
-class Test
+class TestObject
 {
     public const A = 'HELLO WORLD';
 
