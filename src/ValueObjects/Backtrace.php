@@ -27,10 +27,10 @@ class Backtrace implements Arrayable
     public function toArray(): array
     {
         return [
-          'file' => $this->file,
-          'line' => $this->line,
-          'function' => $this->function,
-          'args' => $this->args,
+            'file' => $this->file,
+            'line' => $this->line,
+            'function' => $this->function,
+            'args' => $this->args,
         ];
     }
 }
