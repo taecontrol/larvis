@@ -11,24 +11,33 @@ use Taecontrol\Larvis\ValueObjects\ExceptionData;
 
 class ExceptionsTest extends TestCase
 {
+    protected Larvis $larvis;
+
+    public function setUp(): void
+    {
+        parent::setup();
+        $this->larvis = app(Larvis::class);
+
+        config()->set('larvis.moonguard.domain', 'https://moonguard.test');
+        config()->set('larvis.debug.url', 'http://localhost:55555');
+    }
+
     /** @test */
     public function it_check_if_handler_function_post_extra_data_to_moonguard()
-    {
-        $larvis = app(Larvis::class);
+    {        
         $exception = new Exception('exception');
         $data = [
             'name' => 'test',
             'key' => 'akdflasjdfl',
         ];
-
-        config()->set('larvis.moonguard.domain', 'https://moonguard.test');
+        
         config()->set('larvis.debug.enabled', false);
 
         Http::fake([
             'https://moonguard.test/*' => Http::response([], 200, []),
         ]);
 
-        $larvis->captureException($exception, $data);
+        $this->larvis->captureException($exception, $data);
 
         Http::assertSent(function (Request $request) use ($data) {
             return $request['name'] == $data['name'] &&
@@ -39,18 +48,16 @@ class ExceptionsTest extends TestCase
     /** @test */
     public function check_if_exception_data_exists_in_request_to_moonguard()
     {
-        $larvis = app(Larvis::class);
         $exception = new Exception('test exception');
         $exceptionData = ExceptionData::from($exception)->toArray();
 
-        config()->set('larvis.moonguard.domain', 'https://moonguard.test');
         config()->set('larvis.debug.enabled', false);
 
         Http::fake([
             'https://moonguard.test/*' => Http::response([], 200, []),
         ]);
 
-        $larvis->captureException($exception, []);
+        $this->larvis->captureException($exception, []);
 
         Http::assertSent(function (Request $request) use ($exceptionData) {
             return $request['message'] == $exceptionData['message'] &&
@@ -63,19 +70,16 @@ class ExceptionsTest extends TestCase
     }
 
     /** @test */
-    public function it_verifies_that_exception_data_and_app_data_exists_in_request_to_debug_client()
+    public function it_verifies_that_exception_data_and_app_data_exists_in_debug_data()
     {
-        $larvis = app(Larvis::class);
         $exception = new Exception('test exception');
         $exceptionData = ExceptionData::from($exception);
-
-        config()->set('larvis.debug.url', 'http://localhost:55555');
 
         Http::fake([
             'http://localhost:55555/*' => Http::response([], 200, []),
         ]);
 
-        $larvis->captureException($exception, []);
+        $this->larvis->captureException($exception, []);
 
         Http::assertSent(function (Request $request) use ($exceptionData) {
             $exception = $request['exception'];
