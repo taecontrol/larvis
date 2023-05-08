@@ -12,7 +12,7 @@ class Larvis
 
     public function __construct()
     {
-        if(app()->environment(['local', 'testing'])) {
+        if (app()->environment(['local', 'testing'])) {
             $this->localDebugEnabled = true;
         }
     }
@@ -24,7 +24,7 @@ class Larvis
 
     public function send(mixed $args): void
     {
-        if($this->localDebugEnabled) {
+        if ($this->localDebugEnabled) {
             (new MessageHandler())->handle($args);
         }
     }
