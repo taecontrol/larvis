@@ -18,7 +18,7 @@ class ExceptionHandler
 
         $appData = $larvis->getAppData();
 
-        if($larvis->isLocalDebugEnabled()) {
+        if ($larvis->isLocalDebugEnabled()) {
             $exceptionLoggerUrl = config('larvis.debug.url') . config('larvis.debug.api.exception');
 
             $data = [

@@ -24,13 +24,13 @@ class ExceptionsTest extends TestCase
 
     /** @test */
     public function it_check_if_handler_function_post_extra_data_to_moonguard()
-    {        
+    {
         $exception = new Exception('exception');
         $data = [
             'name' => 'test',
             'key' => 'akdflasjdfl',
         ];
-        
+
         config()->set('larvis.debug.enabled', false);
 
         Http::fake([
@@ -88,7 +88,7 @@ class ExceptionsTest extends TestCase
             $appData = AppData::fromArray($request['app']);
 
             $isExceptionPresent = $exception['message'] === $exceptionData->message &&
-            $exception['type'] === $exceptionData->type &&
+            $exception['kind'] === $exceptionData->type &&
             $exception['line'] === $exceptionData->line &&
             $exception['trace'] === json_encode($exceptionData->trace) &&
             $exception['request'] === json_encode($exceptionData->request);

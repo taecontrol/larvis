@@ -33,7 +33,7 @@ class Larvis
 
     public function send(mixed $args): void
     {
-        if($this->isLocalDebugEnabled()) {
+        if ($this->isLocalDebugEnabled()) {
             (new MessageHandler())->handle($args);
         }
     }
