@@ -20,9 +20,9 @@ class Larvis
         $this->app = AppData::generate();
     }
 
-    public static function start(Application $app): void
+    public function start(Application $app): void
     {
-        static::registerWatchers($app);
+        self::registerWatchers($app);
     }
 
     public function isLocalDebugEnabled(): bool

@@ -9,12 +9,12 @@ trait RegistersWatchers
     /**
      * The class names of the registered watchers.
      */
-    protected static array $watchers = [];
+    protected array $watchers = [];
 
     /**
      * Determine if a given watcher has been registered.
      */
-    public static function hasWatcher(string $class): bool
+    public function hasWatcher(string $class): bool
     {
         return in_array($class, static::$watchers);
     }
@@ -22,9 +22,10 @@ trait RegistersWatchers
     /**
      * Register the configured Larvis watchers.
      */
-    protected static function registerWatchers(Application $app): void
+    protected public function registerWatchers(Application $app): void
     {
         foreach (config('larvis.watchers') as $key => $watcher) {
+
             if (is_string($key) && $watcher === false) {
                 continue;
             }

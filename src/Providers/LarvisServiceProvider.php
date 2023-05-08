@@ -12,7 +12,10 @@ class LarvisServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../../config/larvis.php', 'larvis');
 
         $this->app->bind('larvis', function () {
-            return new Larvis();
+            $larvis = new Larvis();
+            $larvis->start($this->app);
+
+            return $larvis;
         });
     }
 
@@ -21,7 +24,5 @@ class LarvisServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../config/larvis.php' => config_path('larvis.php'),
         ], 'larvis-config');
-
-        Larvis::start($this->app);
     }
 }
