@@ -1,10 +1,10 @@
 <?php
-
 namespace Taecontrol\Larvis\Traits;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Application;
 
-trait RegistersWatchers
+trait RegisterWatchers
 {
     /**
      * The class names of the registered watchers.
@@ -25,7 +25,6 @@ trait RegistersWatchers
     protected public function registerWatchers(Application $app): void
     {
         foreach (config('larvis.watchers') as $key => $watcher) {
-
             if (is_string($key) && $watcher === false) {
                 continue;
             }
