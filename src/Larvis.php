@@ -5,13 +5,13 @@ namespace Taecontrol\Larvis;
 use Throwable;
 use Taecontrol\Larvis\ValueObjects\AppData;
 use Taecontrol\Larvis\Handlers\MessageHandler;
-use Taecontrol\Larvis\Traits\RegistersWatchers;
+use Taecontrol\Larvis\Traits\RegisterWatchers;
 use Illuminate\Contracts\Foundation\Application;
 use Taecontrol\Larvis\Handlers\ExceptionHandler;
 
 class Larvis
 {
-    use RegistersWatchers;
+    use RegisterWatchers;
 
     protected AppData $app;
 
