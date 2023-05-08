@@ -50,7 +50,7 @@ class ExceptionData implements Arrayable
     {
         return [
             'message' => $this->message,
-            'type' => $this->type,
+            'kind' => $this->type,
             'file' => $this->file,
             'trace' => json_encode($this->trace),
             'line' => $this->line,

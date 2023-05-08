@@ -18,7 +18,7 @@ class ExceptionDataTest extends TestCase
         $this->assertNotEmpty($exceptionData);
 
         $this->assertIsString($exceptionData['message'], 'test exception');
-        $this->assertIsString($exceptionData['type'], 'Exception');
+        $this->assertIsString($exceptionData['kind'], 'Exception');
         $this->assertIsString($exceptionData['file'], __FILE__);
         $this->assertIsString($exceptionData['trace']);
         $this->assertIsInt($exceptionData['line'], 15);
