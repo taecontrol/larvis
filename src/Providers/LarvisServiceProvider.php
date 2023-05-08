@@ -21,5 +21,7 @@ class LarvisServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../config/larvis.php' => config_path('larvis.php'),
         ], 'larvis-config');
+
+        Larvis::start($this->app);
     }
 }
