@@ -2,24 +2,27 @@
 
 namespace Taecontrol\Larvis\Watchers;
 
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 
 class RequestWatcher extends Watcher
 {
-    /**
-     * Register the watcher.
-     */
-    public function register(Application $app): void
+    public function register(): void
     {
-        $app['events']->listen(RequestHandled::class, [$this, 'recordRequest']);
+        $this->enabled = config('larvis.watchers.request.enabled');
+
+        Event::listen(RequestHandled::class, function (RequestHandled $event) {
+            if (! $this->enabled()) {
+                return;
+            }
+            $this->handleRequest($event->request, $event->response);
+        });
     }
 
-    /**
-     * Record an incoming HTTP request.
-     */
-    public function recordRequest(RequestHandled $event)
+    public function handleRequest(Request $request, Response $response): void
     {
-        /** Formatear request para enviarlos al debug client (krater) */
+        /** Handle request */
     }
 }

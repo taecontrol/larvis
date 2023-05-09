@@ -22,11 +22,8 @@ return [
         ],
     ],
     'watchers' => [
-        Watchers\RequestWatcher::class => [
-            'enabled' => env('LARVIS_REQUEST_WATCHER', true),
-            'size_limit' => env('LARVIS_RESPONSE_SIZE_LIMIT', 64),
-            'ignore_http_methods' => [],
-            'ignore_status_codes' => [],
+        'request' => [
+            'enabled' => true
         ],
     ],
 ];

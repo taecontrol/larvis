@@ -5,24 +5,15 @@ namespace Taecontrol\Larvis;
 use Throwable;
 use Taecontrol\Larvis\ValueObjects\AppData;
 use Taecontrol\Larvis\Handlers\MessageHandler;
-use Taecontrol\Larvis\Traits\RegisterWatchers;
-use Illuminate\Contracts\Foundation\Application;
 use Taecontrol\Larvis\Handlers\ExceptionHandler;
 
 class Larvis
 {
-    use RegisterWatchers;
-
     protected AppData $app;
 
     public function __construct()
     {
         $this->app = AppData::generate();
-    }
-
-    public function start(Application $app): void
-    {
-        self::registerWatchers($app);
     }
 
     public function isLocalDebugEnabled(): bool
