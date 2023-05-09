@@ -4,31 +4,27 @@ namespace Taecontrol\Larvis\Watchers;
 
 abstract class Watcher
 {
-    /**
-     * The configured watcher options.
-     *
-     * @var array
-     */
-    public $options = [];
+    /** @var bool */
+    protected $enabled = false;
 
-    /**
-     * Create a new watcher instance.
-     *
-     * @param  array  $options
-     *
-     * @return void
-     */
-    public function __construct(array $options = [])
+    abstract public function register(): void;
+
+    public function enabled(): bool
     {
-        $this->options = $options;
+        return $this->enabled;
     }
 
-    /**
-     * Register the watcher.
-     *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
-     *
-     * @return void
-     */
-    abstract public function register($app);
+    public function enable(): Watcher
+    {
+        $this->enabled = true;
+
+        return $this;
+    }
+
+    public function disable(): Watcher
+    {
+        $this->enabled = false;
+
+        return $this;
+    }
 }
