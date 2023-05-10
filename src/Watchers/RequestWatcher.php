@@ -24,5 +24,6 @@ class RequestWatcher extends Watcher
     public function handleRequest(Request $request, Response $response): void
     {
         /** Handle request */
+        //dd($request);
     }
 }

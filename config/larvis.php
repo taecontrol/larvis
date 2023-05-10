@@ -25,5 +25,8 @@ return [
         'request' => [
             'enabled' => true
         ],
+        'queries' => [
+            'enabled' => true
+        ]
     ],
 ];
