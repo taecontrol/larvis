@@ -19,6 +19,7 @@ return [
         'api' => [
             'message' => '/api/message',
             'exception' => '/api/exception',
+            'query' => '/api/query'
         ],
     ],
     'watchers' => [
