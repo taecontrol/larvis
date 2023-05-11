@@ -4,6 +4,7 @@ namespace Taecontrol\Larvis\Providers;
 
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Support\ServiceProvider;
+use Taecontrol\Larvis\Watchers\QueryWatcher;
 use Taecontrol\Larvis\Watchers\Watcher;
 use Taecontrol\Larvis\Watchers\RequestWatcher;
 
@@ -33,6 +34,7 @@ class LarvisServiceProvider extends ServiceProvider
     {
         $watchers = [
             RequestWatcher::class,
+            QueryWatcher::class,
         ];
 
         collect($watchers)
