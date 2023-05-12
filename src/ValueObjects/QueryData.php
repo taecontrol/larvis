@@ -11,7 +11,7 @@ class QueryData implements Arrayable
         public readonly string $sql,
         public readonly array $bindings,
         public readonly float $time,
-        public readonly string $connectionName,
+        public readonly string $connection_name,
     ) {
     }
 
@@ -21,7 +21,7 @@ class QueryData implements Arrayable
             sql: $e->sql,
             bindings: $e->bindings,
             time: $e->time,
-            connectionName: $e->connection->getName(),
+            connection_name: $e->connection->getName(),
         );
     }
 
@@ -31,8 +31,18 @@ class QueryData implements Arrayable
             'sql' => $this->sql,
             'bindings' => $this->bindings,
             'time' => $this->time,
-            'connectionName' => $this->connectionName,
+            'connection_name' => $this->connection_name,
         ];
+    }
+
+    public static function fromArray(array $args): MessageData
+    {
+        return new MessageData(
+            data: $args['sql'],
+            kind: $args['bindings'],
+            file: $args['time'],
+            line: $args['connection_name']
+        );
     }
 
     public function debugFormat(): array
@@ -41,7 +51,7 @@ class QueryData implements Arrayable
             'sql' => $this->sql,
             'bindings' => $this->bindings,
             'time' => $this->time,
-            'connectionName' => $this->connectionName,
+            'connection_name' => $this->connection_name,
         ];
     }
 }
