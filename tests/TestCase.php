@@ -6,7 +6,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Taecontrol\Larvis\Providers\LarvisServiceProvider;
-use Taecontrol\Larvis\Watchers\QueryWatcher;
 
 class TestCase extends Orchestra
 {

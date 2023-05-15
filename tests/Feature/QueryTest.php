@@ -4,10 +4,7 @@ namespace Taecontrol\Larvis\Tests;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Client\Request;
-//use Taecontrol\Larvis\ValueObjects\QueryData;
-//use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\Http;
-//use Taecontrol\Larvis\Watchers\QueryWatcher;
 use Taecontrol\Larvis\Watchers\QueryWatcher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -20,14 +17,14 @@ class QueryTest extends TestCase
         parent::setUp();
 
         config()->set('larvis.debug.url', 'http://localhost:55555');
-        config()->set('larvis.debug.api.message', '/api/messages');
+        config()->set('larvis.debug.api.message', '/api/query');
     }
 
     /** @test */
     public function it_check_if_queries_handler_post_query_data(): void
     {
         Http::fake([
-            'http://localhost:55555/*' => Http::response(null, 201, []),
+            'http://localhost:55555/*' => Http::response([], 200, []),
         ]);
 
         app(QueryWatcher::class)->enable();
@@ -35,17 +32,19 @@ class QueryTest extends TestCase
         DB::table('users')->get('id');
 
         $data = [
-            'sql' => "select * from sqlite_master where type = 'table' and name = ?",
-            'bindings' => [
-                'migrations',
-            ],
+            'sql' => 'select "id" from "users"',
+            'bindings' => [],
             'connection_name' => 'sqlite',
         ];
 
         Http::assertSent(function (Request $request) use ($data) {
-            dd($request);
+            $dataRequest = [
+                'sql' => $request['query']['sql'],
+                'bindings' => $request['query']['bindings'],
+                'connection_name' => $request['query']['connection_name']
+            ];
 
-            return true;
+            return $dataRequest === $data;
         });
 
         app(QueryWatcher::class)->disable();
