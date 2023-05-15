@@ -19,15 +19,15 @@ return [
         'api' => [
             'message' => '/api/message',
             'exception' => '/api/exception',
-            'query' => '/api/query'
+            'query' => '/api/query',
         ],
     ],
     'watchers' => [
         'request' => [
-            'enabled' => false
+            'enabled' => false,
         ],
         'queries' => [
-            'enabled' => false
-        ]
+            'enabled' => false,
+        ],
     ],
 ];

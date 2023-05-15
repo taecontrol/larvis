@@ -2,8 +2,8 @@
 
 namespace Taecontrol\Larvis\Tests\Unit;
 
-use Illuminate\Database\Events\QueryExecuted;
 use Taecontrol\Larvis\Tests\TestCase;
+use Illuminate\Database\Events\QueryExecuted;
 use Taecontrol\Larvis\ValueObjects\QueryData;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -37,13 +37,11 @@ class QueryDataTest extends TestCase
         $this->assertIsArray($queryData['bindings']);
         $this->assertIsFloat($queryData['time'], 2.98);
         $this->assertIsString($queryData['connection_name'], 'test connection');
-
     }
 
     /** @test */
     public function it_validates_that_an_array_is_returned_from_to_array_method()
     {
-
         $capsule = new Capsule;
 
         $capsule->addConnection([

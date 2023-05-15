@@ -41,7 +41,7 @@ class QueryTest extends TestCase
             $dataRequest = [
                 'sql' => $request['query']['sql'],
                 'bindings' => $request['query']['bindings'],
-                'connection_name' => $request['query']['connection_name']
+                'connection_name' => $request['query']['connection_name'],
             ];
 
             return $dataRequest === $data;
