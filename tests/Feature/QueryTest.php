@@ -2,15 +2,19 @@
 
 namespace Taecontrol\Larvis\Tests;
 
-use Taecontrol\Larvis\Larvis;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
-use Taecontrol\Larvis\ValueObjects\AppData;
-use Taecontrol\Larvis\ValueObjects\QueryData;
-use Illuminate\Database\Events\QueryExecuted;
+//use Taecontrol\Larvis\ValueObjects\QueryData;
+//use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Taecontrol\Larvis\Tests\Mock\Models\User;
+//use Taecontrol\Larvis\Watchers\QueryWatcher;
+use Taecontrol\Larvis\Larvis;
 
-class MessagesTest extends TestCase
+class QueryTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -22,11 +26,23 @@ class MessagesTest extends TestCase
     /** @test */
     public function it_check_if_queries_handler_post_query_data(): void
     {
-        $query = new QueryExecuted('test Query', [], 2.98, 'test connection');
-        $queryArray = QueryData::from($query)->toArray();
+
+        /** @var Larvis */
+        app(Larvis::class);
+
+        $user = User::factory()->create([
+            'name' => 'John Doe',
+            'email' => 'johndoe@example.com',
+        ]);
+
+        $this->get('/users/' . $user->id);
 
         $data = [
-            'query' => $queryArray,
+            'sql' => "select * from sqlite_master where type = 'table' and name = ?",
+            'bindings' => [
+                "migrations"
+            ],
+            'connection_name' => 'sqlite'
         ];
 
         Http::fake([
@@ -34,16 +50,10 @@ class MessagesTest extends TestCase
         ]);
 
         Http::assertSent(function (Request $request) use ($data) {
-            /** @var QueryData */
-            $queryData = QueryData::fromArray([
-                $request['sql'],
-                $request['bindings'],
-                $request['time'],
-                $request['connection_name']
-            ]);
 
-            return $queryData === $data['query'];
+            dd($request['query']);
+            return $request['query'] === $data;
         });
 
     }
-
+}

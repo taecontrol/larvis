@@ -41,10 +41,10 @@ class QueryWatcher extends Watcher
             'app' => $appData->toArray(),
         ];
 
+        //dd($url, $endpoint, $data);
         Http::withHeaders(
             ['Content-Type' => 'application/json; charset=utf-8']
         )->post($url . $endpoint, $data)->throw();
 
-       dd($query);
     }
 }

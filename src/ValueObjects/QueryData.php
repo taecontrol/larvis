@@ -21,7 +21,7 @@ class QueryData implements Arrayable
             sql: $e->sql,
             bindings: $e->bindings,
             time: $e->time,
-            connection_name: $e->connection->getName(),
+            connection_name: $e->connectionName,
         );
     }
 
@@ -35,13 +35,13 @@ class QueryData implements Arrayable
         ];
     }
 
-    public static function fromArray(array $args): MessageData
+    public static function fromArray(array $args): QueryData
     {
-        return new MessageData(
-            data: $args['sql'],
-            kind: $args['bindings'],
-            file: $args['time'],
-            line: $args['connection_name']
+        return new QueryData(
+            sql: $args['sql'],
+            bindings: $args['bindings'],
+            time: $args['time'],
+            connection_name: $args['connection_name']
         );
     }
 
