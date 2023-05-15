@@ -30,7 +30,6 @@ class TestCase extends Orchestra
 
     protected function getEnvironmentSetUp($app)
     {
-        config()->set('larvis.watchers.queries.enabled', false);
         config()->set('database.default', 'sqlite');
         config()->set('database.connections.sqlite', [
             'driver' => 'sqlite',

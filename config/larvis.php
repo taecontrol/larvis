@@ -24,10 +24,10 @@ return [
     ],
     'watchers' => [
         'request' => [
-            'enabled' => true
+            'enabled' => false
         ],
         'queries' => [
-            'enabled' => true
+            'enabled' => false
         ]
     ],
 ];

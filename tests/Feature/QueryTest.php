@@ -30,12 +30,7 @@ class QueryTest extends TestCase
             'http://localhost:55555/*' => Http::response(null, 201, []),
         ]);
 
-        /** @var QueryWatcher */
-        $queryWatcher = app(QueryWatcher::class);
-
-        $queryWatcher->enable();
-
-        config()->set('larvis.watchers.queries.enabled', true);
+        app(QueryWatcher::class)->enable();
 
         DB::table('users')->get('id');
 
@@ -52,5 +47,7 @@ class QueryTest extends TestCase
 
             return true;
         });
+
+        app(QueryWatcher::class)->disable();
     }
 }

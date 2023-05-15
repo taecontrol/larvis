@@ -2,12 +2,11 @@
 
 namespace Taecontrol\Larvis\Watchers;
 
-
+use Taecontrol\Larvis\Larvis;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Database\Events\QueryExecuted;
 use Taecontrol\Larvis\ValueObjects\QueryData;
-use Illuminate\Support\Facades\Http;
-use Taecontrol\Larvis\Larvis;
 
 class QueryWatcher extends Watcher
 {
@@ -15,8 +14,8 @@ class QueryWatcher extends Watcher
     {
         $this->enabled = config('larvis.watchers.queries.enabled');
 
-        DB::listen(function (QueryExecuted $query){
-            if (!$this->enabled()) {
+        DB::listen(function (QueryExecuted $query) {
+            if (! $this->enabled()) {
                 return;
             }
 
@@ -26,8 +25,6 @@ class QueryWatcher extends Watcher
 
     public function handleQueries(QueryExecuted $query): void
     {
-        dd($query);
-
         /** @var Larvis */
         $larvis = app(Larvis::class);
 
@@ -42,24 +39,8 @@ class QueryWatcher extends Watcher
             'app' => $appData->toArray(),
         ];
 
-        //dd($url, $endpoint, $data);
         Http::withHeaders(
             ['Content-Type' => 'application/json; charset=utf-8']
         )->post($url . $endpoint, $data)->throw();
-
-    }
-
-    public function enable(): Watcher
-    {
-        parent::enable();
-
-        return $this;
-    }
-
-    public function disable(): Watcher
-    {
-        parent::disable();
-
-        return $this;
     }
 }

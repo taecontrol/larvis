@@ -52,6 +52,7 @@ class LarvisServiceProvider extends ServiceProvider
     {
         $watchers = [
             RequestWatcher::class,
+            QueryWatcher::class,
         ];
 
         collect($watchers)
