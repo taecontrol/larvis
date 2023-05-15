@@ -6,6 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Taecontrol\Larvis\Providers\LarvisServiceProvider;
+use Taecontrol\Larvis\Watchers\QueryWatcher;
 
 class TestCase extends Orchestra
 {
@@ -16,7 +17,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Taecontrol\\Larvis\\Tests\\Mock\\Factories' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Taecontrol\\Larvis\\Tests\\Mock\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
@@ -29,6 +30,7 @@ class TestCase extends Orchestra
 
     protected function getEnvironmentSetUp($app)
     {
+        config()->set('larvis.watchers.queries.enabled', false);
         config()->set('database.default', 'sqlite');
         config()->set('database.connections.sqlite', [
             'driver' => 'sqlite',

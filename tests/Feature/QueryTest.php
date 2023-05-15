@@ -2,14 +2,14 @@
 
 namespace Taecontrol\Larvis\Tests;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Client\Request;
-use Illuminate\Support\Facades\Http;
 //use Taecontrol\Larvis\ValueObjects\QueryData;
 //use Illuminate\Database\Events\QueryExecuted;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Taecontrol\Larvis\Tests\Mock\Models\User;
+use Illuminate\Support\Facades\Http;
 //use Taecontrol\Larvis\Watchers\QueryWatcher;
-use Taecontrol\Larvis\Larvis;
+use Taecontrol\Larvis\Watchers\QueryWatcher;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class QueryTest extends TestCase
 {
@@ -26,34 +26,31 @@ class QueryTest extends TestCase
     /** @test */
     public function it_check_if_queries_handler_post_query_data(): void
     {
-
-        /** @var Larvis */
-        app(Larvis::class);
-
-        $user = User::factory()->create([
-            'name' => 'John Doe',
-            'email' => 'johndoe@example.com',
+        Http::fake([
+            'http://localhost:55555/*' => Http::response(null, 201, []),
         ]);
 
-        $this->get('/users/' . $user->id);
+        /** @var QueryWatcher */
+        $queryWatcher = app(QueryWatcher::class);
+
+        $queryWatcher->enable();
+
+        config()->set('larvis.watchers.queries.enabled', true);
+
+        DB::table('users')->get('id');
 
         $data = [
             'sql' => "select * from sqlite_master where type = 'table' and name = ?",
             'bindings' => [
-                "migrations"
+                'migrations',
             ],
-            'connection_name' => 'sqlite'
+            'connection_name' => 'sqlite',
         ];
 
-        Http::fake([
-            'http://localhost:55555/*' => Http::response([], 200, []),
-        ]);
-
         Http::assertSent(function (Request $request) use ($data) {
+            dd($request);
 
-            dd($request['query']);
-            return $request['query'] === $data;
+            return true;
         });
-
     }
 }

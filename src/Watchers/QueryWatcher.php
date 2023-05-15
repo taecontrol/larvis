@@ -16,7 +16,7 @@ class QueryWatcher extends Watcher
         $this->enabled = config('larvis.watchers.queries.enabled');
 
         DB::listen(function (QueryExecuted $query){
-            if (!$this->enabled) {
+            if (!$this->enabled()) {
                 return;
             }
 
@@ -26,6 +26,7 @@ class QueryWatcher extends Watcher
 
     public function handleQueries(QueryExecuted $query): void
     {
+        dd($query);
 
         /** @var Larvis */
         $larvis = app(Larvis::class);
@@ -46,5 +47,19 @@ class QueryWatcher extends Watcher
             ['Content-Type' => 'application/json; charset=utf-8']
         )->post($url . $endpoint, $data)->throw();
 
+    }
+
+    public function enable(): Watcher
+    {
+        parent::enable();
+
+        return $this;
+    }
+
+    public function disable(): Watcher
+    {
+        parent::disable();
+
+        return $this;
     }
 }
