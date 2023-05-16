@@ -4,27 +4,27 @@ namespace Taecontrol\Larvis\Tests\Unit;
 
 use Taecontrol\Larvis\Tests\TestCase;
 use Taecontrol\Larvis\Tests\Mock\Test;
+use Taecontrol\Larvis\Readers\ModelReader;
 use Taecontrol\Larvis\Tests\Mock\Models\User;
-use Taecontrol\Larvis\ValueObjects\ObjectData;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class ObjectDataTest extends TestCase
+class ModelReaderTest extends TestCase
 {
     /** @test */
     public function it_read_a_model_object_properties()
     {
         $user = new User(['name' => 'Fake', 'email' => 'Fake@mail.com']);
-        $objectData = json_decode(ObjectData::from($user)->data, true);
+        $modelReader = (new ModelReader($user))->data;
 
         $expected = [
-            'fillable' => $objectData['properties']['fillable']['value'],
-            'casts' => $objectData['properties']['casts']['value'],
-            'connection' => $objectData['properties']['connection']['value'],
-            'hidden' => $objectData['properties']['hidden']['value'],
-            'primaryKey' => $objectData['properties']['primaryKey']['value'],
-            'table' => $objectData['properties']['table']['value'],
-            'class' => $objectData['class'],
-            'parent' => $objectData['parent'],
+            'fillable' => $modelReader['properties']['fillable']['value'],
+            'casts' => $modelReader['properties']['casts']['value'],
+            'connection' => $modelReader['properties']['connection']['value'],
+            'hidden' => $modelReader['properties']['hidden']['value'],
+            'primaryKey' => $modelReader['properties']['primaryKey']['value'],
+            'table' => $modelReader['properties']['table']['value'],
+            'class' => $modelReader['class'],
+            'parent' => $modelReader['parent'],
         ];
 
         $actual = [

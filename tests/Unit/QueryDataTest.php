@@ -4,7 +4,7 @@ namespace Taecontrol\Larvis\Tests\Unit;
 
 use Taecontrol\Larvis\Tests\TestCase;
 use Illuminate\Database\Events\QueryExecuted;
-use Taecontrol\Larvis\ValueObjects\QueryData;
+use Taecontrol\Larvis\ValueObjects\Data\QueryData;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class QueryDataTest extends TestCase

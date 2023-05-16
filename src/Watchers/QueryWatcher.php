@@ -6,7 +6,7 @@ use Taecontrol\Larvis\Larvis;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Database\Events\QueryExecuted;
-use Taecontrol\Larvis\ValueObjects\QueryData;
+use Taecontrol\Larvis\ValueObjects\Data\QueryData;
 
 class QueryWatcher extends Watcher
 {

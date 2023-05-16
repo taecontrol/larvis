@@ -1,6 +1,6 @@
 <?php
 
-namespace Taecontrol\Larvis\ValueObjects;
+namespace Taecontrol\Larvis\ValueObjects\Data;
 
 use Exception;
 use Symfony\Component\HttpKernel\Kernel;

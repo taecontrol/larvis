@@ -1,8 +1,10 @@
 <?php
 
-namespace Taecontrol\Larvis\ValueObjects;
+namespace Taecontrol\Larvis\ValueObjects\Data;
 
+use Taecontrol\Larvis\Readers\Reader;
 use Illuminate\Contracts\Support\Arrayable;
+use Taecontrol\Larvis\ValueObjects\Backtrace;
 
 class MessageData implements Arrayable
 {
@@ -125,10 +127,10 @@ class MessageData implements Arrayable
 
     private static function formatObject(object $data): array
     {
-        $objectData = ObjectData::from($data);
+        $reader = Reader::getReader($data);
 
         return [
-            'data' => $objectData->data,
+            'data' => json_encode($reader->data),
             'type' => 'object',
         ];
     }

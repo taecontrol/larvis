@@ -5,8 +5,8 @@ namespace Taecontrol\Larvis\Tests;
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
-use Taecontrol\Larvis\ValueObjects\AppData;
-use Taecontrol\Larvis\ValueObjects\MessageData;
+use Taecontrol\Larvis\ValueObjects\Data\AppData;
+use Taecontrol\Larvis\ValueObjects\Data\MessageData;
 
 class MessagesTest extends TestCase
 {
