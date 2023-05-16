@@ -38,6 +38,8 @@ class QueryTest extends TestCase
         ];
 
         Http::assertSent(function (Request $request) use ($data) {
+            $this->assertIsFloat($request['query']['time']);
+
             $dataRequest = [
                 'sql' => $request['query']['sql'],
                 'bindings' => $request['query']['bindings'],
