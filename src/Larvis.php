@@ -3,9 +3,9 @@
 namespace Taecontrol\Larvis;
 
 use Throwable;
-use Taecontrol\Larvis\ValueObjects\AppData;
 use Taecontrol\Larvis\Handlers\MessageHandler;
 use Taecontrol\Larvis\Handlers\ExceptionHandler;
+use Taecontrol\Larvis\ValueObjects\Data\AppData;
 
 class Larvis
 {

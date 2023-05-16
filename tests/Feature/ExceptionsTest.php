@@ -6,8 +6,8 @@ use Exception;
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
-use Taecontrol\Larvis\ValueObjects\AppData;
-use Taecontrol\Larvis\ValueObjects\ExceptionData;
+use Taecontrol\Larvis\ValueObjects\Data\AppData;
+use Taecontrol\Larvis\ValueObjects\Data\ExceptionData;
 
 class ExceptionsTest extends TestCase
 {
