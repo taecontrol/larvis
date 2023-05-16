@@ -4,7 +4,7 @@ namespace Taecontrol\Larvis\Tests\Unit;
 
 use Exception;
 use Taecontrol\Larvis\Tests\TestCase;
-use Taecontrol\Larvis\ValueObjects\ExceptionData;
+use Taecontrol\Larvis\ValueObjects\Data\ExceptionData;
 
 class ExceptionDataTest extends TestCase
 {

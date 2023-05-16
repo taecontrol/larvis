@@ -5,7 +5,7 @@ namespace Taecontrol\Larvis\Handlers;
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Support\Facades\Http;
 use Taecontrol\Larvis\ValueObjects\Backtrace;
-use Taecontrol\Larvis\ValueObjects\MessageData;
+use Taecontrol\Larvis\ValueObjects\Data\MessageData;
 
 class MessageHandler
 {

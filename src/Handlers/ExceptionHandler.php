@@ -5,7 +5,7 @@ namespace Taecontrol\Larvis\Handlers;
 use Throwable;
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Support\Facades\Http;
-use Taecontrol\Larvis\ValueObjects\ExceptionData;
+use Taecontrol\Larvis\ValueObjects\Data\ExceptionData;
 
 class ExceptionHandler
 {

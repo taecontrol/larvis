@@ -2,11 +2,11 @@
 
 namespace Taecontrol\Larvis\Tests\Unit;
 
+use Taecontrol\Larvis\Readers\Reader;
 use Taecontrol\Larvis\Tests\TestCase;
 use Taecontrol\Larvis\Tests\Mock\TestObject;
 use Taecontrol\Larvis\ValueObjects\Backtrace;
-use Taecontrol\Larvis\ValueObjects\ObjectData;
-use Taecontrol\Larvis\ValueObjects\MessageData;
+use Taecontrol\Larvis\ValueObjects\Data\MessageData;
 
 class MessageTest extends TestCase
 {
@@ -158,10 +158,10 @@ class MessageTest extends TestCase
 
         $messageData = MessageData::from($testObject, $backtrace);
 
-        $testObject = ObjectData::from($testObject);
+        $testObject = json_encode(Reader::getReader($testObject)->data);
 
         $expected = [
-            'data' => $testObject->data,
+            'data' => $testObject,
             'kind' => 'object',
             'file' => $backtrace->file,
             'line' => $backtrace->line,

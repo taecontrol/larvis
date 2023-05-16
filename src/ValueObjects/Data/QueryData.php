@@ -1,6 +1,6 @@
 <?php
 
-namespace Taecontrol\Larvis\ValueObjects;
+namespace Taecontrol\Larvis\ValueObjects\Data;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Events\QueryExecuted;
