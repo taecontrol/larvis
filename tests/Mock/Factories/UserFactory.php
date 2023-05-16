@@ -3,6 +3,7 @@
 namespace Taecontrol\Larvis\Tests\Mock\Factories;
 
 use Illuminate\Support\Str;
+use Taecontrol\Larvis\Tests\Mock\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserFactory extends Factory

@@ -16,7 +16,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Taecontrol\\Larvis\\Tests\\Mock\\Factories' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Taecontrol\\Larvis\\Tests\\Mock\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
