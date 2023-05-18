@@ -42,7 +42,7 @@ class ExceptionData implements Arrayable
             'trace' => $this->trace,
             'line' => $this->line,
             'request' => $this->request,
-            'thrownAt' => $this->thrownAt->utc(),
+            'thrown_at' => $this->thrownAt->utc(),
         ];
     }
 
