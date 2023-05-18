@@ -12,8 +12,8 @@ class QueryData implements Arrayable
         public readonly string $sql,
         public readonly array $bindings,
         public readonly float $time,
-        public readonly string $connection_name,
-        public readonly Carbon $queried_at,
+        public readonly string $connectionName,
+        public readonly Carbon $queriedAt,
     ) {
     }
 
@@ -23,8 +23,8 @@ class QueryData implements Arrayable
             sql: $e->sql,
             bindings: $e->bindings,
             time: $e->time,
-            connection_name: $e->connectionName,
-            queried_at: now(),
+            connectionName: $e->connectionName,
+            queriedAt: now(),
         );
     }
 
@@ -34,8 +34,8 @@ class QueryData implements Arrayable
             'sql' => $this->sql,
             'bindings' => $this->bindings,
             'time' => $this->time,
-            'connection_name' => $this->connection_name,
-            'queried_at' => $this->queried_at->utc(),
+            'connectionName' => $this->connectionName,
+            'queriedAt' => $this->queriedAt->utc(),
         ];
     }
 
@@ -45,8 +45,8 @@ class QueryData implements Arrayable
             sql: $args['sql'],
             bindings: $args['bindings'],
             time: $args['time'],
-            connection_name: $args['connection_name'],
-            queried_at: $args['queried_at'],
+            connectionName: $args['connectionName'],
+            queriedAt: $args['queriedAt'],
         );
     }
 
@@ -56,8 +56,8 @@ class QueryData implements Arrayable
             'sql' => $this->sql,
             'bindings' => $this->bindings,
             'time' => $this->time,
-            'connection_name' => $this->connection_name,
-            'queried_at' => (string) $this->queried_at->format('Y-m-d H:i:s'),
+            'connection_name' => $this->connectionName,
+            'queried_at' => (string) $this->queriedAt->format('Y-m-d H:i:s'),
         ];
     }
 }

@@ -34,7 +34,7 @@ class QueryTest extends TestCase
         $data = [
             'sql' => 'select "id" from "users"',
             'bindings' => [],
-            'connection_name' => 'sqlite',
+            'connectionName' => 'sqlite',
         ];
 
         Http::assertSent(function (Request $request) use ($data) {
@@ -43,7 +43,7 @@ class QueryTest extends TestCase
             $dataRequest = [
                 'sql' => $request['query']['sql'],
                 'bindings' => $request['query']['bindings'],
-                'connection_name' => $request['query']['connection_name'],
+                'connectionName' => $request['query']['connectionName'],
             ];
 
             return $dataRequest === $data;
