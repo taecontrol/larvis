@@ -16,7 +16,7 @@ class ExceptionData implements Arrayable
         public readonly array $trace,
         public readonly int $line,
         public readonly Request $request,
-        public readonly Carbon $thrown_at,
+        public readonly Carbon $thrownAt,
     ) {
     }
 
@@ -29,7 +29,7 @@ class ExceptionData implements Arrayable
             trace: $e->getTrace(),
             line: $e->getLine(),
             request: request(),
-            thrown_at: now(),
+            thrownAt: now(),
         );
     }
 
@@ -42,7 +42,7 @@ class ExceptionData implements Arrayable
             'trace' => $this->trace,
             'line' => $this->line,
             'request' => $this->request,
-            'thrown_at' => $this->thrown_at->utc(),
+            'thrown_at' => $this->thrownAt->utc(),
         ];
     }
 
@@ -55,7 +55,7 @@ class ExceptionData implements Arrayable
             'trace' => json_encode($this->trace),
             'line' => $this->line,
             'request' => json_encode($this->request),
-            'thrown_at' => (string) $this->thrown_at->format('Y-m-d H:i:s'),
+            'thrown_at' => (string) $this->thrownAt->format('Y-m-d H:i:s'),
         ];
     }
 }
