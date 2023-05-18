@@ -2,6 +2,7 @@
 
 namespace Taecontrol\Larvis\ValueObjects\Data;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Events\QueryExecuted;
 
@@ -11,7 +12,8 @@ class QueryData implements Arrayable
         public readonly string $sql,
         public readonly array $bindings,
         public readonly float $time,
-        public readonly string $connection_name,
+        public readonly string $connectionName,
+        public readonly Carbon $queriedAt,
     ) {
     }
 
@@ -21,7 +23,8 @@ class QueryData implements Arrayable
             sql: $e->sql,
             bindings: $e->bindings,
             time: $e->time,
-            connection_name: $e->connectionName,
+            connectionName: $e->connectionName,
+            queriedAt: now(),
         );
     }
 
@@ -31,7 +34,8 @@ class QueryData implements Arrayable
             'sql' => $this->sql,
             'bindings' => $this->bindings,
             'time' => $this->time,
-            'connection_name' => $this->connection_name,
+            'connectionName' => $this->connectionName,
+            'queriedAt' => $this->queriedAt->utc(),
         ];
     }
 
@@ -41,7 +45,8 @@ class QueryData implements Arrayable
             sql: $args['sql'],
             bindings: $args['bindings'],
             time: $args['time'],
-            connection_name: $args['connection_name']
+            connectionName: $args['connectionName'],
+            queriedAt: $args['queriedAt'],
         );
     }
 
@@ -51,7 +56,8 @@ class QueryData implements Arrayable
             'sql' => $this->sql,
             'bindings' => $this->bindings,
             'time' => $this->time,
-            'connection_name' => $this->connection_name,
+            'connection_name' => $this->connectionName,
+            'queried_at' => (string) $this->queriedAt->format('Y-m-d H:i:s'),
         ];
     }
 }

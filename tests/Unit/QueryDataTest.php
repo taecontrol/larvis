@@ -37,6 +37,7 @@ class QueryDataTest extends TestCase
         $this->assertIsArray($queryData['bindings']);
         $this->assertIsFloat($queryData['time'], 2.98);
         $this->assertIsString($queryData['connection_name'], 'test connection');
+        $this->assertIsString($queryData['queried_at']);
     }
 
     /** @test */

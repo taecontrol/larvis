@@ -35,7 +35,7 @@ class QueryWatcher extends Watcher
         $endpoint = config('larvis.debug.api.query');
 
         $data = [
-            'query' => $queryData->toArray(),
+            'query' => $queryData->debugFormat(),
             'app' => $appData->toArray(),
         ];
 
