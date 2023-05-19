@@ -26,6 +26,7 @@ class RequestWatcher extends Watcher
 
     public function handleRequest(Request $request, Response $response): void
     {
+         /* dd($request, $response); */
         /** @var Larvis */
         $larvis = app(Larvis::class);
         $appData = $larvis->getAppData();
@@ -34,14 +35,22 @@ class RequestWatcher extends Watcher
         $url = config('larvis.debug.url');
         $endpoint = config('larvis.debug.api.request');
 
+        $responseData = [
+                'status' => $response->getStatusCode(),
+                'headers' => $response->headers->all(),
+                'content' => $response->getContent(),
+        ];
+
         $data = [
+            /* dd($RequestData, $appData, $responseData), */
             'request' => $RequestData->toArray(),
             'app' => $appData->toArray(),
+            'response' => $responseData,
         ];
 
         Http::withHeaders(
             ['Content-Type' => 'application/json; charset=utf-8']
         )->post($url . $endpoint, $data)->throw(); 
-        dd($request, $response);
+        
     }
 }

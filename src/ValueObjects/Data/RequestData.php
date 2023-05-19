@@ -8,65 +8,91 @@ use Illuminate\Http\Request;
 class RequestData implements Arrayable
 {
     public function __construct(
-        public readonly string $url,
-        public readonly string $http_method,
-        public readonly array $http_headers,
-        public readonly object $request_body,
-        public readonly string $user_agent,
-        public readonly string $ip_address,
-        public readonly string $client_port,
+        public readonly array $attributes,
+        public readonly mixed $request_body,
+        public readonly mixed $files,
+        public readonly array $headers,
+        public readonly string $content,
+        public readonly array $server,
+        public readonly string $request_uri,
+        public readonly string $base_url,
+        public readonly string $method,
+        public readonly mixed $session,
+        public readonly string $format,
+        public readonly string $locale,
         ) {
     }
 
     public static function from(Request $r): RequestData
     {
+        /* dd($r); */
         return new self(
-            url: $r->url,
-            http_method: $r->http_method,
-            http_headers:$r->http_headers,
-            request_body:$r->request_body,
-            user_agent:$r->user_agent,
-            ip_address:$r->ip_address,
-            client_port:$r->client_port,
+            attributes: $r['attributes'] ?? [],
+            request_body: $r->requestBody,
+            files: $r->files,
+            headers: $r['headers'] ?? [],
+            content: $r->content ?? '',
+            server: $r['server'] ?? [],
+            request_uri: $r->requestUri ?? '',
+            base_url: $r->baseUrl ?? '',
+            method: $r->method ?? '',
+            session: $r->session,
+            format: $r->format ?? '',
+            locale: $r->locale ?? '',
         );
     }
 
     public function toArray(): array
     {
         return [
-            'url' => $this->url,
-            'http_method' => $this->http_method,
-            'http_headers' => $this->http_headers,
+            'attributes' => $this->attributes,
             'request_body' => $this->request_body,
-            'user_agent' => $this->user_agent,      
-            'ip_address' => $this->ip_address,
-            'client_port' => $this->client_port,
+            'files' => $this->files,
+            'headers' => $this->headers,
+            'content' => $this->content,
+            'server' => $this->server,
+            'request_uri' => $this->request_uri,
+            'base_url' => $this->base_url,
+            'method' => $this->method,
+            'session' => $this->session,
+            'format' => $this->format,
+            'locale' => $this->locale,
         ];
     }
 
     public static function fromArray(array $args): RequestData
     {
         return new RequestData(
-            url: $args['url'],
-            http_method: $args['http_method'],
-            http_headers:$args['http_headers'],
-            request_body:$args['request_body'],
-            user_agent:$args['user_agent'],
-            ip_address:$args['ip_address'],
-            client_port:$args['client_port'],
+            attributes: $args['attributes'],
+            request_body: $args['request_body'],
+            files: $args['files'],
+            headers: $args['headers'],
+            content: $args['content'],
+            server: $args['server'],
+            request_uri: $args['request_uri'],
+            base_url: $args['base_url'],
+            method: $args['method'],
+            session: $args['session'],
+            format: $args['format'],
+            locale: $args['locale'],
         );
     }
 
     public function debugFormat(): array
     {
         return [
-            'url' => $this->url,
-            'http_method' => $this->http_method,
-            'http_headers' => $this->http_headers,
+            'attributes' => $this->attributes,
             'request_body' => $this->request_body,
-            'user_agent' => $this->user_agent,      
-            'ip_address' => $this->ip_address,
-            'client_port' => $this->client_port,
+            'files' => $this->files,
+            'headers' => $this->headers,
+            'content' => $this->content,
+            'server' => $this->server,
+            'request_uri' => $this->request_uri,
+            'base_url' => $this->base_url,
+            'method' => $this->method,
+            'session' => $this->session,
+            'format' => $this->format,
+            'locale' => $this->locale,
         ];
     }
 }
