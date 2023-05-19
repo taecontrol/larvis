@@ -2,8 +2,8 @@
 
 namespace Taecontrol\Larvis\ValueObjects\Data;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Support\Arrayable;
 
 class RequestData implements Arrayable
 {
@@ -20,7 +20,7 @@ class RequestData implements Arrayable
         public readonly mixed $session,
         public readonly string $format,
         public readonly string $locale,
-        ) {
+    ) {
     }
 
     public static function from(Request $r): RequestData

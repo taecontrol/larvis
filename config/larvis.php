@@ -20,6 +20,7 @@ return [
             'message' => '/api/message',
             'exception' => '/api/exception',
             'query' => '/api/query',
+            'request' => '/api/request',
         ],
     ],
     'watchers' => [
