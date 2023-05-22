@@ -2,18 +2,18 @@
 
 namespace Taecontrol\Larvis\ValueObjects\Data;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Response;
+use Illuminate\Contracts\Support\Arrayable;
 
 class ResponseData implements Arrayable
 {
     public function __construct(
-        public readonly string $status,
+        public readonly int $status,
         public readonly array $headers,
-        public readonly string $content,
+        public readonly bool|string $content,
         public readonly string $version,
         public readonly mixed $original,
-    ){
+    ) {
     }
 
     public static function from(Response $r): ResponseData
@@ -24,7 +24,6 @@ class ResponseData implements Arrayable
             content: $r->getContent(),
             version: $r->getProtocolVersion(),
             original: $r->getOriginalContent(),
-
         );
     }
 
@@ -53,10 +52,10 @@ class ResponseData implements Arrayable
     public function debugFormat(): array
     {
         return [
-            'status' => json_encode($this->status),
+            'status' => strval($this->status),
             'headers' => json_encode($this->headers),
-            'content' => json_encode($this->content),
-            'version' => json_encode($this->version),
+            'content' => strval($this->content),
+            'version' => $this->version,
             'original' => json_encode($this->original),
         ];
     }

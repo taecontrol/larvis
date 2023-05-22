@@ -10,35 +10,38 @@ class RequestData implements Arrayable
     public function __construct(
         public readonly ?array $attributes,
         public readonly mixed $requestBody,
-        public readonly mixed $files,
-        public readonly mixed $headers,
+        public readonly array $files,
+        public readonly array $headers,
         public readonly ?string $content,
-        public readonly ?array $server,
-        public readonly ?string $requestUri,
-        public readonly ?string $baseUrl,
-        public readonly ?string $method,
-        public readonly mixed $session,
+        public readonly array $server,
+        public readonly string $requestUri,
+        public readonly string $baseUrl,
+        public readonly string $method,
+        public readonly array $session,
         public readonly ?string $format,
-        public readonly ?string $locale,
+        public readonly string $locale,
     ) {
     }
 
-    public static function from(Request $r): RequestData
+    public static function from(Request $request): RequestData
     {
-        /* dd($r); */
+        $session = $request->hasSession()
+            ? $request->session()->all()
+            : [];
+
         return new self(
-            attributes: $r->attributes->all(),
-            requestBody: $r->getContent(),
-            files: $r->files->all(),
-            headers: $r->headers->all(),
-            content: $r->getContent(),
-            server: $r->server->all(),
-            requestUri: $r->getRequestUri(),
-            baseUrl: $r->getBaseUrl(),
-            method: $r->getMethod(),
-            session:$r->getSession(),
-            format: $r->getRequestFormat(),
-            locale: $r->getLocale(),
+            attributes: $request->attributes->all(),
+            requestBody: $request->getContent(),
+            files: $request->files->all(),
+            headers: $request->headers->all(),
+            content: $request->getContent(),
+            server: $request->server->all(),
+            requestUri: $request->getRequestUri(),
+            baseUrl: $request->getBaseUrl(),
+            method: $request->getMethod(),
+            session: $session,
+            format: $request->getRequestFormat() ?? 'null',
+            locale: $request->getLocale(),
         );
     }
 
@@ -81,18 +84,18 @@ class RequestData implements Arrayable
     public function debugFormat(): array
     {
         return [
-        'attributes' => json_encode($this->attributes),
-        'request_body' => json_encode($this->requestBody),
-        'files' => json_encode($this->files),
-        'headers' => json_encode($this->headers),
-        'content' => json_encode($this->content),
-        'server' => json_encode($this->server),
-        'request_uri' => json_encode($this->requestUri),
-        'base_url' => json_encode($this->baseUrl),
-        'method' => json_encode($this->method),
-        'session' => json_encode($this->session),
-        'format' => json_encode($this->format),
-        'locale' => json_encode($this->locale),
+            'attributes' => json_encode($this->attributes),
+            'request_body' => json_encode($this->requestBody),
+            'files' => json_encode($this->files),
+            'headers' => json_encode($this->headers),
+            'content' => $this->content ?? 'null',
+            'server' => json_encode($this->server),
+            'request_uri' => $this->requestUri,
+            'base_url' => $this->baseUrl,
+            'method' => $this->method,
+            'session' => json_encode($this->session),
+            'format' => $this->format ?? 'null',
+            'locale' => $this->locale,
         ];
     }
 }

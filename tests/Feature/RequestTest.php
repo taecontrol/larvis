@@ -1,46 +1,49 @@
 <?php
 
 namespace Taecontrol\Larvis\Tests\Feature;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Request;
+
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Taecontrol\Larvis\Tests\TestCase;
+use Taecontrol\Larvis\Watchers\RequestWatcher;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RequestTest extends TestCase
 {
-use RefreshDatabase;
+    use RefreshDatabase;
 
-public function setUp(): void
-{
-    parent::setUp();
+    public function setUp(): void
+    {
+        parent::setUp();
 
-    config()->set('larvis.debug.url', 'http://localhost:55555');
-    config()->set('larvis.debug.api.message', '/api/request');
-}
+        session()->start();
 
-/** @test */
-public function it_test_request_contains_all_required_data(): void
-{
-    Route::get('test', function () {
-        return 'ok';
-    });
+        config()->set('larvis.debug.url', 'http://localhost:55555');
+        config()->set('larvis.debug.api.message', '/api/request');
+    }
 
-    Http::fake([
-        'http://localhost:55555/*' => Http::response([], 200, []),
-    ]);
+    /** @test */
+    public function it_test_request_contains_all_required_data(): void
+    {
+        Route::get('test', function () {
+            return 'ok';
+        });
 
-    app(RequestWatcher::class)->enable();
+        Http::fake([
+            'http://localhost:55555/*' => Http::response([], 200, []),
+        ]);
 
-    $response = $this->get('/test');
+        app(RequestWatcher::class)->enable();
 
-    Http::assertSent(function (Request $request) use ($response) {
+        $response = $this->get('/test');
 
-        $this->assertEquals(200, $response->getStatusCode());
+        Http::assertSent(function (Request $request) use ($response) {
+            $this->assertEquals(200, $response->getStatusCode());
 
-        return true;
-    });
+            return true;
+        });
 
-    app(RequestWatcher::class)->disable();
-}
+        app(RequestWatcher::class)->disable();
+    }
 }

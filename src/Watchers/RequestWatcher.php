@@ -37,9 +37,9 @@ class RequestWatcher extends Watcher
         $endpoint = config('larvis.debug.api.request');
 
         $data = [
-            'request' => $requestData->toArray(),
+            'request' => $requestData->debugFormat(),
             'app' => $appData->toArray(),
-            'response' => $responseData->toArray(),
+            'response' => json_encode($responseData->toArray()),
         ];
 
         Http::withHeaders(
