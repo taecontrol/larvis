@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Event;
 use Symfony\Component\HttpFoundation\Response;
 use Taecontrol\Larvis\ValueObjects\Data\RequestData;
 use Illuminate\Foundation\Http\Events\RequestHandled;
+use Taecontrol\Larvis\ValueObjects\Data\ResponseData;
 
 class RequestWatcher extends Watcher
 {
@@ -26,26 +27,19 @@ class RequestWatcher extends Watcher
 
     public function handleRequest(Request $request, Response $response): void
     {
-        /* dd($request, $response); */
         /** @var Larvis */
         $larvis = app(Larvis::class);
         $appData = $larvis->getAppData();
-        $RequestData = RequestData::from($request);
+        $requestData = RequestData::from($request);
+        $responseData = ResponseData::from($response);
 
         $url = config('larvis.debug.url');
         $endpoint = config('larvis.debug.api.request');
 
-        $responseData = [
-            'status' => $response->getStatusCode(),
-            'headers' => $response->headers->all(),
-            'content' => $response->getContent(),
-        ];
-
         $data = [
-            /* dd($RequestData, $appData, $responseData), */
-            'request' => $RequestData->toArray(),
+            'request' => $requestData->toArray(),
             'app' => $appData->toArray(),
-            'response' => $responseData,
+            'response' => $responseData->toArray(),
         ];
 
         Http::withHeaders(

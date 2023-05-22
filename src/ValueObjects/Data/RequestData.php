@@ -8,18 +8,18 @@ use Illuminate\Contracts\Support\Arrayable;
 class RequestData implements Arrayable
 {
     public function __construct(
-        public readonly array $attributes,
-        public readonly mixed $request_body,
+        public readonly ?array $attributes,
+        public readonly mixed $requestBody,
         public readonly mixed $files,
-        public readonly array $headers,
-        public readonly string $content,
-        public readonly array $server,
-        public readonly string $request_uri,
-        public readonly string $base_url,
-        public readonly string $method,
+        public readonly mixed $headers,
+        public readonly ?string $content,
+        public readonly ?array $server,
+        public readonly ?string $requestUri,
+        public readonly ?string $baseUrl,
+        public readonly ?string $method,
         public readonly mixed $session,
-        public readonly string $format,
-        public readonly string $locale,
+        public readonly ?string $format,
+        public readonly ?string $locale,
     ) {
     }
 
@@ -27,18 +27,18 @@ class RequestData implements Arrayable
     {
         /* dd($r); */
         return new self(
-            attributes: $r['attributes'] ?? [],
-            request_body: $r->requestBody,
-            files: $r->files,
-            headers: $r['headers'] ?? [],
-            content: $r->content ?? '',
-            server: $r['server'] ?? [],
-            request_uri: $r->requestUri ?? '',
-            base_url: $r->baseUrl ?? '',
-            method: $r->method ?? '',
-            session: $r->session,
-            format: $r->format ?? '',
-            locale: $r->locale ?? '',
+            attributes: $r->attributes->all(),
+            requestBody: $r->getContent(),
+            files: $r->files->all(),
+            headers: $r->headers->all(),
+            content: $r->getContent(),
+            server: $r->server->all(),
+            requestUri: $r->getRequestUri(),
+            baseUrl: $r->getBaseUrl(),
+            method: $r->getMethod(),
+            session:$r->getSession(),
+            format: $r->getRequestFormat(),
+            locale: $r->getLocale(),
         );
     }
 
@@ -46,13 +46,13 @@ class RequestData implements Arrayable
     {
         return [
             'attributes' => $this->attributes,
-            'request_body' => $this->request_body,
+            'requestBody' => $this->requestBody,
             'files' => $this->files,
             'headers' => $this->headers,
             'content' => $this->content,
             'server' => $this->server,
-            'request_uri' => $this->request_uri,
-            'base_url' => $this->base_url,
+            'requestUri' => $this->requestUri,
+            'baseUrl' => $this->baseUrl,
             'method' => $this->method,
             'session' => $this->session,
             'format' => $this->format,
@@ -64,13 +64,13 @@ class RequestData implements Arrayable
     {
         return new RequestData(
             attributes: $args['attributes'],
-            request_body: $args['request_body'],
+            requestBody: $args['requestBody'],
             files: $args['files'],
             headers: $args['headers'],
             content: $args['content'],
             server: $args['server'],
-            request_uri: $args['request_uri'],
-            base_url: $args['base_url'],
+            requestUri: $args['requestUri'],
+            baseUrl: $args['baseUrl'],
             method: $args['method'],
             session: $args['session'],
             format: $args['format'],
@@ -81,18 +81,18 @@ class RequestData implements Arrayable
     public function debugFormat(): array
     {
         return [
-            'attributes' => $this->attributes,
-            'request_body' => $this->request_body,
-            'files' => $this->files,
-            'headers' => $this->headers,
-            'content' => $this->content,
-            'server' => $this->server,
-            'request_uri' => $this->request_uri,
-            'base_url' => $this->base_url,
-            'method' => $this->method,
-            'session' => $this->session,
-            'format' => $this->format,
-            'locale' => $this->locale,
+        'attributes' => json_encode($this->attributes),
+        'request_body' => json_encode($this->requestBody),
+        'files' => json_encode($this->files),
+        'headers' => json_encode($this->headers),
+        'content' => json_encode($this->content),
+        'server' => json_encode($this->server),
+        'request_uri' => json_encode($this->requestUri),
+        'base_url' => json_encode($this->baseUrl),
+        'method' => json_encode($this->method),
+        'session' => json_encode($this->session),
+        'format' => json_encode($this->format),
+        'locale' => json_encode($this->locale),
         ];
     }
 }
