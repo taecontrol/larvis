@@ -88,13 +88,13 @@ class RequestData implements Arrayable
             'request_body' => json_encode($this->requestBody),
             'files' => json_encode($this->files),
             'headers' => json_encode($this->headers),
-            'content' => $this->content ?? 'null',
+            'content' => $this->content,
             'server' => json_encode($this->server),
             'request_uri' => $this->requestUri,
             'base_url' => $this->baseUrl,
             'method' => $this->method,
             'session' => json_encode($this->session),
-            'format' => $this->format ?? 'null',
+            'format' => $this->format,
             'locale' => $this->locale,
         ];
     }
