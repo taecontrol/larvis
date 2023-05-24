@@ -42,7 +42,7 @@ class QueryTest extends TestCase
 
             $dataRequest = [
                 'sql' => $request['query']['sql'],
-                'bindings' => $request['query']['bindings'],
+                'bindings' => json_decode($request['query']['bindings']),
                 'connection_name' => $request['query']['connection_name'],
             ];
 
