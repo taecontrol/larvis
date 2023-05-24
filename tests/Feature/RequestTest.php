@@ -6,6 +6,8 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Taecontrol\Larvis\Tests\TestCase;
+use Taecontrol\Larvis\ValueObjects\Data\RequestData;
+use Taecontrol\Larvis\ValueObjects\Data\ResponseData;
 use Taecontrol\Larvis\Watchers\RequestWatcher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -41,7 +43,33 @@ class RequestTest extends TestCase
         Http::assertSent(function (Request $request) use ($response) {
             $this->assertEquals(200, $response->getStatusCode());
 
-            return true;
+            /** @var RequestData */
+            $requestData = RequestData::fromArray($request['request']);
+
+            /** @var ResponseData */
+            $responseData = ResponseData::fromArray($request['response']);
+            
+            $isRequestDataPresent = $requestData &&
+            $requestData->attributes === ['foo' => 'bar'] &&
+            $requestData->requestBody === 'test request body' &&
+            $requestData->files === ['file1' => 'file1 content', 'file2' => 'file2 content'] &&
+            $requestData->headers === ['Content-Type' => 'application/json'] &&
+            $requestData->content === 'test content' &&
+            $requestData->server === ['SERVER_NAME' => 'localhost'] &&
+            $requestData->requestUri === '/test' &&
+            $requestData->baseUrl === '/test' &&
+            $requestData->method === 'GET' &&
+            $requestData->session === null &&
+            $requestData->format === 'json' &&
+            $requestData->locale === 'en';
+
+            $isResponseDataPresent = $responseData->status === $response &&
+            $responseData->headers === ['Content-Type' => 'application/json'] &&
+            $responseData->content === 'test content' &&
+            $responseData->version === '1.1' &&
+            $responseData->original === null;
+            
+            return $isRequestDataPresent && $isResponseDataPresent;
         });
 
         app(RequestWatcher::class)->disable();
