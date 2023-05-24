@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Event;
 use Symfony\Component\HttpFoundation\Response;
 use Taecontrol\Larvis\ValueObjects\Data\RequestData;
 use Illuminate\Foundation\Http\Events\RequestHandled;
-use Taecontrol\Larvis\ValueObjects\Data\ResponseData;
 
 class RequestWatcher extends Watcher
 {
