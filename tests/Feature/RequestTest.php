@@ -6,9 +6,8 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Taecontrol\Larvis\Tests\TestCase;
-use Taecontrol\Larvis\ValueObjects\Data\RequestData;
-use Taecontrol\Larvis\ValueObjects\Data\ResponseData;
 use Taecontrol\Larvis\Watchers\RequestWatcher;
+use Taecontrol\Larvis\ValueObjects\Data\AppData;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RequestTest extends TestCase
@@ -42,34 +41,43 @@ class RequestTest extends TestCase
 
         Http::assertSent(function (Request $request) use ($response) {
             $this->assertEquals(200, $response->getStatusCode());
-
-            /** @var RequestData */
-            $requestData = RequestData::fromArray($request['request']);
-
-            /** @var ResponseData */
-            $responseData = ResponseData::fromArray($request['response']);
             
-            $isRequestDataPresent = $requestData &&
-            $requestData->attributes === ['foo' => 'bar'] &&
-            $requestData->requestBody === 'test request body' &&
-            $requestData->files === ['file1' => 'file1 content', 'file2' => 'file2 content'] &&
-            $requestData->headers === ['Content-Type' => 'application/json'] &&
-            $requestData->content === 'test content' &&
-            $requestData->server === ['SERVER_NAME' => 'localhost'] &&
-            $requestData->requestUri === '/test' &&
-            $requestData->baseUrl === '/test' &&
-            $requestData->method === 'GET' &&
-            $requestData->session === null &&
-            $requestData->format === 'json' &&
-            $requestData->locale === 'en';
+            /** @var AppData */
+            $appData = AppData::fromArray($request['app']);
 
-            $isResponseDataPresent = $responseData->status === $response &&
-            $responseData->headers === ['Content-Type' => 'application/json'] &&
-            $responseData->content === 'test content' &&
-            $responseData->version === '1.1' &&
-            $responseData->original === null;
-            
-            return $isRequestDataPresent && $isResponseDataPresent;
+            $isRequestDataPresent = $request['request'] &&
+            $request['request']['attributes'] === "[]" &&
+            $request['request']['request_body'] === '""' &&
+            $request['request']['files'] === "[]" &&
+            $request['request']['headers'] &&
+            $request['request']['content'] === "" &&
+            $request['request']['server'] &&
+            $request['request']['request_uri'] === '/test' &&
+            $request['request']['base_url'] === '' &&
+            $request['request']['method'] === 'GET' &&
+            $request['request']['session'] === "[]" &&
+            $request['request']['format'] === 'html' &&
+            $request['request']['locale'] === 'en';
+
+            $this->assertJson($request['request']['headers']);
+            $this->assertJson($request['request']['server']);
+            $this->assertJson($request['request']['response']);
+
+            $response = json_decode($request['request']['response']);
+
+            $isResponseDataPresent = $response->status === 200 &&
+            $response->headers &&
+            $response->content === "ok" &&
+            $response->version === '1.1' &&
+            $response->original === "ok";
+
+            $isAppDataPresent = $appData->name === env('APP_NAME') &&
+            $appData->framework === 'Laravel' &&
+            $appData->frameworkVersion === app()->version() &&
+            $appData->language === 'PHP' &&
+            $appData->languageVersion === PHP_VERSION;
+
+            return $isAppDataPresent && $isRequestDataPresent && $isResponseDataPresent;
         });
 
         app(RequestWatcher::class)->disable();

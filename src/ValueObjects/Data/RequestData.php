@@ -4,6 +4,7 @@ namespace Taecontrol\Larvis\ValueObjects\Data;
 
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Arrayable;
+use Symfony\Component\HttpFoundation\Response;
 
 class RequestData implements Arrayable
 {
@@ -20,10 +21,11 @@ class RequestData implements Arrayable
         public readonly array $session,
         public readonly ?string $format,
         public readonly string $locale,
+        public readonly ResponseData $response,
     ) {
     }
 
-    public static function from(Request $request): RequestData
+    public static function from(Request $request, Response $response): RequestData
     {
         $session = $request->hasSession()
             ? $request->session()->all()
@@ -42,6 +44,7 @@ class RequestData implements Arrayable
             session: $session,
             format: $request->getRequestFormat() ?? 'null',
             locale: $request->getLocale(),
+            response: ResponseData::from($response),
         );
     }
 
@@ -60,6 +63,7 @@ class RequestData implements Arrayable
             'session' => $this->session,
             'format' => $this->format,
             'locale' => $this->locale,
+            'response' => $this->response,
         ];
     }
 
@@ -78,6 +82,7 @@ class RequestData implements Arrayable
             session: $args['session'],
             format: $args['format'],
             locale: $args['locale'],
+            response: $args['response']
         );
     }
 
@@ -96,6 +101,7 @@ class RequestData implements Arrayable
             'session' => json_encode($this->session),
             'format' => $this->format,
             'locale' => $this->locale,
+            'response' => json_encode($this->response->toArray()),
         ];
     }
 }
