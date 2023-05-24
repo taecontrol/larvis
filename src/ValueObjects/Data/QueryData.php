@@ -54,7 +54,7 @@ class QueryData implements Arrayable
     {
         return [
             'sql' => $this->sql,
-            'bindings' => $this->bindings,
+            'bindings' => json_encode($this->bindings),
             'time' => $this->time,
             'connection_name' => $this->connectionName,
             'queried_at' => (string) $this->queriedAt->format('Y-m-d H:i:s'),
