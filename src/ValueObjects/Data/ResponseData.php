@@ -9,6 +9,7 @@ class ResponseData implements Arrayable
 {
     public function __construct(
         public readonly int $status,
+        public readonly string $statusText,
         public readonly array $headers,
         public readonly bool|string $content,
         public readonly string $version,
@@ -16,14 +17,15 @@ class ResponseData implements Arrayable
     ) {
     }
 
-    public static function from(Response $r): ResponseData
+    public static function from(Response $response): ResponseData
     {
         return new self(
-            status: $r->getStatusCode(),
-            headers: $r->headers->all(),
-            content: $r->getContent(),
-            version: $r->getProtocolVersion(),
-            original: $r->getOriginalContent(),
+            status: $response->getStatusCode(),
+            statusText: $response->statusText(),
+            headers: $response->headers->all(),
+            content: $response->getContent(),
+            version: $response->getProtocolVersion(),
+            original: $response->getOriginalContent(),
         );
     }
 
@@ -31,6 +33,7 @@ class ResponseData implements Arrayable
     {
         return [
             'status' => $this->status,
+            'statusText' => $this->statusText,
             'headers' => $this->headers,
             'content' => $this->content,
             'version' => $this->version,
@@ -42,6 +45,7 @@ class ResponseData implements Arrayable
     {
         return new ResponseData(
             status: $args['status'],
+            statusText: data_get($args, ['statusText', 'status_text']),
             headers: $args['headers'],
             content: $args['content'],
             version: $args['version'],
@@ -53,6 +57,7 @@ class ResponseData implements Arrayable
     {
         return [
             'status' => strval($this->status),
+            'status_text' => $this->statusText,
             'headers' => json_encode($this->headers),
             'content' => strval($this->content),
             'version' => $this->version,

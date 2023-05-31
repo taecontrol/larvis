@@ -40,24 +40,29 @@ class RequestWatcherTest extends TestCase
         $response = $this->get('/test');
 
         Http::assertSent(function (Request $request) use ($response) {
+
             $this->assertEquals(200, $response->getStatusCode());
+
+            $uri = json_decode($request['request']['uri']);
 
             /** @var AppData */
             $appData = AppData::fromArray($request['app']);
 
             $isRequestDataPresent = $request['request'] &&
             $request['request']['attributes'] === '[]' &&
-            $request['request']['request_body'] === '""' &&
+            $request['request']['body'] === '""' &&
             $request['request']['files'] === '[]' &&
             $request['request']['headers'] &&
             $request['request']['content'] === '' &&
             $request['request']['server'] &&
-            $request['request']['request_uri'] === '/test' &&
-            $request['request']['base_url'] === '' &&
             $request['request']['method'] === 'GET' &&
             $request['request']['session'] === '[]' &&
             $request['request']['format'] === 'html' &&
-            $request['request']['locale'] === 'en';
+            $request['request']['locale'] === 'en' &&
+            $uri->root === 'http://localhost' &&
+            $uri->path === 'test' &&
+            $uri->host === 'localhost' &&
+            $uri->port === 80;
 
             $this->assertJson($request['request']['headers']);
             $this->assertJson($request['request']['server']);
