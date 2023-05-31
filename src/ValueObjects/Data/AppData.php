@@ -2,8 +2,6 @@
 
 namespace Taecontrol\Larvis\ValueObjects\Data;
 
-use Exception;
-use Illuminate\Encryption\MissingAppKeyException;
 use Symfony\Component\HttpKernel\Kernel;
 use Illuminate\Contracts\Support\Arrayable;
 use Taecontrol\Larvis\Exceptions\MissingAppNameException;
