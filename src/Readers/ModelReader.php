@@ -8,10 +8,10 @@ class ModelReader extends Reader
 {
     public function __construct(object $object)
     {
-        $this->data = $this->read($object);
+        $this->read($object);
     }
 
-    public function read(object $object): array
+    public function read(object $object): self
     {
         $reflection = new ReflectionClass($object);
 
@@ -44,15 +44,10 @@ class ModelReader extends Reader
             'accessToken',
         ];
 
-        $properties = $this->getProperties($reflection, $object, $filterProperties);
+        $this->class = get_class($object);
+        $this->parent = get_parent_class($object);
+        $this->properties = $this->getProperties($reflection, $object, $filterProperties);
 
-        $constants = $reflection->getConstants();
-
-        return [
-            'properties' => $properties,
-            'constants' => $constants,
-            'class' => get_class($object),
-            'parent' => get_parent_class($object),
-        ];
+        return $this;
     }
 }

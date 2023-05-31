@@ -14,17 +14,17 @@ class ModelReaderTest extends TestCase
     public function it_read_a_model_object_properties()
     {
         $user = new User(['name' => 'Fake', 'email' => 'Fake@mail.com']);
-        $modelReader = (new ModelReader($user))->data;
+        $modelReader = (new ModelReader($user));
 
         $expected = [
-            'fillable' => $modelReader['properties']['fillable']['value'],
-            'casts' => $modelReader['properties']['casts']['value'],
-            'connection' => $modelReader['properties']['connection']['value'],
-            'hidden' => $modelReader['properties']['hidden']['value'],
-            'primaryKey' => $modelReader['properties']['primaryKey']['value'],
-            'table' => $modelReader['properties']['table']['value'],
-            'class' => $modelReader['class'],
-            'parent' => $modelReader['parent'],
+            'fillable' => $modelReader->properties['+fillable'],
+            'casts' => $modelReader->properties['+casts'],
+            'connection' => $modelReader->properties['#connection'],
+            'hidden' => $modelReader->properties['+hidden'],
+            'primaryKey' => $modelReader->properties['#primaryKey'],
+            'table' => $modelReader->properties['#table'],
+            'class' => $modelReader->class,
+            'parent' => $modelReader->parent,
         ];
 
         $actual = [
