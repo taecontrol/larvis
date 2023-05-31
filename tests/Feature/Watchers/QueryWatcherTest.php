@@ -1,14 +1,15 @@
 <?php
 
-namespace Taecontrol\Larvis\Tests;
+namespace Taecontrol\Larvis\Tests\Feature\Watchers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
+use Taecontrol\Larvis\Tests\TestCase;
 use Taecontrol\Larvis\Watchers\QueryWatcher;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class QueryTest extends TestCase
+class QueryWatcherTest extends TestCase
 {
     use RefreshDatabase;
 

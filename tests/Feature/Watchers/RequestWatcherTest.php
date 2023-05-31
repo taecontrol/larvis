@@ -1,6 +1,6 @@
 <?php
 
-namespace Taecontrol\Larvis\Tests\Feature;
+namespace Taecontrol\Larvis\Tests\Feature\Watchers;
 
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
@@ -10,7 +10,7 @@ use Taecontrol\Larvis\Watchers\RequestWatcher;
 use Taecontrol\Larvis\ValueObjects\Data\AppData;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class RequestTest extends TestCase
+class RequestWatcherTest extends TestCase
 {
     use RefreshDatabase;
 

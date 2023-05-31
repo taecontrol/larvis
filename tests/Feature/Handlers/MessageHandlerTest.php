@@ -1,14 +1,15 @@
 <?php
 
-namespace Taecontrol\Larvis\Tests;
+namespace Taecontrol\Larvis\Tests\Feature\Handlers;
 
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
+use Taecontrol\Larvis\Tests\TestCase;
 use Taecontrol\Larvis\ValueObjects\Data\AppData;
 use Taecontrol\Larvis\ValueObjects\Data\MessageData;
 
-class MessagesTest extends TestCase
+class MessageHandlerTest extends TestCase
 {
     public function setUp(): void
     {
@@ -36,7 +37,7 @@ class MessagesTest extends TestCase
             /** @var MessageData */
             $messageData = MessageData::fromArray($request['message']);
 
-            return $messageData->data === $data;
+            return $messageData->data === '"Hi from Larvis"';
         });
     }
 
@@ -63,9 +64,9 @@ class MessagesTest extends TestCase
             /** @var AppData */
             $appData = AppData::fromArray($request['app']);
 
-            $isMessageDataPresent = $messageData->data === $data &&
+            $isMessageDataPresent = $messageData->data === '"Hi from Larvis"' &&
             $messageData->kind === 'string' &&
-            $messageData->line === 57 &&
+            $messageData->line === 58 &&
             $messageData->file === __FILE__;
 
             $isAppDataPresent = $appData->name === env('APP_NAME') &&

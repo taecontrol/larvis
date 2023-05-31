@@ -3,15 +3,17 @@
 namespace Taecontrol\Larvis\Readers;
 
 use ReflectionClass;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection as DBCollection;
 
 class CollectionReader extends Reader
 {
-    public function __construct(object $data)
+    public function __construct(Collection | DBCollection $collection)
     {
-        $this->data = $this->read($data);
+        $this->read($collection);
     }
 
-    public function read(object $object): array
+    public function read(object $object): self
     {
         $reflection = new ReflectionClass($object);
 
@@ -20,15 +22,10 @@ class CollectionReader extends Reader
             'escapeWhenCastingToString',
         ];
 
-        $properties = $this->getProperties($reflection, $object, $filterProperties);
+        $this->class = get_class($object);
+        $this->parent = get_parent_class($object);
+        $this->properties = $this->getProperties($reflection, $object, $filterProperties);
 
-        $constants = $reflection->getConstants();
-
-        return [
-            'properties' => $properties,
-            'constants' => $constants,
-            'class' => get_class($object),
-            'parent' => get_parent_class($object),
-        ];
+        return $this;
     }
 }

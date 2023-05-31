@@ -8,22 +8,19 @@ class DefaultReader extends Reader
 {
     public function __construct(object $object)
     {
-        $this->data = $this->read($object);
+        $this->read($object);
     }
 
-    public function read(object $object): array
+    public function read(object $object): self
     {
         $reflection = new ReflectionClass($object);
 
-        $properties = $this->getProperties($reflection, $object);
+        $this->properties = $this->getProperties($reflection, $object);
 
-        $constants = $reflection->getConstants();
+        $this->class = get_class($object);
 
-        return [
-            'properties' => $properties,
-            'constants' => $constants,
-            'class' => get_class($object),
-            'parent' => get_parent_class($object),
-        ];
+        $this->parent = get_parent_class($object);
+
+        return $this;
     }
 }
