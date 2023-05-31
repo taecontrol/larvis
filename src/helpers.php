@@ -11,7 +11,7 @@ if (! function_exists('larvis')) {
     function larvis(mixed $args)
     {
         try {
-            return app(Larvis::class)->send($args);
+            return app(Larvis::class)->sendMessage($args);
         } catch (Exception $exception) {
             return null;
         }

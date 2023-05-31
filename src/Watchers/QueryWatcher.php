@@ -4,7 +4,6 @@ namespace Taecontrol\Larvis\Watchers;
 
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Database\Events\QueryExecuted;
 use Taecontrol\Larvis\ValueObjects\Data\QueryData;
 
@@ -31,16 +30,13 @@ class QueryWatcher extends Watcher
         $appData = $larvis->getAppData();
         $queryData = QueryData::from($query);
 
-        $url = config('larvis.debug.url');
-        $endpoint = config('larvis.debug.api.query');
+        $url = config('larvis.debug.url') . config('larvis.debug.api.query');
 
         $data = [
             'query' => $queryData->debugFormat(),
             'app' => $appData->toArray(),
         ];
 
-        Http::withHeaders(
-            ['Content-Type' => 'application/json; charset=utf-8']
-        )->post($url . $endpoint, $data)->throw();
+        $larvis->send($url, $data);
     }
 }
