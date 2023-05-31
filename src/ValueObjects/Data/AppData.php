@@ -2,9 +2,9 @@
 
 namespace Taecontrol\Larvis\ValueObjects\Data;
 
-use Exception;
 use Symfony\Component\HttpKernel\Kernel;
 use Illuminate\Contracts\Support\Arrayable;
+use Taecontrol\Larvis\Exceptions\MissingAppNameException;
 
 class AppData implements Arrayable
 {
@@ -22,7 +22,7 @@ class AppData implements Arrayable
         $name = env('APP_NAME');
 
         if (! $name || $name === '') {
-            throw new Exception('Missing App Name');
+            throw new MissingAppNameException();
         }
 
         $framework = self::getFramework();
