@@ -3,7 +3,6 @@
 namespace Taecontrol\Larvis\Handlers;
 
 use Taecontrol\Larvis\Larvis;
-use Illuminate\Support\Facades\Http;
 use Taecontrol\Larvis\Support\Formatter;
 use Taecontrol\Larvis\ValueObjects\Backtrace;
 use Taecontrol\Larvis\ValueObjects\Data\MessageData;
@@ -34,8 +33,6 @@ class MessageHandler
             'app' => $appData->toArray(),
         ];
 
-        Http::withHeaders(
-            ['Content-Type' => 'application/json; charset=utf-8']
-        )->post($url, $data);
+        $larvis->send($url, $data);
     }
 }
