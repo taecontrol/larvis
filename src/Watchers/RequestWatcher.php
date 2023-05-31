@@ -4,7 +4,6 @@ namespace Taecontrol\Larvis\Watchers;
 
 use Illuminate\Http\Request;
 use Taecontrol\Larvis\Larvis;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Event;
 use Symfony\Component\HttpFoundation\Response;
 use Taecontrol\Larvis\ValueObjects\Data\RequestData;
@@ -31,16 +30,13 @@ class RequestWatcher extends Watcher
         $appData = $larvis->getAppData();
         $requestData = RequestData::from($request, $response);
 
-        $url = config('larvis.debug.url');
-        $endpoint = config('larvis.debug.api.request');
+        $url = config('larvis.debug.url') . config('larvis.debug.api.request');
 
         $data = [
             'request' => $requestData->debugFormat(),
             'app' => $appData->toArray(),
         ];
 
-        Http::withHeaders(
-            ['Content-Type' => 'application/json; charset=utf-8']
-        )->post($url . $endpoint, $data)->throw();
+        $larvis->send($url, $data);
     }
 }
