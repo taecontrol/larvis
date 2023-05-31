@@ -10,13 +10,12 @@ class RequestData implements Arrayable
 {
     public function __construct(
         public readonly ?array $attributes,
-        public readonly mixed $requestBody,
+        public readonly mixed $body,
         public readonly array $files,
         public readonly array $headers,
         public readonly ?string $content,
         public readonly array $server,
-        public readonly string $requestUri,
-        public readonly string $baseUrl,
+        public readonly array $uri,
         public readonly string $method,
         public readonly array $session,
         public readonly ?string $format,
@@ -31,15 +30,21 @@ class RequestData implements Arrayable
             ? $request->session()->all()
             : [];
 
+        $uri = [
+            'root' => $request->root(),
+            'path' =>  $request->path(),
+            'host'=> $request->getHost(),
+            'port' => $request->getPort(),
+        ];
+
         return new self(
             attributes: $request->attributes->all(),
-            requestBody: $request->getContent(),
+            body: $request->getContent(),
             files: $request->files->all(),
             headers: $request->headers->all(),
             content: $request->getContent(),
             server: $request->server->all(),
-            requestUri: $request->getRequestUri(),
-            baseUrl: $request->getBaseUrl(),
+            uri: $uri,
             method: $request->getMethod(),
             session: $session,
             format: $request->getRequestFormat() ?? 'null',
@@ -52,13 +57,12 @@ class RequestData implements Arrayable
     {
         return [
             'attributes' => $this->attributes,
-            'requestBody' => $this->requestBody,
+            'body' => $this->body,
             'files' => $this->files,
             'headers' => $this->headers,
             'content' => $this->content,
             'server' => $this->server,
-            'requestUri' => $this->requestUri,
-            'baseUrl' => $this->baseUrl,
+            'uri' => $this->uri,
             'method' => $this->method,
             'session' => $this->session,
             'format' => $this->format,
@@ -71,13 +75,12 @@ class RequestData implements Arrayable
     {
         return new RequestData(
             attributes: $args['attributes'],
-            requestBody: $args['requestBody'],
+            body: $args['body'],
             files: $args['files'],
             headers: $args['headers'],
             content: $args['content'],
             server: $args['server'],
-            requestUri: $args['requestUri'],
-            baseUrl: $args['baseUrl'],
+            uri: $args['uri'],
             method: $args['method'],
             session: $args['session'],
             format: $args['format'],
@@ -90,13 +93,12 @@ class RequestData implements Arrayable
     {
         return [
             'attributes' => json_encode($this->attributes),
-            'request_body' => json_encode($this->requestBody),
+            'body' => json_encode($this->body),
             'files' => json_encode($this->files),
             'headers' => json_encode($this->headers),
             'content' => $this->content,
             'server' => json_encode($this->server),
-            'request_uri' => $this->requestUri,
-            'base_url' => $this->baseUrl,
+            'uri' => json_encode($this->uri),
             'method' => $this->method,
             'session' => json_encode($this->session),
             'format' => $this->format,
