@@ -1,15 +1,16 @@
 <?php
 
-namespace Taecontrol\Larvis\Tests;
+namespace Taecontrol\Larvis\Tests\Feature\Handlers;
 
 use Exception;
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
+use Taecontrol\Larvis\Tests\TestCase;
 use Taecontrol\Larvis\ValueObjects\Data\AppData;
 use Taecontrol\Larvis\ValueObjects\Data\ExceptionData;
 
-class ExceptionsTest extends TestCase
+class ExceptionHandlerTest extends TestCase
 {
     protected Larvis $larvis;
 
