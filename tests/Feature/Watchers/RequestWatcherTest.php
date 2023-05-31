@@ -40,7 +40,6 @@ class RequestWatcherTest extends TestCase
         $response = $this->get('/test');
 
         Http::assertSent(function (Request $request) use ($response) {
-
             $this->assertEquals(200, $response->getStatusCode());
 
             $uri = json_decode($request['request']['uri']);

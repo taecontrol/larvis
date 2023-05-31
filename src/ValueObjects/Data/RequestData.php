@@ -32,8 +32,8 @@ class RequestData implements Arrayable
 
         $uri = [
             'root' => $request->root(),
-            'path' =>  $request->path(),
-            'host'=> $request->getHost(),
+            'path' => $request->path(),
+            'host' => $request->getHost(),
             'port' => $request->getPort(),
         ];
 
