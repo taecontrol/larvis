@@ -48,13 +48,23 @@ class ExceptionData implements Arrayable
 
     public function debugFormat(): array
     {
+        $request['request'] = [
+            'url' => $this->request->url(),
+            'params' => $this->request->request->all(),
+            'query' => $this->request->query->all(),
+        ];
+
+        $request['headers'] = $this->request->headers->all();
+
+        $request['server'] = $this->request->server->all();
+
         return [
             'message' => $this->message,
             'kind' => $this->type,
             'file' => $this->file,
             'trace' => json_encode($this->trace),
             'line' => $this->line,
-            'request' => json_encode($this->request),
+            'request' => json_encode($request),
             'thrown_at' => (string) $this->thrownAt->format('Y-m-d H:i:s'),
         ];
     }

@@ -27,6 +27,25 @@ class ExceptionDataTest extends TestCase
     }
 
     /** @test */
+    public function it_validates_that_debug_format_has_request_data()
+    {
+        $exception = new Exception('test exception');
+        $exceptionData = ExceptionData::from($exception)->debugFormat();
+
+        $this->assertIsArray($exceptionData);
+        $this->assertNotEmpty($exceptionData);
+
+        $request = json_decode($exceptionData['request']);
+
+        $this->assertEquals($request->request->url, 'http://localhost');
+        $this->assertEquals($request->request->params, []);
+        $this->assertEquals($request->request->query, []);
+
+        $this->assertObjectHasAttribute('headers', $request);
+        $this->assertObjectHasAttribute('server', $request);
+    }
+
+    /** @test */
     public function it_validates_that_an_array_is_returned_from_to_array_method()
     {
         $exception = new Exception('test exception');
