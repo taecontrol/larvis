@@ -91,8 +91,13 @@ class ExceptionHandlerTest extends TestCase
             $isExceptionPresent = $exception['message'] === $exceptionData->message &&
             $exception['kind'] === $exceptionData->type &&
             $exception['line'] === $exceptionData->line &&
-            $exception['trace'] === json_encode($exceptionData->trace) &&
-            $exception['request'] === json_encode($exceptionData->request);
+            $exception['trace'] === json_encode($exceptionData->trace);
+
+            $this->assertJson($exception['request']);
+
+            $exceptionRequest = json_decode($exception['request']);
+
+            $isExceptionDataAvailable = $exceptionRequest->request->url === 'http://localhost';
 
             $isAppDataPresent = $appData->name === env('APP_NAME') &&
             $appData->framework === 'Laravel' &&
@@ -100,7 +105,7 @@ class ExceptionHandlerTest extends TestCase
             $appData->language === 'PHP' &&
             $appData->languageVersion === PHP_VERSION;
 
-            return $isExceptionPresent && $isAppDataPresent;
+            return $isExceptionPresent && $isAppDataPresent && $isExceptionDataAvailable;
         });
     }
 }
