@@ -78,7 +78,7 @@ class FormatterTest extends TestCase
             ->format(['a', 'b', 'c'])
             ->toJson();
 
-        $expected = "[\n    \"a\",\n    \"b\",\n    \"c\"\n]";
+        $expected = '["a","b","c"]';
 
         $this->assertEquals($expected, $formatted);
         $this->assertTrue($formatter->kind === 'array');
@@ -112,8 +112,7 @@ class FormatterTest extends TestCase
             ->toJson();
 
         $readedObjectInJson = json_encode(
-            Reader::getReader($testObject)->toArray(),
-            JSON_PRETTY_PRINT
+            Reader::getReader($testObject)->toArray()
         );
 
         $this->assertEquals($readedObjectInJson, $formatted);
@@ -135,8 +134,7 @@ class FormatterTest extends TestCase
         $object2Readed = Reader::getReader($object2)->toArray();
 
         $arrayInJson = json_encode(
-            [$object1Readed, $object2Readed],
-            JSON_PRETTY_PRINT
+            [$object1Readed, $object2Readed]
         );
 
         $formatted = $formatter

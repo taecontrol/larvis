@@ -30,7 +30,7 @@ class Formatter
 
     public function toJson(): string
     {
-        return json_encode($this->data, JSON_PRETTY_PRINT);
+        return json_encode($this->data);
     }
 
     public function formatString(string $data): void
