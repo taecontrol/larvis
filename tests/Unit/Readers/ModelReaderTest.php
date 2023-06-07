@@ -1,6 +1,6 @@
 <?php
 
-namespace Taecontrol\Larvis\Tests\Unit;
+namespace Taecontrol\Larvis\Tests\Unit\Readers;
 
 use Taecontrol\Larvis\Tests\TestCase;
 use Taecontrol\Larvis\Tests\Mock\Test;

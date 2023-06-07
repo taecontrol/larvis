@@ -51,6 +51,8 @@ abstract class Reader implements Arrayable
         /** @var Collection<ReflectionProperty> */
         $properties = $this->getFilteredProperties($reflection, $filterProperties);
 
+        $formattedProperties = [];
+
         foreach ($properties as $property) {
             $modifiers = $this->getModifierFromProperty($property, $object);
             $modifierSymbol = $this->getModifierSymbol($modifiers);
