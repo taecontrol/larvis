@@ -4,8 +4,8 @@ namespace Taecontrol\Larvis\Tests\Unit\Readers;
 
 use Illuminate\Http\Request;
 use Taecontrol\Larvis\Readers\Reader;
-use Taecontrol\Larvis\Tests\Mock\TestEmptyObject;
 use Taecontrol\Larvis\Tests\TestCase;
+use Taecontrol\Larvis\Tests\Mock\TestEmptyObject;
 use Symfony\Component\HttpFoundation\Request as SymphonyRequest;
 
 class DefaultReaderTest extends TestCase
@@ -37,6 +37,6 @@ class DefaultReaderTest extends TestCase
         $this->assertNotNull($reader);
         $this->assertEquals($reader->properties, []);
         $this->assertEquals($reader->class, TestEmptyObject::class);
-        $this->assertEquals($reader->parent, "");
+        $this->assertEquals($reader->parent, '');
     }
 }
