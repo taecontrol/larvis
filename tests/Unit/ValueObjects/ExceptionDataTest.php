@@ -1,6 +1,6 @@
 <?php
 
-namespace Taecontrol\Larvis\Tests\Unit;
+namespace Taecontrol\Larvis\Tests\Unit\ValueObjects;
 
 use Exception;
 use Taecontrol\Larvis\Tests\TestCase;
