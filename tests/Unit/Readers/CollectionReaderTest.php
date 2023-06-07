@@ -1,6 +1,6 @@
 <?php
 
-namespace Taecontrol\Larvis\Tests\Unit;
+namespace Taecontrol\Larvis\Tests\Unit\Readers;
 
 use Illuminate\Support\Collection;
 use Taecontrol\Larvis\Tests\TestCase;
