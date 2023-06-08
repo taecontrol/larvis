@@ -5,7 +5,6 @@ namespace Taecontrol\Larvis;
 use Throwable;
 use Illuminate\Support\Facades\Http;
 use Taecontrol\Larvis\Handlers\MessageHandler;
-use Taecontrol\Larvis\Handlers\ExceptionHandler;
 use Taecontrol\Larvis\ValueObjects\Data\AppData;
 
 class Larvis
@@ -39,9 +38,9 @@ class Larvis
             )->post($url, $data);
         } catch (Throwable $th) {
             /**
-             * This catch block is empty because there is no action plan 
-             * to catch Larvis's unwanted exceptions. 
-             * 
+             * This catch block is empty because there is no action plan
+             * to catch Larvis's unwanted exceptions.
+             *
              * This will be reviewed in an upcoming update.
              */
         }
