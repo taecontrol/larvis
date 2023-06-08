@@ -30,8 +30,8 @@ class Larvis
     public function send(string $url, mixed $data): void
     {
         /**
-         * This try-catch prevents unwanted exceptions when sending
-         * data to MoonGuard or Krater
+         * This try-catch prevents unwanted exceptions when there's a
+         * failure sending data to MoonGuard/Krater
          */
         try {
             Http::withHeaders(
@@ -39,8 +39,10 @@ class Larvis
             )->post($url, $data);
         } catch (Throwable $th) {
             /**
-             * Currently there's no action if we catch an unexpected exception
-             * sending data. This section will be updated on a update.
+             * This catch block is empty because there is no action plan 
+             * to catch Larvis's unwanted exceptions. 
+             * 
+             * This will be reviewed in an upcoming update.
              */
         }
     }
