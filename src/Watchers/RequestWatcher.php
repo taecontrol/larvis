@@ -13,7 +13,7 @@ class RequestWatcher extends Watcher
 {
     public function register(): void
     {
-        $this->enabled = config('larvis.watchers.request.enabled');
+        $this->enabled = config('larvis.watchers.requests.enabled');
 
         Event::listen(RequestHandled::class, function (RequestHandled $event) {
             if (! $this->enabled()) {

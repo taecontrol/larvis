@@ -7,10 +7,12 @@ use Taecontrol\Larvis\Larvis;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Taecontrol\Larvis\Tests\TestCase;
+use Illuminate\Log\Events\MessageLogged;
 use Taecontrol\Larvis\ValueObjects\Data\AppData;
+use Taecontrol\Larvis\Watchers\ExceptionWatcher;
 use Taecontrol\Larvis\ValueObjects\Data\ExceptionData;
 
-class ExceptionHandlerTest extends TestCase
+class ExceptionWatcherTest extends TestCase
 {
     protected Larvis $larvis;
 
@@ -24,63 +26,46 @@ class ExceptionHandlerTest extends TestCase
     }
 
     /** @test */
-    public function it_check_if_handler_function_post_extra_data_to_moonguard()
+    public function it_asserts_that_exception_handler_send_exception_data_to_moonguard()
     {
-        $exception = new Exception('exception');
-        $data = [
-            'name' => 'test',
-            'key' => 'akdflasjdfl',
-        ];
-
+        app(ExceptionWatcher::class)->enable();
         config()->set('larvis.debug.enabled', false);
 
         Http::fake([
             'https://moonguard.test/*' => Http::response([], 200, []),
         ]);
 
-        $this->larvis->captureException($exception, $data);
-
-        Http::assertSent(function (Request $request) use ($data) {
-            return $request['name'] == $data['name'] &&
-                   $request['key'] == $data['key'];
-        });
-    }
-
-    /** @test */
-    public function check_if_exception_data_exists_in_request_to_moonguard()
-    {
-        $exception = new Exception('test exception');
+        $exception = new Exception('Exception');
         $exceptionData = ExceptionData::from($exception)->toArray();
 
-        config()->set('larvis.debug.enabled', false);
-
-        Http::fake([
-            'https://moonguard.test/*' => Http::response([], 200, []),
-        ]);
-
-        $this->larvis->captureException($exception, []);
+        event(new MessageLogged('warning', 'test', ['exception' => $exception]));
 
         Http::assertSent(function (Request $request) use ($exceptionData) {
             return $request['message'] == $exceptionData['message'] &&
-                   $request['type'] == $exceptionData['type'] &&
-                   $request['file'] == $exceptionData['file'] &&
-                   $request['line'] == $exceptionData['line'] &&
-                   $request['trace'] == $exceptionData['trace'] &&
-                   $request['request'] == $exceptionData['request'];
+            $request['type'] == $exceptionData['type'] &&
+            $request['file'] == $exceptionData['file'] &&
+            $request['line'] == $exceptionData['line'] &&
+            $request['trace'] == $exceptionData['trace'] &&
+            $request['request'] == $exceptionData['request'];
         });
+
+        app(ExceptionWatcher::class)->disable();
     }
 
     /** @test */
-    public function it_verifies_that_exception_data_and_app_data_exists_in_debug_data()
+    public function it_asserts_that_exception_handler_send_exception_data_to_debug_client()
     {
-        $exception = new Exception('test exception');
-        $exceptionData = ExceptionData::from($exception);
+        app(ExceptionWatcher::class)->enable();
+        config()->set('larvis.debug.enabled', true);
 
         Http::fake([
             'http://localhost:55555/*' => Http::response([], 200, []),
         ]);
 
-        $this->larvis->captureException($exception, []);
+        $exception = new Exception('Exception');
+        $exceptionData = ExceptionData::from($exception);
+
+        event(new MessageLogged('warning', 'test', ['exception' => $exception]));
 
         Http::assertSent(function (Request $request) use ($exceptionData) {
             $exception = $request['exception'];
@@ -107,5 +92,7 @@ class ExceptionHandlerTest extends TestCase
 
             return $isExceptionPresent && $isAppDataPresent && $isExceptionDataAvailable;
         });
+
+        app(ExceptionWatcher::class)->disable();
     }
 }

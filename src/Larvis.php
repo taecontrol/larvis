@@ -27,19 +27,21 @@ class Larvis
         return $this->app;
     }
 
-    public function captureException(Throwable $exception, array $data = []): void
-    {
-        (new ExceptionHandler())->handle($exception, $data);
-    }
-
     public function send(string $url, mixed $data): void
     {
+        /**
+         * This try-catch prevents unwanted exceptions when sending
+         * data to MoonGuard or Krater
+         */
         try {
             Http::withHeaders(
                 ['Content-Type' => 'application/json; charset=utf-8']
             )->post($url, $data);
         } catch (Throwable $th) {
-            //throw $th;
+            /**
+             * Currently there's no action if we catch an unexpected exception
+             * sending data. This section will be updated on a update.
+             */
         }
     }
 

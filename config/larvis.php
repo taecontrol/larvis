@@ -24,10 +24,13 @@ return [
         ],
     ],
     'watchers' => [
-        'request' => [
+        'requests' => [
             'enabled' => false,
         ],
         'queries' => [
+            'enabled' => false,
+        ],
+        'exceptions' => [
             'enabled' => false,
         ],
     ],
