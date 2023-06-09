@@ -40,7 +40,7 @@ class ExceptionWatcher extends Watcher
         $larvis->send($exceptionLoggerUrl, $data);
     }
 
-    private function isAnException(MessageLogged $message): bool
+    protected function isAnException(MessageLogged $message): bool
     {
         if (! isset($message->context['exception'])) {
             return false;
@@ -53,7 +53,7 @@ class ExceptionWatcher extends Watcher
         return true;
     }
 
-    private function getUrl(Larvis $larvis): string
+    protected function getUrl(Larvis $larvis): string
     {
         if ($larvis->isLocalDebugEnabled()) {
             return config('larvis.debug.url') . config('larvis.debug.api.exception');
@@ -62,7 +62,7 @@ class ExceptionWatcher extends Watcher
         return config('larvis.moonguard.domain') . config('larvis.moonguard.exception_logger.endpoint');
     }
 
-    private function getData(Larvis $larvis, Throwable $exception): array
+    protected function getData(Larvis $larvis, Throwable $exception): array
     {
         $exceptionData = ExceptionData::from($exception);
 
