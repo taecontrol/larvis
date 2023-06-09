@@ -5,7 +5,6 @@ namespace Taecontrol\Larvis;
 use Throwable;
 use Illuminate\Support\Facades\Http;
 use Taecontrol\Larvis\Handlers\MessageHandler;
-use Taecontrol\Larvis\Handlers\ExceptionHandler;
 use Taecontrol\Larvis\ValueObjects\Data\AppData;
 
 class Larvis
@@ -27,19 +26,21 @@ class Larvis
         return $this->app;
     }
 
-    public function captureException(Throwable $exception, array $data = []): void
-    {
-        (new ExceptionHandler())->handle($exception, $data);
-    }
-
     public function send(string $url, mixed $data): void
     {
+        /**
+         * This try-catch prevents unwanted exceptions when there's a
+         * failure sending data to MoonGuard/Krater
+         */
         try {
             Http::withHeaders(
                 ['Content-Type' => 'application/json; charset=utf-8']
             )->post($url, $data);
         } catch (Throwable $th) {
-            //throw $th;
+            /**
+             * This catch block is empty because there is no action plan
+             * to catch Larvis's unwanted exceptions.
+             */
         }
     }
 

@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Taecontrol\Larvis\Watchers\Watcher;
 use Taecontrol\Larvis\Watchers\QueryWatcher;
 use Taecontrol\Larvis\Watchers\RequestWatcher;
+use Taecontrol\Larvis\Watchers\ExceptionWatcher;
 
 class LarvisServiceProvider extends ServiceProvider
 {
@@ -35,6 +36,7 @@ class LarvisServiceProvider extends ServiceProvider
         $watchers = [
             RequestWatcher::class,
             QueryWatcher::class,
+            ExceptionWatcher::class,
         ];
 
         collect($watchers)
@@ -53,6 +55,7 @@ class LarvisServiceProvider extends ServiceProvider
         $watchers = [
             RequestWatcher::class,
             QueryWatcher::class,
+            ExceptionWatcher::class,
         ];
 
         collect($watchers)
