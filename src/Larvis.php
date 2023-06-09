@@ -40,8 +40,6 @@ class Larvis
             /**
              * This catch block is empty because there is no action plan
              * to catch Larvis's unwanted exceptions.
-             *
-             * This will be reviewed in an upcoming update.
              */
         }
     }
