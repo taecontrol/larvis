@@ -6,13 +6,16 @@
     "autoload": {
         "psr-4": {
             "Taecontrol\\Larvis\\": "src"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
             "Taecontrol\\Larvis\\Tests\\": "tests"
         }
-    },  
+    },
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.0"
@@ -36,5 +39,5 @@
         "test": "vendor/bin/phpunit"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true   
+    "prefer-stable": true
 }

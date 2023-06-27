@@ -4,6 +4,10 @@ namespace Taecontrol\Larvis\Providers;
 
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Support\ServiceProvider;
+use Taecontrol\Larvis\Watchers\Watcher;
+use Taecontrol\Larvis\Watchers\QueryWatcher;
+use Taecontrol\Larvis\Watchers\RequestWatcher;
+use Taecontrol\Larvis\Watchers\ExceptionWatcher;
 
 class LarvisServiceProvider extends ServiceProvider
 {
@@ -14,6 +18,8 @@ class LarvisServiceProvider extends ServiceProvider
         $this->app->bind('larvis', function () {
             return new Larvis();
         });
+
+        $this->registerWatchers();
     }
 
     public function boot()
@@ -21,5 +27,42 @@ class LarvisServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../config/larvis.php' => config_path('larvis.php'),
         ], 'larvis-config');
+
+        $this->bootWatchers();
+    }
+
+    protected function bootWatchers(): self
+    {
+        $watchers = [
+            RequestWatcher::class,
+            QueryWatcher::class,
+            ExceptionWatcher::class,
+        ];
+
+        collect($watchers)
+            ->each(function (string $watcherClass) {
+                /** @var Watcher $watcher */
+                $watcher = app($watcherClass);
+
+                $watcher->register();
+            });
+
+        return $this;
+    }
+
+    protected function registerWatchers(): self
+    {
+        $watchers = [
+            RequestWatcher::class,
+            QueryWatcher::class,
+            ExceptionWatcher::class,
+        ];
+
+        collect($watchers)
+            ->each(function (string $watcherClass) {
+                $this->app->singleton($watcherClass);
+            });
+
+        return $this;
     }
 }

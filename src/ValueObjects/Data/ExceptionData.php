@@ -1,6 +1,6 @@
 <?php
 
-namespace Taecontrol\Larvis\ValueObjects;
+namespace Taecontrol\Larvis\ValueObjects\Data;
 
 use Throwable;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class ExceptionData implements Arrayable
         public readonly array $trace,
         public readonly int $line,
         public readonly Request $request,
-        public readonly Carbon $thrown_at,
+        public readonly Carbon $thrownAt,
     ) {
     }
 
@@ -29,7 +29,7 @@ class ExceptionData implements Arrayable
             trace: $e->getTrace(),
             line: $e->getLine(),
             request: request(),
-            thrown_at: now(),
+            thrownAt: now(),
         );
     }
 
@@ -41,12 +41,31 @@ class ExceptionData implements Arrayable
             'file' => $this->file,
             'trace' => $this->trace,
             'line' => $this->line,
-            'request' => [
-                'url' => $this->request->url(),
-                'params' => $this->request->all(),
-                'headers' => $this->request->headers->all(),
-            ],
-            'thrown_at' => $this->thrown_at->utc(),
+            'request' => $this->request,
+            'thrown_at' => $this->thrownAt->utc(),
+        ];
+    }
+
+    public function debugFormat(): array
+    {
+        $request['request'] = [
+            'url' => $this->request->url(),
+            'params' => $this->request->request->all(),
+            'query' => $this->request->query->all(),
+        ];
+
+        $request['headers'] = $this->request->headers->all();
+
+        $request['server'] = $this->request->server->all();
+
+        return [
+            'message' => $this->message,
+            'kind' => $this->type,
+            'file' => $this->file,
+            'trace' => json_encode($this->trace),
+            'line' => $this->line,
+            'request' => json_encode($request),
+            'thrown_at' => (string) $this->thrownAt->format('Y-m-d H:i:s'),
         ];
     }
 }
