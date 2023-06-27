@@ -27,12 +27,12 @@ class Larvis
         return $this->app;
     }
 
-    public function showQueries(): void
+    public function startQueryWatch(): void
     {
         app(QueryWatcher::class)->enable();
     }
 
-    public function stopQueries(): void
+    public function stopQueryWatch(): void
     {
         app(QueryWatcher::class)->disable();
     }
