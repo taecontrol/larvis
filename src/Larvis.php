@@ -4,6 +4,7 @@ namespace Taecontrol\Larvis;
 
 use Throwable;
 use Illuminate\Support\Facades\Http;
+use Taecontrol\Larvis\Watchers\QueryWatcher;
 use Taecontrol\Larvis\Handlers\MessageHandler;
 use Taecontrol\Larvis\ValueObjects\Data\AppData;
 
@@ -24,6 +25,16 @@ class Larvis
     public function getAppData(): AppData
     {
         return $this->app;
+    }
+
+    public function showQueries(): void
+    {
+        app(QueryWatcher::class)->enable();
+    }
+
+    public function stopQueries(): void
+    {
+        app(QueryWatcher::class)->disable();
     }
 
     public function send(string $url, mixed $data): void
