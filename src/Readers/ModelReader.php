@@ -15,34 +15,7 @@ class ModelReader extends Reader
     {
         $reflection = new ReflectionClass($object);
 
-        $filterProperties = [
-            'connection',
-            'table',
-            'primaryKey',
-            'keyType',
-            'incrementing',
-            'with',
-            'withCount',
-            'preventsLazyLoading',
-            'perPage',
-            'exists',
-            'hidden',
-            'attributes',
-            'original',
-            'changes',
-            'casts',
-            'dates',
-            'dateFormat',
-            'appends',
-            'relations',
-            'touches',
-            'timestamps',
-            'visible',
-            'fillable',
-            'guarded',
-            'rememberTokenName',
-            'accessToken',
-        ];
+        $filterProperties = config('larvis.reader.model.props');
 
         $this->class = get_class($object);
         $this->parent = get_parent_class($object);
