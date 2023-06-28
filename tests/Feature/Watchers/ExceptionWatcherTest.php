@@ -82,7 +82,9 @@ class ExceptionWatcherTest extends TestCase
 
             $exceptionRequest = json_decode($exception['request']);
 
-            $isExceptionDataAvailable = $exceptionRequest->request->url === 'http://localhost';
+            $isExceptionDataAvailable = $exceptionRequest->url === 'http://localhost' &&
+            $exceptionRequest->params === [] &&
+            $exceptionRequest->query === [];
 
             $isAppDataPresent = $appData->name === env('APP_NAME') &&
             $appData->framework === 'Laravel' &&

@@ -37,9 +37,9 @@ class ExceptionDataTest extends TestCase
 
         $request = json_decode($exceptionData['request']);
 
-        $this->assertEquals($request->request->url, 'http://localhost');
-        $this->assertEquals($request->request->params, []);
-        $this->assertEquals($request->request->query, []);
+        $this->assertEquals($request->url, 'http://localhost');
+        $this->assertEquals($request->params, []);
+        $this->assertEquals($request->query, []);
 
         $this->assertObjectHasAttribute('headers', $request);
         $this->assertObjectHasAttribute('server', $request);

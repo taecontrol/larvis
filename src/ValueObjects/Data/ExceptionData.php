@@ -48,7 +48,7 @@ class ExceptionData implements Arrayable
 
     public function debugFormat(): array
     {
-        $request['request'] = [
+        $request = [
             'url' => $this->request->url(),
             'params' => $this->request->request->all(),
             'query' => $this->request->query->all(),
