@@ -92,7 +92,7 @@ class ResponseData implements Arrayable
     {
         $debugContent = $this->content;
 
-        if(is_array($this->content)) {
+        if (is_array($this->content)) {
             $debugContent = json_encode($this->content);
         }
 
