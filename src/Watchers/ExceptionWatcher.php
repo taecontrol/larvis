@@ -56,10 +56,10 @@ class ExceptionWatcher extends Watcher
     protected function getUrl(Larvis $larvis): string
     {
         if ($larvis->isLocalDebugEnabled()) {
-            return config('larvis.debug.url') . config('larvis.debug.api.exception');
+            return config('larvis.krater.url') . config('larvis.krater.api.exceptions');
         }
 
-        return config('larvis.moonguard.domain') . config('larvis.moonguard.exception_logger.endpoint');
+        return config('larvis.moonguard.domain') . config('larvis.moonguard.api.exceptions');
     }
 
     protected function getData(Larvis $larvis, Throwable $exception): array
@@ -77,7 +77,7 @@ class ExceptionWatcher extends Watcher
 
         return array_merge(
             $exceptionData->toArray(),
-            ['api_token' => config('larvis.site.api_token')],
+            ['api_token' => config('larvis.moonguard.site.api_token')],
         );
     }
 }

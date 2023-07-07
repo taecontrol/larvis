@@ -65,7 +65,7 @@ class ExceptionData implements Arrayable
             'trace' => json_encode($this->trace),
             'line' => $this->line,
             'request' => json_encode($request),
-            'thrown_at' => (string) $this->thrownAt->format('Y-m-d H:i:s'),
+            'thrown_at' => $this->thrownAt->format('Y-m-d\TH:i:s\Z'),
         ];
     }
 }

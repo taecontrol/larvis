@@ -15,7 +15,7 @@ class ModelReader extends Reader
     {
         $reflection = new ReflectionClass($object);
 
-        $filterProperties = config('larvis.reader.model.props');
+        $filterProperties = config('larvis.readers.model.props');
 
         $this->class = get_class($object);
         $this->parent = get_parent_class($object);
