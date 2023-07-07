@@ -17,15 +17,15 @@ class QueryWatcherTest extends TestCase
     {
         parent::setUp();
 
-        config()->set('larvis.debug.url', 'http://localhost:55555');
-        config()->set('larvis.debug.api.message', '/api/query');
+        config()->set('larvis.krater.url', 'http://localhost:58673');
+        config()->set('larvis.krater.api.messages', '/api/queries');
     }
 
     /** @test */
     public function it_check_if_queries_handler_post_query_data(): void
     {
         Http::fake([
-            'http://localhost:55555/*' => Http::response([], 200, []),
+            'http://localhost:58673/*' => Http::response([], 200, []),
         ]);
 
         app(QueryWatcher::class)->enable();

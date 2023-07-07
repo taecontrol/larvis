@@ -30,7 +30,7 @@ class RequestWatcher extends Watcher
         $appData = $larvis->getAppData();
         $requestData = RequestData::from($request, $response);
 
-        $url = config('larvis.debug.url') . config('larvis.debug.api.request');
+        $url = config('larvis.krater.url') . config('larvis.krater.api.requests');
 
         $data = [
             'request' => $requestData->debugFormat(),
