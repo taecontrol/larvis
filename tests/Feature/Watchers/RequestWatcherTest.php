@@ -20,7 +20,7 @@ class RequestWatcherTest extends TestCase
 
         session()->start();
 
-        config()->set('larvis.krater.url', 'http://localhost:55555');
+        config()->set('larvis.krater.url', 'http://localhost:58673');
         config()->set('larvis.krater.api.messages', '/api/requests');
     }
 
@@ -32,7 +32,7 @@ class RequestWatcherTest extends TestCase
         });
 
         Http::fake([
-            'http://localhost:55555/*' => Http::response([], 200, []),
+            'http://localhost:58673/*' => Http::response([], 200, []),
         ]);
 
         app(RequestWatcher::class)->enable();

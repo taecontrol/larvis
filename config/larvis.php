@@ -40,7 +40,7 @@ return [
         /**
          *  The url where the Krater app is listening for requests.
          */
-        'url' => env('KRATER_DEBUG_URL', 'http://localhost:55555'),
+        'url' => env('KRATER_DEBUG_URL', 'http://localhost:58673'),
 
         /**
          *  Krater api endpoints.

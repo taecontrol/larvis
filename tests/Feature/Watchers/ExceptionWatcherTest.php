@@ -22,7 +22,7 @@ class ExceptionWatcherTest extends TestCase
         $this->larvis = app(Larvis::class);
 
         config()->set('larvis.moonguard.domain', 'https://moonguard.test');
-        config()->set('larvis.krater.url', 'http://localhost:55555');
+        config()->set('larvis.krater.url', 'http://localhost:58673');
     }
 
     /** @test */
@@ -59,7 +59,7 @@ class ExceptionWatcherTest extends TestCase
         config()->set('larvis.krater.enabled', true);
 
         Http::fake([
-            'http://localhost:55555/*' => Http::response([], 200, []),
+            'http://localhost:58673/*' => Http::response([], 200, []),
         ]);
 
         $exception = new Exception('Exception');

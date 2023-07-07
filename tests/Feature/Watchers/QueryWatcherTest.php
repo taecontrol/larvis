@@ -17,7 +17,7 @@ class QueryWatcherTest extends TestCase
     {
         parent::setUp();
 
-        config()->set('larvis.krater.url', 'http://localhost:55555');
+        config()->set('larvis.krater.url', 'http://localhost:58673');
         config()->set('larvis.krater.api.messages', '/api/queries');
     }
 
@@ -25,7 +25,7 @@ class QueryWatcherTest extends TestCase
     public function it_check_if_queries_handler_post_query_data(): void
     {
         Http::fake([
-            'http://localhost:55555/*' => Http::response([], 200, []),
+            'http://localhost:58673/*' => Http::response([], 200, []),
         ]);
 
         app(QueryWatcher::class)->enable();

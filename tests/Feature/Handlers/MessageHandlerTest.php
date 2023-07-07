@@ -15,7 +15,7 @@ class MessageHandlerTest extends TestCase
     {
         parent::setUp();
 
-        config()->set('larvis.krater.url', 'http://localhost:55555');
+        config()->set('larvis.krater.url', 'http://localhost:58673');
         config()->set('larvis.krater.api.messages', '/api/messages');
     }
 
@@ -28,7 +28,7 @@ class MessageHandlerTest extends TestCase
         $data = 'Hi from Larvis';
 
         Http::fake([
-            'http://localhost:55555/*' => Http::response(null, 201, []),
+            'http://localhost:58673/*' => Http::response(null, 201, []),
         ]);
 
         larvis($data);
@@ -46,13 +46,13 @@ class MessageHandlerTest extends TestCase
     {
         /** @var Larvis */
         app(Larvis::class);
-        config()->set('larvis.krater.url', 'http://localhost:55555');
+        config()->set('larvis.krater.url', 'http://localhost:58673');
         config()->set('larvis.krater.api.messages', '/api/messages');
 
         $data = 'Hi from Larvis';
 
         Http::fake([
-            'http://localhost:55555/*' => Http::response(null, 201, []),
+            'http://localhost:58673/*' => Http::response(null, 201, []),
         ]);
 
         larvis($data);
