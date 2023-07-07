@@ -1,28 +1,63 @@
 <?php
-
+/**
+ *  This settings handles Larvis behaviour for local debug with Krater and production
+ *  report with MoonGuard.
+ */
 return [
+    /**
+     *  MoonGuard settings
+     */
     'moonguard' => [
+        /**
+         * The domain where MoonGuard is located.
+         */
         'domain' => env('MOONGUARD_DOMAIN'),
 
-        'exception_logger' => [
-            'endpoint' => env('MOONGUARD_EXCEPTION_LOGGER_ENDPOINT', '/api/exceptions'),
-        ],
-    ],
-    'site' => [
-        'api_token' => env('MOONGUARD_SITE_API_TOKEN'),
-    ],
-    'debug' => [
-        'enabled' => env('LARVIS_DEBUG_ENABLED', false),
-
-        'url' => env('LARVIS_DEBUG_CLIENT_DOMAIN', 'http://localhost:55555'),
-
+        /**
+         * MoonGuard api endpoints.
+         */
         'api' => [
-            'message' => '/api/message',
-            'exception' => '/api/exception',
-            'query' => '/api/query',
-            'request' => '/api/request',
+            'exceptions' => env('MOONGUARD_EXCEPTION_LOGGER_ENDPOINT', '/moonguard/api/exceptions'),
+        ],
+
+        /**
+         * Moonguard site configuration.
+         */
+        'site' => [
+            'api_token' => env('MOONGUARD_SITE_API_TOKEN'),
         ],
     ],
+
+    /**
+     * Krater settings
+     */
+    'krater' => [
+        /**
+         *  If enabled, Larvis can report data to Krater.
+         */
+        'enabled' => env('KRATER_DEBUG', false),
+
+        /**
+         *  The url where the Krater app is listening for requests.
+         */
+        'url' => env('KRATER_DEBUG_URL', 'http://localhost:55555'),
+
+        /**
+         *  Krater api endpoints.
+         */
+        'api' => [
+            'messages' => '/api/messages',
+            'exceptions' => '/api/exceptions',
+            'queries' => '/api/queries',
+            'requests' => '/api/requests',
+        ],
+    ],
+
+    /**
+     * Watchers settings
+     *
+     * Important: requests and queries are not compatible with MoonGuard.
+     */
     'watchers' => [
         'requests' => [
             'enabled' => false,
@@ -34,7 +69,17 @@ return [
             'enabled' => false,
         ],
     ],
-    'reader' => [
+
+    /**
+     * Readers settings
+     *
+     * This are the properties that are readed from Larvis when an object is processed.
+     * You can modify the properties to read from:
+     *
+     * Illuminate\Database\Eloquent\Model
+     * Illuminate\Support\Collection
+     */
+    'readers' => [
         'model' => [
             'props' => [
                 'connection',

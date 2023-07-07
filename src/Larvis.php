@@ -19,7 +19,7 @@ class Larvis
 
     public function isLocalDebugEnabled(): bool
     {
-        return app()->environment(['local', 'testing']) && config('larvis.debug.enabled');
+        return app()->environment(['local', 'testing']) && config('larvis.krater.enabled');
     }
 
     public function getAppData(): AppData

@@ -17,7 +17,7 @@ class CollectionReader extends Reader
     {
         $reflection = new ReflectionClass($object);
 
-        $filterProperties = config('larvis.reader.collection.props');
+        $filterProperties = config('larvis.readers.collection.props');
 
         $this->class = get_class($object);
         $this->parent = get_parent_class($object);

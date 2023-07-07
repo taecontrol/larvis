@@ -26,7 +26,7 @@ class MessageHandler
 
         $appData = $larvis->getAppData();
 
-        $url = config('larvis.debug.url') . config('larvis.debug.api.message');
+        $url = config('larvis.krater.url') . config('larvis.krater.api.messages');
 
         $data = [
             'message' => $messageData->debugFormat(),

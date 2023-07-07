@@ -15,8 +15,8 @@ class MessageHandlerTest extends TestCase
     {
         parent::setUp();
 
-        config()->set('larvis.debug.url', 'http://localhost:55555');
-        config()->set('larvis.debug.api.message', '/api/messages');
+        config()->set('larvis.krater.url', 'http://localhost:55555');
+        config()->set('larvis.krater.api.messages', '/api/messages');
     }
 
     /** @test */
@@ -46,8 +46,8 @@ class MessageHandlerTest extends TestCase
     {
         /** @var Larvis */
         app(Larvis::class);
-        config()->set('larvis.debug.url', 'http://localhost:55555');
-        config()->set('larvis.debug.api.message', '/api/messages');
+        config()->set('larvis.krater.url', 'http://localhost:55555');
+        config()->set('larvis.krater.api.messages', '/api/messages');
 
         $data = 'Hi from Larvis';
 

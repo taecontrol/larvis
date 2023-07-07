@@ -17,8 +17,8 @@ class QueryWatcherTest extends TestCase
     {
         parent::setUp();
 
-        config()->set('larvis.debug.url', 'http://localhost:55555');
-        config()->set('larvis.debug.api.message', '/api/query');
+        config()->set('larvis.krater.url', 'http://localhost:55555');
+        config()->set('larvis.krater.api.messages', '/api/queries');
     }
 
     /** @test */

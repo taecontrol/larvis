@@ -30,7 +30,7 @@ class QueryWatcher extends Watcher
         $appData = $larvis->getAppData();
         $queryData = QueryData::from($query);
 
-        $url = config('larvis.debug.url') . config('larvis.debug.api.query');
+        $url = config('larvis.krater.url') . config('larvis.krater.api.queries');
 
         $data = [
             'query' => $queryData->debugFormat(),
