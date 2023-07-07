@@ -17,7 +17,7 @@ return [
          * MoonGuard api endpoints.
          */
         'api' => [
-            'exceptions' => env('MOONGUARD_EXCEPTION_LOGGER_ENDPOINT', '/moonguard/api/exceptions'),
+            'exceptions' => env('MOONGUARD_API_EXCEPTIONS_ROUTE', '/moonguard/api/exceptions'),
         ],
 
         /**
