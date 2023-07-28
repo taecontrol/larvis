@@ -16,6 +16,10 @@ class MessageHandler
         /** @var Larvis */
         $larvis = app(Larvis::class);
 
+        if(! $larvis->isLocalDebugEnabled()) {
+            return;
+        }
+
         $backtrace = Backtrace::from(
             debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, self::BACKTRACE_LIMIT)[2]
         );

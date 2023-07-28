@@ -35,7 +35,7 @@ return [
         /**
          *  If enabled, Larvis can report data to Krater.
          */
-        'enabled' => env('KRATER_DEBUG', false),
+        'enabled' => env('KRATER_DEBUG', true),
 
         /**
          *  The url where the Krater app is listening for requests.
