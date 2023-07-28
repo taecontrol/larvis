@@ -22,16 +22,17 @@ class QueryWatcherTest extends TestCase
     }
 
     /** @test */
-    public function query_watcher_only_works_on_local_with_krater(): void {
-        putenv("APP_ENV=production");
+    public function query_watcher_only_works_on_local_with_krater(): void
+    {
+        putenv('APP_ENV=production');
 
-        app(QueryWatcher::class)->enable();       
-        
+        app(QueryWatcher::class)->enable();
+
         DB::table('users')->get('id');
 
         Http::assertNothingSent();
 
-        app(QueryWatcher::class)->disable();    
+        app(QueryWatcher::class)->disable();
     }
 
     /** @test */

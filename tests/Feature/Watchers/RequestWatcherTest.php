@@ -25,19 +25,20 @@ class RequestWatcherTest extends TestCase
     }
 
     /** @test */
-    public function request_watcher_only_works_on_local_with_krater(): void {
-        putenv("APP_ENV=production");
+    public function request_watcher_only_works_on_local_with_krater(): void
+    {
+        putenv('APP_ENV=production');
         Route::get('test', function () {
             return 'ok';
         });
 
         app(RequestWatcher::class)->enable();
-        
+
         $this->get('/test');
 
         Http::assertNothingSent();
 
-        app(RequestWatcher::class)->disable();    
+        app(RequestWatcher::class)->disable();
     }
 
     /** @test */

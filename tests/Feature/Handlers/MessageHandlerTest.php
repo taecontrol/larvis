@@ -20,10 +20,11 @@ class MessageHandlerTest extends TestCase
     }
 
     /** @test */
-    public function message_handler_only_works_on_local_with_krater(): void {
-        putenv("APP_ENV=production");
-        
-        larvis("hola");
+    public function message_handler_only_works_on_local_with_krater(): void
+    {
+        putenv('APP_ENV=production');
+
+        larvis('hola');
 
         Http::assertNothingSent();
     }

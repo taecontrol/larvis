@@ -16,7 +16,7 @@ class MessageHandler
         /** @var Larvis */
         $larvis = app(Larvis::class);
 
-        if(! $larvis->isLocalDebugEnabled()) {
+        if (! $larvis->isLocalDebugEnabled()) {
             return;
         }
 
