@@ -76,7 +76,7 @@ class MessageHandlerTest extends TestCase
 
             $isMessageDataPresent = $messageData->data === '"Hi from Larvis"' &&
             $messageData->kind === 'string' &&
-            $messageData->line === 67 &&
+            $messageData->line === 68 &&
             $messageData->file === __FILE__;
 
             $isAppDataPresent = $appData->name === env('APP_NAME') &&
