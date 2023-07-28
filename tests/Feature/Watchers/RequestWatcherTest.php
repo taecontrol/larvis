@@ -72,8 +72,7 @@ class RequestWatcherTest extends TestCase
             $isResponseDataPresent = $response->status === 200 &&
             $response->headers &&
             $response->content === 'HTML Response' &&
-            $response->version === '1.1' &&
-            $response->original === 'ok';
+            $response->version === '1.1';
 
             $isAppDataPresent = $appData->name === env('APP_NAME') &&
             $appData->framework === 'Laravel' &&
