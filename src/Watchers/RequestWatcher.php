@@ -15,14 +15,6 @@ class RequestWatcher extends Watcher
     {
         $this->enabled = config('larvis.watchers.requests.enabled');
 
-        $isLocal = app(Larvis::class)->isLocalEnvironment();
-
-        $value = getenv('APP_ENV');
-
-        if (! $isLocal) {
-            return;
-        }
-
         Event::listen(RequestHandled::class, function (RequestHandled $event) {
             if (! $this->enabled()) {
                 return;
@@ -35,6 +27,13 @@ class RequestWatcher extends Watcher
     {
         /** @var Larvis */
         $larvis = app(Larvis::class);
+
+        $isLocal = $larvis->isLocalEnvironment();
+
+        if (! $isLocal) {
+            return;
+        }
+
         $appData = $larvis->getAppData();
         $requestData = RequestData::from($request, $response);
 

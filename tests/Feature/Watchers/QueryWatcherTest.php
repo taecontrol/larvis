@@ -24,7 +24,11 @@ class QueryWatcherTest extends TestCase
     /** @test */
     public function query_watcher_only_works_on_local_with_krater(): void
     {
-        putenv('APP_ENV=production');
+        Http::fake();
+
+        app()->detectEnvironment(function () {
+            return 'production';
+        });
 
         app(QueryWatcher::class)->enable();
 

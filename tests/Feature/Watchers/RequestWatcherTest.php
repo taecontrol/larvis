@@ -27,7 +27,12 @@ class RequestWatcherTest extends TestCase
     /** @test */
     public function request_watcher_only_works_on_local_with_krater(): void
     {
-        putenv('APP_ENV=production');
+        Http::fake();
+
+        $this->app->detectEnvironment(function () {
+            return 'production';
+        });
+
         Route::get('test', function () {
             return 'ok';
         });

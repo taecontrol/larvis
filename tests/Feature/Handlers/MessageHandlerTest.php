@@ -22,7 +22,11 @@ class MessageHandlerTest extends TestCase
     /** @test */
     public function message_handler_only_works_on_local_with_krater(): void
     {
-        putenv('APP_ENV=production');
+        Http::fake();
+
+        app()->detectEnvironment(function () {
+            return 'production';
+        });
 
         larvis('hola');
 
@@ -76,7 +80,7 @@ class MessageHandlerTest extends TestCase
 
             $isMessageDataPresent = $messageData->data === '"Hi from Larvis"' &&
             $messageData->kind === 'string' &&
-            $messageData->line === 68 &&
+            $messageData->line === 72 &&
             $messageData->file === __FILE__;
 
             $isAppDataPresent = $appData->name === env('APP_NAME') &&

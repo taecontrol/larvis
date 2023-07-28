@@ -13,12 +13,6 @@ class QueryWatcher extends Watcher
     {
         $this->enabled = config('larvis.watchers.queries.enabled');
 
-        $isLocal = app(Larvis::class)->isLocalEnvironment();
-
-        if (! $isLocal) {
-            return;
-        }
-
         DB::listen(function (QueryExecuted $query) {
             if (! $this->enabled()) {
                 return;
@@ -32,6 +26,12 @@ class QueryWatcher extends Watcher
     {
         /** @var Larvis */
         $larvis = app(Larvis::class);
+
+        $isLocal = $larvis->isLocalEnvironment();
+
+        if (! $isLocal) {
+            return;
+        }
 
         $appData = $larvis->getAppData();
         $queryData = QueryData::from($query);
