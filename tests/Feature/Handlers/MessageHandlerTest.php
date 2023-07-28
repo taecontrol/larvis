@@ -20,6 +20,20 @@ class MessageHandlerTest extends TestCase
     }
 
     /** @test */
+    public function message_handler_only_works_on_local_with_krater(): void
+    {
+        Http::fake();
+
+        app()->detectEnvironment(function () {
+            return 'production';
+        });
+
+        larvis('hola');
+
+        Http::assertNothingSent();
+    }
+
+    /** @test */
     public function it_check_if_message_handler_post_message_data(): void
     {
         /** @var Larvis */
@@ -66,7 +80,7 @@ class MessageHandlerTest extends TestCase
 
             $isMessageDataPresent = $messageData->data === '"Hi from Larvis"' &&
             $messageData->kind === 'string' &&
-            $messageData->line === 58 &&
+            $messageData->line === 72 &&
             $messageData->file === __FILE__;
 
             $isAppDataPresent = $appData->name === env('APP_NAME') &&

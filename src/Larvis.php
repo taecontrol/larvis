@@ -17,9 +17,14 @@ class Larvis
         $this->app = AppData::generate();
     }
 
+    public function isLocalEnvironment(): bool
+    {
+        return app()->environment(['local', 'testing']);
+    }
+
     public function isLocalDebugEnabled(): bool
     {
-        return app()->environment(['local', 'testing']) && config('larvis.krater.enabled');
+        return $this->isLocalEnvironment() && config('larvis.krater.enabled');
     }
 
     public function getAppData(): AppData

@@ -27,6 +27,12 @@ class QueryWatcher extends Watcher
         /** @var Larvis */
         $larvis = app(Larvis::class);
 
+        $isLocal = $larvis->isLocalEnvironment();
+
+        if (! $isLocal) {
+            return;
+        }
+
         $appData = $larvis->getAppData();
         $queryData = QueryData::from($query);
 
