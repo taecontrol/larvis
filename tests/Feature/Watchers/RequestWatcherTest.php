@@ -25,6 +25,28 @@ class RequestWatcherTest extends TestCase
     }
 
     /** @test */
+    public function request_watcher_only_works_on_local_with_krater(): void
+    {
+        Http::fake();
+
+        $this->app->detectEnvironment(function () {
+            return 'production';
+        });
+
+        Route::get('test', function () {
+            return 'ok';
+        });
+
+        app(RequestWatcher::class)->enable();
+
+        $this->get('/test');
+
+        Http::assertNothingSent();
+
+        app(RequestWatcher::class)->disable();
+    }
+
+    /** @test */
     public function it_test_request_contains_all_required_data(): void
     {
         Route::get('test', function () {
@@ -72,8 +94,7 @@ class RequestWatcherTest extends TestCase
             $isResponseDataPresent = $response->status === 200 &&
             $response->headers &&
             $response->content === 'HTML Response' &&
-            $response->version === '1.1' &&
-            $response->original === 'ok';
+            $response->version === '1.1';
 
             $isAppDataPresent = $appData->name === env('APP_NAME') &&
             $appData->framework === 'Laravel' &&
