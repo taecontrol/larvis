@@ -4,10 +4,11 @@ namespace Taecontrol\Larvis\ValueObjects\Data;
 
 use Illuminate\View\View;
 use Illuminate\Support\Str;
-use Illuminate\Http\Response;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Support\Arrayable;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response as IlluminateResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ResponseData implements Arrayable
 {
@@ -16,22 +17,23 @@ class ResponseData implements Arrayable
         public readonly string $statusText,
         public readonly array $headers,
         public readonly array|string $content,
-        public readonly string $version,
-        public readonly mixed $original,
+        public readonly string $version
     ) {
     }
 
     public static function from(Response $response): ResponseData
     {
         $content = static::formatContent($response);
+        $statusCode = $response->getStatusCode();
+
+        $illuminate = new IlluminateResponse($response->getContent(), $statusCode, $response->headers->all());
 
         return new self(
-            status: $response->getStatusCode(),
-            statusText: $response->statusText(),
-            headers: $response->headers->all(),
+            status: $statusCode,
+            statusText: Response::$statusTexts[$statusCode],
+            headers: $illuminate->headers->all(),
             content: $content,
-            version: $response->getProtocolVersion(),
-            original: $response->getOriginalContent(),
+            version: $response->getProtocolVersion()
         );
     }
 
@@ -43,7 +45,6 @@ class ResponseData implements Arrayable
             'headers' => $this->headers,
             'content' => $this->content,
             'version' => $this->version,
-            'original' => $this->original,
         ];
     }
 
@@ -66,7 +67,7 @@ class ResponseData implements Arrayable
             return 'Redirected to ' . $response->getTargetUrl();
         }
 
-        if ($response instanceof Response && $response->getOriginalContent() instanceof View) {
+        if ($response instanceof IlluminateResponse && $response->getOriginalContent() instanceof View) {
             return [
                 'view' => $response->getOriginalContent()->getPath(),
                 'data' => static::extractDataFromView($response->getOriginalContent()),
@@ -84,7 +85,6 @@ class ResponseData implements Arrayable
             headers: $args['headers'],
             content: $args['content'],
             version: $args['version'],
-            original: $args['original'],
         );
     }
 
@@ -102,7 +102,6 @@ class ResponseData implements Arrayable
             'headers' => json_encode($this->headers),
             'content' => $debugContent,
             'version' => $this->version,
-            'original' => json_encode($this->original),
         ];
     }
 
