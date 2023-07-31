@@ -66,7 +66,7 @@ return [
             'enabled' => false,
         ],
         'exceptions' => [
-            'enabled' => false,
+            'enabled' => true,
         ],
     ],
 
