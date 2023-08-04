@@ -12,8 +12,8 @@ class AppData implements Arrayable
         public readonly string|null $framework,
         public readonly string|null $frameworkVersion,
         public readonly string $name,
-        public readonly string $language,
-        public readonly string $languageVersion,
+        public readonly string|null $language,
+        public readonly string|null $languageVersion,
     ) {
     }
 

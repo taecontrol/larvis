@@ -2,6 +2,7 @@
 
 namespace Taecontrol\Larvis\Tests\Unit\ValueObjects;
 
+use Illuminate\Support\Carbon;
 use Taecontrol\Larvis\Tests\TestCase;
 use Illuminate\Database\Events\QueryExecuted;
 use Taecontrol\Larvis\ValueObjects\Data\QueryData;
@@ -10,7 +11,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class QueryDataTest extends TestCase
 {
     /** @test */
-    public function it_validates_Query_data_with_debug_format()
+    public function it_validates_query_data_with_debug_format()
     {
         $capsule = new Capsule;
 
@@ -38,6 +39,38 @@ class QueryDataTest extends TestCase
         $this->assertIsFloat($queryData['time'], 2.98);
         $this->assertIsString($queryData['connection_name'], 'test connection');
         $this->assertIsString($queryData['queried_at']);
+    }
+
+    /** @test */
+    public function it_validates_query_data_with_to_array()
+    {
+        $capsule = new Capsule;
+
+        $capsule->addConnection([
+            'driver' => 'sqlite',
+            'host' => 'localhost',
+            'database' => 'test_database',
+            'username' => 'test_username',
+            'password' => 'test_password',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+        ]);
+
+        $connection = $capsule->getConnection();
+
+        $query = new QueryExecuted('test Query', [], 2.98, $connection);
+        $array = QueryData::from($query)->toArray();
+
+        $this->assertIsArray($array);
+        $this->assertNotEmpty($array);
+
+        $this->assertIsString($array['sql'], 'test query');
+        $this->assertIsArray($array['bindings']);
+        $this->assertIsFloat($array['time'], 2.98);
+        $this->assertIsString($array['connection_name'], 'test connection');
+        $this->assertIsObject($array['queried_at']);
+        $this->assertInstanceOf(Carbon::class, $array['queried_at']);
     }
 
     /** @test */

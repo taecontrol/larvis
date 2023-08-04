@@ -34,8 +34,8 @@ class QueryData implements Arrayable
             'sql' => $this->sql,
             'bindings' => $this->bindings,
             'time' => $this->time,
-            'connectionName' => $this->connectionName,
-            'queriedAt' => $this->queriedAt->utc(),
+            'connection_name' => $this->connectionName,
+            'queried_at' => $this->queriedAt->utc(),
         ];
     }
 
@@ -45,8 +45,8 @@ class QueryData implements Arrayable
             sql: $args['sql'],
             bindings: $args['bindings'],
             time: $args['time'],
-            connectionName: $args['connectionName'],
-            queriedAt: $args['queriedAt'],
+            connectionName: $args['connection_name'],
+            queriedAt: $args['queried_at'],
         );
     }
 

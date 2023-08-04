@@ -3,6 +3,7 @@
 namespace Taecontrol\Larvis\Tests\Unit\ValueObjects;
 
 use Exception;
+use Illuminate\Support\Carbon;
 use Taecontrol\Larvis\Tests\TestCase;
 use Taecontrol\Larvis\ValueObjects\Data\ExceptionData;
 
@@ -43,6 +44,34 @@ class ExceptionDataTest extends TestCase
 
         $this->assertObjectHasAttribute('headers', $request);
         $this->assertObjectHasAttribute('server', $request);
+    }
+
+    /** @test */
+    public function it_validates_that_to_array_returns_all_the_exception_data()
+    {
+        $exception = new Exception('test exception');
+        $array = ExceptionData::from($exception)->toArray();
+
+        $this->assertIsArray($array);
+
+        $this->assertNotEmpty($array);
+        $this->assertNotEmpty($array['trace']);
+        $this->assertNotEmpty($array['request']['headers']);
+
+        $this->assertIsNumeric($array['line']);
+        $this->assertIsObject($array['thrown_at']);
+        $this->assertInstanceOf(Carbon::class, $array['thrown_at']);
+
+        $this->assertEquals($array['message'], 'test exception');
+        $this->assertEquals($array['type'], 'Exception');
+        $this->assertEquals($array['file'], __FILE__);
+        $this->assertEquals($array['request']['url'], 'http://localhost');
+        $this->assertEquals($array['request']['params'], []);
+        $this->assertEquals($array['request']['query'], []);
+
+        $this->assertArrayHasKey('headers', $array['request']);
+        $this->assertArrayHasKey('params', $array['request']);
+        $this->assertArrayHasKey('query', $array['request']);
     }
 
     /** @test */

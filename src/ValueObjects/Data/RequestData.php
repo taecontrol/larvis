@@ -67,7 +67,7 @@ class RequestData implements Arrayable
             'session' => $this->session,
             'format' => $this->format,
             'locale' => $this->locale,
-            'response' => $this->response,
+            'response' => $this->response->toArray(),
         ];
     }
 

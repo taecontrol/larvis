@@ -41,7 +41,7 @@ class ResponseData implements Arrayable
     {
         return [
             'status' => $this->status,
-            'statusText' => $this->statusText,
+            'status_text' => $this->statusText,
             'headers' => $this->headers,
             'content' => $this->content,
             'version' => $this->version,
