@@ -35,13 +35,21 @@ class ExceptionData implements Arrayable
 
     public function toArray(): array
     {
+        $request = [
+            'url' => $this->request->url(),
+            'params' => $this->request->request->all(),
+            'query' => $this->request->query->all(),
+        ];
+
+        $request['headers'] = $this->request->headers->all();
+
         return [
             'message' => $this->message,
             'type' => $this->type,
             'file' => $this->file,
             'trace' => $this->trace,
             'line' => $this->line,
-            'request' => $this->request,
+            'request' => $request,
             'thrown_at' => $this->thrownAt->utc(),
         ];
     }
