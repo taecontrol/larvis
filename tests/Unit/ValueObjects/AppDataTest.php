@@ -22,8 +22,8 @@ class AppDataTest extends TestCase
     /** @test */
     public function it_validates_that_generate_creates_app_data()
     {
-      $appData = AppData::generate();
-      $this->assertInstanceOf(AppData::class, $appData);
-      $this->assertNotEmpty($appData);
+        $appData = AppData::generate();
+        $this->assertInstanceOf(AppData::class, $appData);
+        $this->assertNotEmpty($appData);
     }
 }
