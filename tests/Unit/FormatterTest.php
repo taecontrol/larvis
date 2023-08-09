@@ -4,6 +4,7 @@ namespace Taecontrol\Larvis\Tests\Unit;
 
 use Taecontrol\Larvis\Readers\Reader;
 use Taecontrol\Larvis\Tests\TestCase;
+use Illuminate\Database\Eloquent\Model;
 use Taecontrol\Larvis\Support\Formatter;
 use Taecontrol\Larvis\Tests\Mock\TestObject;
 
@@ -144,5 +145,15 @@ class FormatterTest extends TestCase
         $this->assertJson($formatted);
         $this->assertEquals($arrayInJson, $formatted);
         $this->assertEquals($formatter->kind, 'array');
+    }
+
+    /** @test */
+    public function it_formats_slashes_correctly()
+    {
+        $string = 'https://sigma.test/login';
+
+        $json = (new Formatter())->format($string)->toJson();
+
+        $this->assertEquals($json, '"https://sigma.test/login"');
     }
 }
