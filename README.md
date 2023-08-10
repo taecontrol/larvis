@@ -36,21 +36,21 @@ To allow Larvis to capture and report exceptions, it is necessary to add three v
 
 ```php
 MOONGUARD_DOMAIN=https://mymoonguard.com
-MOONGUARD_SITE_API_TOKEN=LDUxazsuq6aYi9bvSMqc6vkMXOjsD7JdrIN2FkWtA4UVNhaPE02gMS23FIp0
+MOONGUARD_SITE_API_TOKEN=LDUxazsuq6aYi9bvSMqc6vkMXOjsD7JdrIN2FkWtA4UVNhaPE02gMS23FIp0/*  */
 KRATER_DEBUG=false
 ```
 
-| Variable | Description |
-| --- | --- |
-| MOONGUARD_DOMAIN | The domain where the MoonGuard is located. |
-| MONGUARD_SITE_API_TOKEN | The app site API Token. |
-| KRATER_DEBUG | Enables or disables Larvis Debug Mode with Krater. |
+| Variable                | Description                                        |
+| ----------------------- | -------------------------------------------------- |
+| MOONGUARD_DOMAIN        | The domain where the MoonGuard is located.         |
+| MONGUARD_SITE_API_TOKEN | The app site API Token.                            |
+| KRATER_DEBUG            | Enables or disables Larvis Debug Mode with Krater. |
 
 You can obtain the API token at the MoonGuard admin panel (Site administration). This token is unique to your site and is used to authenticate the site in every request to MoonGuard.
 
 ![Image](https://github.com/taecontrol/larvis/assets/41251063/211a0b25-1cbf-4f41-bf9c-454f92030267)
 
-No extra steps needed. With this setup Larvis can report your app exceptions to MoonGuard. 
+No extra steps needed. With this setup Larvis can report your app exceptions to MoonGuard.
 
 > 💡 **Important:** Reporting exceptions to MoonGuard only works when the app environment is `production`.
 
@@ -62,7 +62,7 @@ Larvis default behavior is to work and debug with Krater. We have develop severa
 
 Watchers are components that monitor and record different aspects of your application, such as requests, database queries, and exceptions. Larvis includes the following watchers:
 
-1. QueryWatcher: Detects and reports all queries that are made to the app database. 
+1. QueryWatcher: Detects and reports all queries that are made to the app database.
 2. ExceptionWatcher: Detects and reports any exception that have occurred in the app.
 3. RequestWatcher: Detects and report any request that have been made to the app.
 
@@ -78,25 +78,25 @@ There is a global function called `larvis($args)` that allows you to send any ty
 
 ### Sending an array of strings
 
-```jsx
+```php
 larvis(["hello","i'm Larvis"]);
 ```
 
 ### Sending a string
 
-```jsx
+```php
 larvis("Hello");
 ```
 
 ### Sending an array of numbers
 
-```jsx
+```php
 larvis([1, 2, 3, 4, 5]);
 ```
 
 ### Sending a null value
 
-```jsx
+```php
 larvis(null);
 ```
 
@@ -146,7 +146,7 @@ larvis()->stopQueryWatch();
 
 # Watching and Sending Exceptions to Krater
 
-In order to watch and send exceptions to Krater the ExceptionWatcher must be enabled, this watcher is enabled by default. 
+In order to watch and send exceptions to Krater the ExceptionWatcher must be enabled, this watcher is enabled by default.
 
 ```php
 [
@@ -164,11 +164,11 @@ In order to watch and send request to Krater the RequestWatcher must be enabled,
 
 ```php
 [
-		'watchers' => [
-				'request' => [
-						'enabled' => true,
-				],
-		],
+    'watchers' => [
+        'request' => [
+            'enabled' => true,
+        ],
+    ],
 ];
 ```
 
