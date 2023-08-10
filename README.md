@@ -1,54 +1,221 @@
 # Introduction - Getting to Know Larvis
 
-Larvis is a PHP package for Laravel that allows a Laravel app to send exceptions information to Moonguard.
+Larvis is a PHP package for Laravel that allows a Laravel app to send and report information to Moonguard or Krater.
 
-> 💡 Important: This version only works with MoonGuard v0.1.0.
-## Installation
+Currently, you can use Larvis in the following scenarios:
 
-You can install Larvis via composer using the following command:
+- To report exceptions from your application to Moonguard (ideal for production sites that require tracking).
+- To report and send messages, exceptions, database queries, and HTTP requests from a Laravel application to Krater (ideal for a development environment where different information needs to be debugged).
+
+> 💡 **Important:** This version is compatible only with MoonGuard 1.0.0.
+
+# Installation
+
+You can install Larvis via composer with the following command:
 
 ```bash
 composer require taecontrol/larvis
 ```
 
-That’s it, no additional steps needed.
+After installation, we recommend publishing the configuration to customize Larvis' behavior according to your needs.
 
-# Larvis Configuration:
-
-To allow Larvis to capture and report exceptions, it is necessary to add the following code to the `app/Exceptions/Handler.php` file:
-
-```php
-use Taecontrol\Larvis\Larvis;
-
-		/**
-     * Register the exception handling callbacks for the application.
-     *
-     * @return void
-     */
-    public function register()
-{
-    if (! app()->environment('testing')) {
-        $this->reportable(function (Throwable $e) {
-            /** @var Larvis $larvis */
-            $larvis = app(Larvis::class);
-
-            $larvis->captureException($e);
-        });
-    }
+```bash
+php artisan vendor:publish --tag larvis-config
 ```
 
-Exception capture and sending won’t work if your project's `APP_ENV` is set to `testing`. Ideally, you want this report to be done when the environment is productive with `APP_ENV=production`.
+That’s it! Larvis is installed in your project and the configuration file must be available at `config/larvis.php`, now you must decide how Larvis should work and behave:
 
-To setup the site api token and the MoonGuard domain add two new variables to the application's `.env` file:
+1. Setup Larvis to work with MoonGuard.
+2. Setup Larvis to work with Krater.
+
+> 💡 **Important:** The default behavior of Larvis is to work with Krater.
+
+# Setup Larvis to work with MoonGuard
+
+To allow Larvis to capture and report exceptions, it is necessary to add three variables on the app `.env` file:
 
 ```php
 MOONGUARD_DOMAIN=https://mymoonguard.com
-MOONGUARD_SITE_API_TOKEN=rZyNUws6SfdOsTEQdUW8f9949F1if3qGVUIgpRUtzI1SUbJOdJoMzHOGvhZj
+MOONGUARD_SITE_API_TOKEN=LDUxazsuq6aYi9bvSMqc6vkMXOjsD7JdrIN2FkWtA4UVNhaPE02gMS23FIp0
+KRATER_DEBUG=false
 ```
+
+| Variable | Description |
+| --- | --- |
+| MOONGUARD_DOMAIN | The domain where the MoonGuard is located. |
+| MONGUARD_SITE_API_TOKEN | The app site API Token. |
+| KRATER_DEBUG | Enables or disables Larvis Debug Mode with Krater. |
 
 You can obtain the API token at the MoonGuard admin panel (Site administration). This token is unique to your site and is used to authenticate the site in every request to MoonGuard.
 
-![Larvis-Api-Token](https://github.com/taecontrol/larvis/assets/41251063/3fd45dc1-b395-4bbe-a221-b9e716cb173f)
+![Image](https://github.com/taecontrol/larvis/assets/41251063/211a0b25-1cbf-4f41-bf9c-454f92030267)
+
+No extra steps needed. With this setup Larvis can report your app exceptions to MoonGuard. 
+
+> 💡 **Important:** Reporting exceptions to MoonGuard only works when the app environment is `production`.
+
+# Setup Larvis to work with Krater
+
+Larvis default behavior is to work and debug with Krater. We have develop several utilities to catch and report data as messages, exceptions, queries and requests easily to Krater.
+
+## Watchers
+
+Watchers are components that monitor and record different aspects of your application, such as requests, database queries, and exceptions. Larvis includes the following watchers:
+
+1. QueryWatcher: Detects and reports all queries that are made to the app database. 
+2. ExceptionWatcher: Detects and reports any exception that have occurred in the app.
+3. RequestWatcher: Detects and report any request that have been made to the app.
+
+All the watchers can be enabled or disabled from the Larvis configuration file.
+
+> 💡 **Important**: RequestWatcher and QueryWatcher are not compatible with MoonGuard.
+
+# Sending Messages to Krater
+
+Larvis understand a message as the data you want to send to Krater, similar to when you use `dd($arg)` in your projects. In this case, Larvis and Krater use different strategies to format and make the debugging of the data flexible.
+
+There is a global function called `larvis($args)` that allows you to send any type of data to Krater as a message. Here are some examples of how to use it:
+
+### Sending an array of strings
+
+```jsx
+larvis(["hello","i'm Larvis"]);
+```
+
+### Sending a string
+
+```jsx
+larvis("Hello");
+```
+
+### Sending an array of numbers
+
+```jsx
+larvis([1, 2, 3, 4, 5]);
+```
+
+### Sending a null value
+
+```jsx
+larvis(null);
+```
+
+### Sending a collection
+
+```php
+$collection = collect([1, 2, 3, 4, 5]);
+larvis($collection);
+```
+
+### Sending an object
+
+```php
+$user = new User();
+$user->name = 'John Doe';
+$user->email = 'johndoe@example.com';
+$user->age = 30;
+larvis($user);
+```
+
+# Watching and Sending Queries to Krater
+
+In order to watch and send queries to Krater the QueryWatcher must be enabled, as we mentioned earlier, this watcher allows you to detect and report all queries that are made to the app database.
+
+QueryWatcher can be enabled in Larvis configuration:
+
+```php
+[
+    'watchers' => [
+        'queries' => [
+            'enabled' => true,
+        ],
+    ],
+];
+```
+
+To record isolated queries, you can use the `startQueryWatch()` and `stopQueryWatch()` as follow:
+
+```php
+larvis()->startQueryWatch();
+User::all();
+larvis()->stopQueryWatch();
+```
+
+- The `startQueryWatch()`: starts the QueryWatcher, any query after this line will be recorded and reported.
+- The `stopQueryWatch()`: stops the QueryWatcher, any query after this line will not be logged or reported.
+
+# Watching and Sending Exceptions to Krater
+
+In order to watch and send exceptions to Krater the ExceptionWatcher must be enabled, this watcher is enabled by default. 
+
+```php
+[
+    'watchers' => [
+        'exceptions' => [
+            'enabled' => true,
+        ],
+    ],
+];
+```
+
+# Watching and Sending Request to Krater
+
+In order to watch and send request to Krater the RequestWatcher must be enabled, is enables the ability to monitor HTTP requests in your Laravel application and send the relevant information to Krater.
+
+```php
+[
+		'watchers' => [
+				'request' => [
+						'enabled' => true,
+				],
+		],
+];
+```
+
+# Readers
+
+A reader is a utility we have developed to process PHP objects in a practical way. Its versatility allows you to specify the properties that need to be processed from an object, you can modify this in the Larvis configuration.
+
+Currently, this property specification is only compatible with the following Illuminate classes:
+
+- `Illuminate\Database\Eloquent\Model`
+- `Illuminate\Support\Collection`
+
+In the configuration file, you will find something like:
+
+```php
+[
+    'readers' => [
+        'model' => [
+            'props' => [
+                'connection',
+                'table',
+                'primaryKey',
+                'keyType',
+                'incrementing',
+                'with',
+                'withCount',
+                //...
+            ],
+        ],
+    ],
+];
+```
+
+Here you can modify the properties you need to debug an Illuminate model according to your preferences.
+
+You can do the same with an Collection from Illuminate:
+
+```php
+[
+    'collection' => [
+        'props' => [
+            'items',
+            'escapeWhenCastingToString',
+        ],
+    ],
+];
+```
 
 ## Contributing
 
