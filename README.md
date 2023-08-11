@@ -1,10 +1,10 @@
 # Introduction - Getting to Know Larvis
 
-Larvis is a PHP package for Laravel that allows a Laravel app to send and report information to Moonguard or Krater.
+Larvis is a PHP package for Laravel that allows a Laravel app to send and report information to MoonGuard or Krater.
 
 Currently, you can use Larvis in the following scenarios:
 
-- To report exceptions from your application to Moonguard (ideal for production sites that require tracking).
+- To report exceptions from your application to MoonGuard (ideal for production sites that require tracking).
 - To report and send messages, exceptions, database queries, and HTTP requests from a Laravel application to Krater (ideal for a development environment where different information needs to be debugged).
 
 > 💡 **Important:** This version is compatible only with MoonGuard 1.0.0.
