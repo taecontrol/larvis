@@ -4,7 +4,6 @@ namespace Taecontrol\Larvis\Tests\Unit;
 
 use Taecontrol\Larvis\Readers\Reader;
 use Taecontrol\Larvis\Tests\TestCase;
-use Illuminate\Database\Eloquent\Model;
 use Taecontrol\Larvis\Support\Formatter;
 use Taecontrol\Larvis\Tests\Mock\TestObject;
 
