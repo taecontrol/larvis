@@ -97,4 +97,18 @@ class QueryDataTest extends TestCase
         $this->assertIsArray($queryData);
         $this->assertNotEmpty($queryData);
     }
+
+    /** @test */
+    public function it_formats_the_bindings_into_a_sql_string()
+    {
+        $sql = 'INSERT INTO table (name, age, data) VALUES (?, ?, ?, ?, ?, ?)';
+        $bindings = ['John', 25, '{"key": "value"}', null, true, 'null'];
+
+        $formattedSQL = QueryData::formatBindingsInSQL($sql, $bindings);
+
+        $this->assertEquals(
+            "INSERT INTO table (name, age, data) VALUES ('John', 25, '{\"key\": \"value\"}', null, 1, 'null')",
+            $formattedSQL
+        );
+    }
 }
