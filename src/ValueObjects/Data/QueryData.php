@@ -35,7 +35,7 @@ class QueryData implements Arrayable
 
             if ($position !== false) {
                 if (is_string($binding)) {
-                    $binding = "'" . $binding . "'";
+                    $binding = "'" . str_replace("'", "''", $binding) . "'";
                 }
 
                 if (is_null($binding)) {

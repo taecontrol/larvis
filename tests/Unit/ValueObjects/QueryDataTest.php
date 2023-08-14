@@ -111,4 +111,36 @@ class QueryDataTest extends TestCase
             $formattedSQL
         );
     }
+
+    /** @test */
+    public function it_formats_a_complex_json_object_into_a_valid_sql_string()
+    {
+        $sql = 'INSERT INTO table (content) VALUES (?)';
+
+        $bindings = [json_encode([
+            'line_preview' => [
+                '30' => '',
+                '31' => '    return "user-created";',
+                '32' => '});',
+                '33' => '',
+                '34' => "Route::get('/delete', function () {",
+                '35' => '',
+                '36' => '    larvis()->startQueryWatch();',
+                '37' => '    $user = User::find(1);',
+                '38' => '',
+                '39' => '    $user->delete();',
+                '40' => '    larvis()->stopQueryWatch();',
+                '41' => '    return "user-deleted";',
+            ],
+        ])];
+
+        $formattedSql = QueryData::formatBindingsInSQL($sql, $bindings);
+
+        $expectedSql = "INSERT INTO table (content) VALUES ('{\"line_preview\":{\"30\":\"\",\"31\":\"    return \\\"user-created\\\";\",\"32\":\"});\",\"33\":\"\",\"34\":\"Route::get(''\\/delete'', function () {\",\"35\":\"\",\"36\":\"    larvis()->startQueryWatch();\",\"37\":\"    \$user = User::find(1);\",\"38\":\"\",\"39\":\"    \$user->delete();\",\"40\":\"    larvis()->stopQueryWatch();\",\"41\":\"    return \\\"user-deleted\\\";\"}}')";
+
+        $this->assertEquals(
+            $expectedSql,
+            $formattedSql
+        );
+    }
 }
