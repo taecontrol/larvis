@@ -20,12 +20,32 @@ class QueryData implements Arrayable
     public static function from(QueryExecuted $e): QueryData
     {
         return new self(
-            sql: $e->sql,
+            sql: QueryData::formatBindingsInSQL($e->sql, $e->bindings),
             bindings: $e->bindings,
             time: $e->time,
             connectionName: $e->connectionName,
             queriedAt: now(),
         );
+    }
+
+    public static function formatBindingsInSQL(string $sql, array $bindings): string
+    {
+        foreach ($bindings as $binding) {
+            $position = strpos($sql, '?');
+
+            if ($position !== false) {
+                if (is_string($binding)) {
+                    $binding = "'" . str_replace("'", "''", $binding) . "'";
+                }
+
+                if (is_null($binding)) {
+                    $binding = 'null';
+                }
+                $sql = substr_replace($sql, $binding, $position, 1);
+            }
+        }
+
+        return $sql;
     }
 
     public function toArray(): array

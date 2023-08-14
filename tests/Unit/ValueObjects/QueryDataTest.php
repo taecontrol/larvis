@@ -97,4 +97,50 @@ class QueryDataTest extends TestCase
         $this->assertIsArray($queryData);
         $this->assertNotEmpty($queryData);
     }
+
+    /** @test */
+    public function it_formats_the_bindings_into_a_sql_string()
+    {
+        $sql = 'INSERT INTO table (name, age, data, tag, is_alive, tag_in_string) VALUES (?, ?, ?, ?, ?, ?)';
+        $bindings = ['John', 25, '{"key": "value"}', null, true, 'null'];
+
+        $formattedSQL = QueryData::formatBindingsInSQL($sql, $bindings);
+
+        $this->assertEquals(
+            "INSERT INTO table (name, age, data, tag, is_alive, tag_in_string) VALUES ('John', 25, '{\"key\": \"value\"}', null, 1, 'null')",
+            $formattedSQL
+        );
+    }
+
+    /** @test */
+    public function it_formats_a_complex_json_object_into_a_valid_sql_string()
+    {
+        $sql = 'INSERT INTO table (content) VALUES (?)';
+
+        $bindings = [json_encode([
+            'line_preview' => [
+                '30' => '',
+                '31' => '    return "user-created";',
+                '32' => '});',
+                '33' => '',
+                '34' => "Route::get('/delete', function () {",
+                '35' => '',
+                '36' => '    larvis()->startQueryWatch();',
+                '37' => '    $user = User::find(1);',
+                '38' => '',
+                '39' => '    $user->delete();',
+                '40' => '    larvis()->stopQueryWatch();',
+                '41' => '    return "user-deleted";',
+            ],
+        ])];
+
+        $formattedSql = QueryData::formatBindingsInSQL($sql, $bindings);
+
+        $expectedSql = "INSERT INTO table (content) VALUES ('{\"line_preview\":{\"30\":\"\",\"31\":\"    return \\\"user-created\\\";\",\"32\":\"});\",\"33\":\"\",\"34\":\"Route::get(''\\/delete'', function () {\",\"35\":\"\",\"36\":\"    larvis()->startQueryWatch();\",\"37\":\"    \$user = User::find(1);\",\"38\":\"\",\"39\":\"    \$user->delete();\",\"40\":\"    larvis()->stopQueryWatch();\",\"41\":\"    return \\\"user-deleted\\\";\"}}')";
+
+        $this->assertEquals(
+            $expectedSql,
+            $formattedSql
+        );
+    }
 }
