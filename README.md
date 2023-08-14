@@ -16,7 +16,7 @@ Currently, you can use Larvis in the following scenarios:
 
 - MoonGuard helps you track important features like SSL certificates status, uptime, and exceptions on your applications.
 
-For more information visit the [MoonGuard]( https://moonguard.dev/) site official.
+For more information visit the [MoonGuard]( https://moonguard.dev/) official site.
 
 ## What is Krater?
 
