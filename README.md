@@ -5,9 +5,24 @@ Larvis is a PHP package for Laravel that allows a Laravel app to send and report
 Currently, you can use Larvis in the following scenarios:
 
 - To report exceptions from your application to MoonGuard (ideal for production sites that require tracking).
+
 - To report and send messages, exceptions, database queries, and HTTP requests from a Laravel application to Krater (ideal for a development environment where different information needs to be debugged).
 
 > 💡 **Important:** This version is compatible only with MoonGuard 1.0.0.
+
+## What is MoonGuard?
+
+- MoonGuard is an open source Filament plugin that aims to provide utilities to monitor your Laravel apps in production.
+
+- MoonGuard helps you track important features like SSL certificates status, uptime, and exceptions on your applications.
+
+For more information visit the [MoonGuard]( https://moonguard.dev/) official site.
+
+## What is Krater?
+
+- Krater is a desktop application for debugging Laravel apps, it provides an intuitive and friendly interface to debug exceptions, queries, requests and more.
+
+For more information visit the [Krater](https://moonguard.dev/krater) official site.
 
 # Installation
 
@@ -30,13 +45,13 @@ That’s it! Larvis is installed in your project and the configuration file must
 
 > 💡 **Important:** The default behavior of Larvis is to work with Krater.
 
-# Setup Larvis to work with MoonGuard
+## Setup Larvis to work with MoonGuard
 
 To allow Larvis to capture and report exceptions, it is necessary to add three variables on the app `.env` file:
 
 ```php
 MOONGUARD_DOMAIN=https://mymoonguard.com
-MOONGUARD_SITE_API_TOKEN=LDUxazsuq6aYi9bvSMqc6vkMXOjsD7JdrIN2FkWtA4UVNhaPE02gMS23FIp0/*  */
+MOONGUARD_SITE_API_TOKEN=LDUxazsuq6aYi9bvSMqc6vkMXOjsD7JdrIN2FkWtA4UVNhaPE02gMS23FIp0
 KRATER_DEBUG=false
 ```
 
@@ -54,11 +69,11 @@ No extra steps needed. With this setup Larvis can report your app exceptions to 
 
 > 💡 **Important:** Reporting exceptions to MoonGuard only works when the app environment is `production`.
 
-# Setup Larvis to work with Krater
+## Setup Larvis to work with Krater
 
 Larvis default behavior is to work and debug with Krater. We have develop several utilities to catch and report data as messages, exceptions, queries and requests easily to Krater.
 
-## Watchers
+### Watchers
 
 Watchers are components that monitor and record different aspects of your application, such as requests, database queries, and exceptions. Larvis includes the following watchers:
 
@@ -70,7 +85,7 @@ All the watchers can be enabled or disabled from the Larvis configuration file.
 
 > 💡 **Important**: RequestWatcher and QueryWatcher are not compatible with MoonGuard.
 
-# Sending Messages to Krater
+## Sending Messages to Krater
 
 Larvis understand a message as the data you want to send to Krater, similar to when you use `dd($arg)` in your projects. In this case, Larvis and Krater use different strategies to format and make the debugging of the data flexible.
 
@@ -117,7 +132,7 @@ $user->age = 30;
 larvis($user);
 ```
 
-# Watching and Sending Queries to Krater
+## Watching and Sending Queries to Krater
 
 In order to watch and send queries to Krater the QueryWatcher must be enabled, as we mentioned earlier, this watcher allows you to detect and report all queries that are made to the app database.
 
@@ -144,7 +159,7 @@ larvis()->stopQueryWatch();
 - The `startQueryWatch()`: starts the QueryWatcher, any query after this line will be recorded and reported.
 - The `stopQueryWatch()`: stops the QueryWatcher, any query after this line will not be logged or reported.
 
-# Watching and Sending Exceptions to Krater
+## Watching and Sending Exceptions to Krater
 
 In order to watch and send exceptions to Krater the ExceptionWatcher must be enabled, this watcher is enabled by default.
 
@@ -158,7 +173,7 @@ In order to watch and send exceptions to Krater the ExceptionWatcher must be ena
 ];
 ```
 
-# Watching and Sending Request to Krater
+## Watching and Sending Request to Krater
 
 In order to watch and send request to Krater the RequestWatcher must be enabled, is enables the ability to monitor HTTP requests in your Laravel application and send the relevant information to Krater.
 
@@ -172,7 +187,7 @@ In order to watch and send request to Krater the RequestWatcher must be enabled,
 ];
 ```
 
-# Readers
+## Readers
 
 A reader is a utility we have developed to process PHP objects in a practical way. Its versatility allows you to specify the properties that need to be processed from an object, you can modify this in the Larvis configuration.
 
