@@ -101,13 +101,13 @@ class QueryDataTest extends TestCase
     /** @test */
     public function it_formats_the_bindings_into_a_sql_string()
     {
-        $sql = 'INSERT INTO table (name, age, data) VALUES (?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO table (name, age, data, tag, is_alive, tag_in_string) VALUES (?, ?, ?, ?, ?, ?)';
         $bindings = ['John', 25, '{"key": "value"}', null, true, 'null'];
 
         $formattedSQL = QueryData::formatBindingsInSQL($sql, $bindings);
 
         $this->assertEquals(
-            "INSERT INTO table (name, age, data) VALUES ('John', 25, '{\"key\": \"value\"}', null, 1, 'null')",
+            "INSERT INTO table (name, age, data, tag, is_alive, tag_in_string) VALUES ('John', 25, '{\"key\": \"value\"}', null, 1, 'null')",
             $formattedSQL
         );
     }
