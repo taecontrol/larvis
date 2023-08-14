@@ -1,32 +1,30 @@
 # Introduction - Getting to Know Larvis
 
-Larvis is a PHP package for Laravel that allows a Laravel app to send and report information to Moonguard or Krater.
+Larvis is a PHP package for Laravel that allows a Laravel app to send and report information to MoonGuard or Krater.
 
 Currently, you can use Larvis in the following scenarios:
 
-- To report exceptions from your application to Moonguard (ideal for production sites that require tracking).
-
-What is MoonGuard?
-
-- Moonguard is an open source Filament plugin that aims to provide utilities to monitor your Laravel apps in production.
-
-- MoonGuard helps you track important features like SSL certificates status, uptime, and exceptions on your applications.
-
-for more information visit the site official [MoonGuard]( https://moonguard.dev/).
-
-> 💡 **Important:** This version is compatible only with MoonGuard 1.0.0.
+- To report exceptions from your application to MoonGuard (ideal for production sites that require tracking).
 
 - To report and send messages, exceptions, database queries, and HTTP requests from a Laravel application to Krater (ideal for a development environment where different information needs to be debugged).
 
-What is Krater?
+> 💡 **Important:** This version is compatible only with MoonGuard 1.0.0.
 
-- Krater is a debugging application for Laravel that helps you solve problems related to exceptions, queries and requests.
+## What is MoonGuard?
 
-- With its intuitive interface it simplifies the debugging process and improves the efficiency of application development.
+- MoonGuard is an open source Filament plugin that aims to provide utilities to monitor your Laravel apps in production.
 
-for more information visit the official site [Krater](https://moonguard.dev/).
+- MoonGuard helps you track important features like SSL certificates status, uptime, and exceptions on your applications.
 
-## Installation
+For more information visit the [MoonGuard]( https://moonguard.dev/) site official.
+
+## What is Krater?
+
+- Krater is a desktop application for debugging Laravel apps, it provides an intuitive and friendly interface to debug exceptions, queries, requests and more.
+
+For more information visit the [Krater](https://moonguard.dev/krater) official site.
+
+# Installation
 
 You can install Larvis via composer with the following command:
 
