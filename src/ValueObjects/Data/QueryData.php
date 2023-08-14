@@ -32,10 +32,12 @@ class QueryData implements Arrayable
     {
         foreach ($bindings as $binding) {
             $position = strpos($sql, '?');
+
             if ($position !== false) {
                 if (is_string($binding)) {
                     $binding = "'" . $binding . "'";
                 }
+
                 if (is_null($binding)) {
                     $binding = 'null';
                 }

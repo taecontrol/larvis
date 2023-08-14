@@ -2,7 +2,6 @@
 
 namespace Taecontrol\Larvis\Watchers;
 
-use Symfony\Component\ErrorHandler\Debug;
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Events\QueryExecuted;
