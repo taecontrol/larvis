@@ -12,8 +12,16 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
-      - name: Create Release
+      - name: Check Tag
+        id: check-tag
+        run: |
+          if [[ "${{ github.ref }}" =~ alpha|beta ]]; then
+            echo "::set-output name=prerelease::true"
+          else
+            echo "::set-output name=prerelease::false"
+          fi
+      - name: Release
         uses: ncipollo/release-action@v1.12.0
         with:
-          prerelease: true
+          prerelease: ${{ steps.check-tag.outputs.prerelease }}
           generateReleaseNotes: true
