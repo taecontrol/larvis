@@ -102,6 +102,8 @@ class RequestWatcherTest extends TestCase
             $appData->language === 'PHP' &&
             $appData->languageVersion === PHP_VERSION;
 
+            $this->assertStringContainsString('larvis', $appData->directory);
+
             return $isAppDataPresent && $isRequestDataPresent && $isResponseDataPresent;
         });
 

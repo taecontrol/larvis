@@ -92,6 +92,8 @@ class ExceptionWatcherTest extends TestCase
             $appData->language === 'PHP' &&
             $appData->languageVersion === PHP_VERSION;
 
+            $this->assertStringContainsString('larvis', $appData->directory);
+
             return $isExceptionPresent && $isAppDataPresent && $isExceptionDataAvailable;
         });
 

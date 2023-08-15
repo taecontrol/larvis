@@ -12,6 +12,7 @@ class AppData implements Arrayable
         public readonly string|null $framework,
         public readonly string|null $frameworkVersion,
         public readonly string $name,
+        public readonly string $directory,
         public readonly string|null $language,
         public readonly string|null $languageVersion,
     ) {
@@ -29,6 +30,7 @@ class AppData implements Arrayable
 
         return new AppData(
             framework: $framework['name'],
+            directory: base_path(),
             frameworkVersion: $framework['version'],
             name: $name,
             language: 'PHP',
@@ -40,6 +42,7 @@ class AppData implements Arrayable
     {
         return [
             'name' => $this->name,
+            'directory' => $this->directory,
             'framework' => $this->framework,
             'framework_version' => $this->frameworkVersion,
             'language' => $this->language,
@@ -85,6 +88,7 @@ class AppData implements Arrayable
     {
         return new AppData(
             name: $args['name'],
+            directory: $args['directory'],
             framework: $args['framework'],
             frameworkVersion: $args['framework_version'],
             language: $args['language'],

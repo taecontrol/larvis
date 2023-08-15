@@ -89,6 +89,8 @@ class MessageHandlerTest extends TestCase
             $appData->language === 'PHP' &&
             $appData->languageVersion === PHP_VERSION;
 
+            $this->assertStringContainsString('larvis', $appData->directory);
+
             return $isMessageDataPresent && $isAppDataPresent;
         });
     }
