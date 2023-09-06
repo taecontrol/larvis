@@ -2,7 +2,6 @@
 
 namespace Taecontrol\Larvis\Tests\Feature\Handlers;
 
-use PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer;
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
@@ -39,7 +38,7 @@ class MessageHandlerTest extends TestCase
     {
         Http::fake();
 
-        larvis(1,2,3,4);
+        larvis(1, 2, 3, 4);
 
         Http::assertSentCount(4);
     }
@@ -91,7 +90,7 @@ class MessageHandlerTest extends TestCase
 
             $isMessageDataPresent = $messageData->data === '"Hi from Larvis"' &&
             $messageData->kind === 'string' &&
-            $messageData->line === 72 &&
+            $messageData->line === 82 &&
             $messageData->file === __FILE__;
 
             $isAppDataPresent = $appData->name === env('APP_NAME') &&
