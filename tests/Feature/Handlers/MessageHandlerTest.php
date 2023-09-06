@@ -2,6 +2,7 @@
 
 namespace Taecontrol\Larvis\Tests\Feature\Handlers;
 
+use PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer;
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
@@ -31,6 +32,16 @@ class MessageHandlerTest extends TestCase
         larvis('hola');
 
         Http::assertNothingSent();
+    }
+
+    /** @test */
+    public function it_sends_multiple_messages(): void
+    {
+        Http::fake();
+
+        larvis(1,2,3,4);
+
+        Http::assertSentCount(4);
     }
 
     /** @test */

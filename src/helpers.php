@@ -15,7 +15,7 @@ if (! function_exists('larvis')) {
                 return app(Larvis::class);
             }
 
-            return app(Larvis::class)->sendMessage($args[0]);
+            return app(Larvis::class)->sendMessage(...$args);
         } catch (Exception $exception) {
             return null;
         }

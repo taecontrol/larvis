@@ -60,10 +60,12 @@ class Larvis
         }
     }
 
-    public function sendMessage(mixed $args): void
+    public function sendMessage(mixed ...$args): void
     {
         if ($this->isLocalDebugEnabled()) {
-            (new MessageHandler())->handle($args);
+            foreach ($args as $arg) {
+                (new MessageHandler())->handle($arg);
+            }
         }
     }
 }
