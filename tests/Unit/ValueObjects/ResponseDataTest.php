@@ -13,15 +13,15 @@ class ResponseDataTest extends TestCase
     {
         $response = ResponseData::from(new Response())->debugFormat();
 
-        $this->assertIsString($response['status'], '200');
-        $this->assertIsString($response['status_text'], 'OK');
+        $this->assertEquals($response['status'], '200');
+        $this->assertEquals($response['status_text'], 'OK');
 
         $headers = json_decode($response['headers']);
         $this->assertIsObject($headers);
         $this->assertNotEmpty($headers);
 
-        $this->assertIsString($response['content'], 'HTML Response');
-        $this->assertIsString($response['version'], '1.0');
+        $this->assertEquals($response['content'], 'HTML Response');
+        $this->assertEquals($response['version'], '1.0');
     }
 
     /** @test */
@@ -30,12 +30,12 @@ class ResponseDataTest extends TestCase
         $response = ResponseData::from(new Response())->toArray();
 
         $this->assertIsNumeric($response['status'], '200');
-        $this->assertIsString($response['status_text'], 'OK');
+        $this->assertEquals($response['status_text'], 'OK');
 
         $this->assertIsArray($response['headers']);
         $this->assertNotEmpty($response['headers']);
 
-        $this->assertIsString($response['content'], 'HTML Response');
-        $this->assertIsString($response['version'], '1.0');
+        $this->assertEquals($response['content'], 'HTML Response');
+        $this->assertEquals($response['version'], '1.0');
     }
 }
