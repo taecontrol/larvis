@@ -34,10 +34,11 @@ class QueryDataTest extends TestCase
         $this->assertIsArray($queryData);
         $this->assertNotEmpty($queryData);
 
-        $this->assertIsString($queryData['sql'], 'test query');
+        $this->assertEquals($queryData['sql'], 'test Query');
+        $this->assertEquals($queryData['database'], 'test_database');
         $this->assertIsString($queryData['bindings']);
-        $this->assertIsFloat($queryData['time'], 2.98);
-        $this->assertIsString($queryData['connection_name'], 'test connection');
+        $this->assertEquals($queryData['time'], 2.98);
+        $this->assertEquals($queryData['connection_name'], 'default');
         $this->assertIsString($queryData['queried_at']);
     }
 
@@ -65,10 +66,11 @@ class QueryDataTest extends TestCase
         $this->assertIsArray($array);
         $this->assertNotEmpty($array);
 
-        $this->assertIsString($array['sql'], 'test query');
+        $this->assertEquals($array['sql'], 'test Query');
+        $this->assertEquals($array['database'], 'test_database');
         $this->assertIsArray($array['bindings']);
         $this->assertIsFloat($array['time'], 2.98);
-        $this->assertIsString($array['connection_name'], 'test connection');
+        $this->assertEquals($array['connection_name'], 'default');
         $this->assertIsObject($array['queried_at']);
         $this->assertInstanceOf(Carbon::class, $array['queried_at']);
     }

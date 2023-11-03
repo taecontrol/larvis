@@ -10,6 +10,7 @@ class QueryData implements Arrayable
 {
     public function __construct(
         public readonly string $sql,
+        public readonly string $database,
         public readonly array $bindings,
         public readonly float $time,
         public readonly string $connectionName,
@@ -21,6 +22,7 @@ class QueryData implements Arrayable
     {
         return new self(
             sql: QueryData::formatBindingsInSQL($e->sql, $e->bindings),
+            database: $e->connection->getDatabaseName(),
             bindings: $e->bindings,
             time: $e->time,
             connectionName: $e->connectionName,
@@ -52,6 +54,7 @@ class QueryData implements Arrayable
     {
         return [
             'sql' => $this->sql,
+            'database' => $this->database,
             'bindings' => $this->bindings,
             'time' => $this->time,
             'connection_name' => $this->connectionName,
@@ -63,6 +66,7 @@ class QueryData implements Arrayable
     {
         return new QueryData(
             sql: $args['sql'],
+            database: $args['database'],
             bindings: $args['bindings'],
             time: $args['time'],
             connectionName: $args['connection_name'],
@@ -74,6 +78,7 @@ class QueryData implements Arrayable
     {
         return [
             'sql' => $this->sql,
+            'database' => $this->database,
             'bindings' => json_encode($this->bindings),
             'time' => $this->time,
             'connection_name' => $this->connectionName,
