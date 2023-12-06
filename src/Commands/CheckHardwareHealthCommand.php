@@ -25,8 +25,13 @@ class CheckHardwareHealthCommand extends Command
         $hardwareData = new HardwareData($cpuLoad, $memory, $disk);
         $this->info('data');
         var_dump($hardwareData->toArray());
-        $url = config('larvis.krater.url') . config('larvis.krater.api.messages');
-        $data =  $hardwareData->toArray();
+        $url = config('larvis.moonguard.domain') . config('larvis.moonguard.api.hardware');
+
+        $data = array_merge(
+            $hardwareData->toArray(),
+            ['api_token' => config('larvis.moonguard.site.api_token')],
+        );
+
         $larvis->send($url, $data);
 
     }
