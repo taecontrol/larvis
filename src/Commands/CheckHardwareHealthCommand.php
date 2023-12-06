@@ -23,7 +23,8 @@ class CheckHardwareHealthCommand extends Command
         $disk = HardwareService::getDiskUsage();
 
         $hardwareData = new HardwareData($cpuLoad, $memory, $disk);
-
+        $this->info('data');
+        var_dump($hardwareData->toArray());
         $url = config('larvis.krater.url') . config('larvis.krater.api.messages');
         $data =  $hardwareData->toArray();
         $larvis->send($url, $data);

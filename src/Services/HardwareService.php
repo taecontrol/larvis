@@ -8,7 +8,6 @@ use Taecontrol\Larvis\Exceptions\MemoryHealthException;
 
 class HardwareService
 {
-
     public static function getDiskUsage()
     {
         $result = false;
@@ -26,7 +25,8 @@ class HardwareService
         ];
 
         if (!$result) {
-            throw DiskHealthException::class;
+
+            throw DiskHealthException::make();
         }
 
         return $result;
@@ -42,7 +42,7 @@ class HardwareService
         }
 
         if (!$result) {
-            throw MemoryHealthException::class;
+            throw MemoryHealthException::make();
         }
 
         return $result;
@@ -57,7 +57,7 @@ class HardwareService
         }
 
         if (!$result) {
-            throw CpuHealthException::class;
+            throw CpuHealthException::make();
         }
 
         $result = array_map(fn ($n) => round($n * 100), $result);

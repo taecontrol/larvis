@@ -6,16 +6,9 @@ use Exception;
 
 class CpuHealthException extends Exception
 {
-    /**
-   * Create a new exception instance.
-   *
-   * @param  string  $message
-   *
-   * @return void
-   */
-    public function __construct($message = 'Could not get cpu Load.')
+    public static function make(): self
     {
-        parent::__construct($message);
+        return new self("Could not measure the CPU of your system");
     }
-
 }
+

@@ -6,16 +6,8 @@ use Exception;
 
 class DiskHealthException extends Exception
 {
-    /**
-   * Create a new exception instance.
-   *
-   * @param  string  $message
-   *
-   * @return void
-   */
-    public function __construct($message = 'Could not get hard disk usage.')
+    public static function make(): self
     {
-        parent::__construct($message);
+        return new self("Could not measure the Disk size of your system");
     }
-
 }

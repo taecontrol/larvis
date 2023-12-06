@@ -6,16 +6,8 @@ use Exception;
 
 class MemoryHealthException extends Exception
 {
-    /**
-   * Create a new exception instance.
-   *
-   * @param  string  $message
-   *
-   * @return void
-   */
-    public function __construct($message = 'Could not get memory usage.')
+    public static function make(): self
     {
-        parent::__construct($message);
+        return new self("Could not measure the Memory of your system");
     }
-
 }
