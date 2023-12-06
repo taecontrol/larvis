@@ -12,17 +12,17 @@ class HardwareService
     public static function getDiskUsage()
     {
         $result = false;
-        $freeDiskSpace = false;
-        $totalDiskSpace = false;
+        $freeSpace = false;
+        $totalSpace = false;
 
         if(function_exists('disk_free_space') && function_exists('disk_total_space')) {
-            $freeDiskSpace = round((disk_free_space('/') / pow(1024, 3)), 2);
-            $totalDiskSpace = round((disk_total_space('/') / pow(1024, 3)), 2);
+            $freeSpace = round((disk_free_space('/') / pow(1024, 3)), 1);
+            $totalSpace = round((disk_total_space('/') / pow(1024, 3)), 1);
         }
 
         $result = [
-            "freeDiskSpace" => $freeDiskSpace,
-            "totalDiskSpace" => $totalDiskSpace,
+            "freeSpace" => $freeSpace,
+            "totalSpace" => $totalSpace,
         ];
 
         if (!$result) {
@@ -38,9 +38,7 @@ class HardwareService
 
         if (function_exists('exec')) {
             $memory = shell_exec(" free | grep Mem | awk '{print $3/$2 * 100}' ");
-            //$result = $memory;
-            $result = round((float)$memory, 2);  //correguir
-
+            $result = round((float) $memory);
         }
 
         if (!$result) {
@@ -48,7 +46,6 @@ class HardwareService
         }
 
         return $result;
-
     }
 
     public static function getCpuLoadUsage()
@@ -63,9 +60,8 @@ class HardwareService
             throw CpuHealthException::class;
         }
 
+        $result = array_map(fn ($n) => round($n * 100), $result);
 
-        $result = array_map(fn ($n) => round($n, 2), $result);
-
-        return $result[1]; //los ultimos 5 min
+        return $result[1];
     }
 }
