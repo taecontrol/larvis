@@ -35,7 +35,7 @@ class HardwareService
     public static function getMemoryUsage()
     {
         $result = false;
-
+ 
         if (function_exists('exec')) {
             $memory = shell_exec(" free | grep Mem | awk '{print $3/$2 * 100}' ");
             $result = round((float) $memory);
