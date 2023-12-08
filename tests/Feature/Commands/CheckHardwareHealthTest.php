@@ -4,8 +4,7 @@ namespace Taecontrol\Larvis\Tests\Feature\Commands;
 
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
-use Mockery;
-use Taecontrol\Larvis\Larvis;
+use Mockery\MockInterface;
 use Taecontrol\Larvis\Services\HardwareService;
 use Taecontrol\Larvis\Tests\TestCase;
 
@@ -15,43 +14,46 @@ class CheckHardwareHealthTest extends TestCase
     {
         parent::setUp();
 
-        config()->set('larvis.moonguard.url', 'http://localhost:58673');
+        config()->set('larvis.moonguard.domain', 'http://moonguard.test');
         config()->set('larvis.moonguard.api.hardware', '/moonguard/api/hardware');
 
         // mock hardware service
-        $hardwareServiceMock = Mockery::mock(HardwareService::class);
-        $hardwareServiceMock->shouldReceive('getCPULoadUsage')->once()->andReturn(10.2);
-        $hardwareServiceMock->shouldReceive('getMemoryUsage')->once()->andReturn(23);
-        $hardwareServiceMock->shouldReceive('getDiskUsage')->once()->andReturn([
-            'freeSpace' => 79.8,
-            'totalSpace' => 181.7,
-        ]);
+        $mock = $this->mock(HardwareService::class, function (MockInterface $mock) {
+            $mock->shouldReceive('getCPULoadUsage')->once()->andReturn(10);
+            $mock->shouldReceive('getMemoryUsage')->once()->andReturn(23);
+            $mock->shouldReceive('getDiskUsage')->once()->andReturn([
+                'freeSpace' => 79.7,
+                'totalSpace' => 181.7
+            ]);
+        });
 
-        app()->instance(HardwareService::class, $hardwareServiceMock);
+        app()->instance(HardwareService::class, $mock);
     }
     /** @test */
     public function it_asserts_that_data_its_send_correctly(): void
     {
-        /** @var Larvis */
-        app(Larvis::class);
+        config()->set('larvis.krater.enabled', false);
 
         $data = [
-            'cpuLoad' => 10.2,
+            'cpuLoad' => 10,
             'memory' => 23,
             'disk' => [
-                'freeSpace' => 79.8,
+                'freeSpace' => 79.7,
                 'totalSpace' => 181.7
             ],
             'api_token' => config('larvis.moonguard.site.api_token'),
         ];
 
-        Http::fake(['https://localhost:5873/*' => Http::response(null, 201, [])]);
+        Http::fake(['https://moonguard.test/*' => Http::response([], 200, [])]);
 
-        $this->artisan('check:hardware')->run();
+        $this->artisan('check:hardware');
 
         Http::assertSent(function (Request $request) use ($data) {
-            dd($request);
-            return $request === $data;
+            //dd($request['cpuLoad']);
+            //dd($request);
+            $requestCpu = $request['disk']['freeSpace'];
+            //dd($requestCpu);
+            return $requestCpu === $data['disk']['freeSpace'];
         });
     }
 }

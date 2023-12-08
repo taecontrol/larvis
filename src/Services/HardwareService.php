@@ -5,10 +5,23 @@ namespace Taecontrol\Larvis\Services;
 use Taecontrol\Larvis\Exceptions\CpuHealthException;
 use Taecontrol\Larvis\Exceptions\DiskHealthException;
 use Taecontrol\Larvis\Exceptions\MemoryHealthException;
+use Taecontrol\Larvis\Interfaces\HardwareServiceInterface;
+use Taecontrol\Larvis\ValueObjects\Data\HardwareData;
 
-class HardwareService
+class HardwareService implements HardwareServiceInterface
 {
-    public static function getDiskUsage()
+    public function getHardwareData()
+    {
+        $cpuLoad = $this->getCpuLoadUsage();
+        $memory = $this->getMemoryUsage();
+        $disk = $this->getDiskUsage();
+
+        $hardwareData = new HardwareData($cpuLoad, $memory, $disk);
+
+        return $hardwareData;
+    }
+
+    public function getDiskUsage()
     {
         $result = false;
         $freeSpace = false;
@@ -25,17 +38,16 @@ class HardwareService
         ];
 
         if (!$result) {
-
             throw DiskHealthException::make();
         }
 
         return $result;
     }
 
-    public static function getMemoryUsage()
+    public function getMemoryUsage()
     {
         $result = false;
- 
+
         if (function_exists('exec')) {
             $memory = shell_exec(" free | grep Mem | awk '{print $3/$2 * 100}' ");
             $result = round((float) $memory);
@@ -48,7 +60,7 @@ class HardwareService
         return $result;
     }
 
-    public static function getCpuLoadUsage()
+    public function getCpuLoadUsage()
     {
         $result = false;
 
