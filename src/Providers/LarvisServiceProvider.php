@@ -4,6 +4,7 @@ namespace Taecontrol\Larvis\Providers;
 
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Support\ServiceProvider;
+use Taecontrol\Larvis\Commands\CheckHardwareHealthCommand;
 use Taecontrol\Larvis\Watchers\Watcher;
 use Taecontrol\Larvis\Watchers\QueryWatcher;
 use Taecontrol\Larvis\Watchers\RequestWatcher;
@@ -29,6 +30,10 @@ class LarvisServiceProvider extends ServiceProvider
         ], 'larvis-config');
 
         $this->bootWatchers();
+
+        $this->commands([
+            CheckHardwareHealthCommand::class,
+        ]);
     }
 
     protected function bootWatchers(): self
