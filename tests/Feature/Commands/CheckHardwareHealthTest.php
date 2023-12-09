@@ -78,7 +78,7 @@ class CheckHardwareHealthTest extends TestCase
             ],
         ];
 
-        $hardwareService = new HardwareService();
+        $hardwareService = new FakeHardwareService();
         $checkService = new CheckService($hardwareService);
 
         $result = $checkService->getHardwareData();
