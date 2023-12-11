@@ -11,23 +11,12 @@ use Taecontrol\Larvis\Commands\CheckHardwareHealthCommand;
 
 class CheckHardwareHealthTest extends TestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        config()->set('larvis.moonguard.domain', 'http://moonguard.test');
-        config()->set('larvis.moonguard.api.hardware', '/moonguard/api/hardware');
-    }
-
     /** @test */
     public function it_asserts_that_data_its_send_correctly(): void
     {
         config()->set('larvis.krater.enabled', false);
         config()->set('larvis.moonguard.domain', 'https://moonguard.test');
         config()->set('larvis.moonguard.api.hardware', '/moonguard/api/hardware');
-
-        dump(config('larvis.moonguard.domain'));
-        dump(config('larvis.moonguard.api.hardware'));
 
         $this->mock(HardwareService::class, function (MockInterface $mock) {
             $mock->shouldReceive('getHardwareData')
@@ -59,7 +48,6 @@ class CheckHardwareHealthTest extends TestCase
         $command->handle();
 
         Http::assertSent(function (Request $request) use ($data) {
-            dump($request);
             $requestMemory = $request['memory'];
             $requestCpuLoad = $request['cpuLoad'];
             $requestTotalDisk = $request['disk']['totalSpace'];
@@ -102,6 +90,6 @@ class CheckHardwareHealthTest extends TestCase
         $hardwareService = app(HardwareService::class);
 
         $result = $hardwareService->getHardwareData();
-        $this->assertTrue($result === $data);
+        $this->assertTrue($result == $data);
     }
 }
