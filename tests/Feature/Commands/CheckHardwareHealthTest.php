@@ -58,10 +58,10 @@ class CheckHardwareHealthTest extends TestCase
             $requestTotalDisk = $request['disk']['totalSpace'];
             $requestFreeDisk = $request['disk']['freeSpace'];
 
-            return $requestCpuLoad === $data['cpuLoad'] &&
-                   $requestMemory === $data['memory'] &&
-                   $requestFreeDisk === $data['disk']['freeSpace'] &&
-                   $requestTotalDisk === $data['disk']['totalSpace'];
+            return $requestCpuLoad == $data['cpuLoad'] &&
+                   $requestMemory == $data['memory'] &&
+                   $requestFreeDisk == $data['disk']['freeSpace'] &&
+                   $requestTotalDisk == $data['disk']['totalSpace'];
         });
     }
 
