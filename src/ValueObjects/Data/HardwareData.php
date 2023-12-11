@@ -10,7 +10,8 @@ class HardwareData implements Arrayable
         public readonly float $cpuLoad,
         public readonly float $memory,
         public readonly array $disk,
-    ) {}
+    ) {
+    }
 
     public function toArray(): array
     {

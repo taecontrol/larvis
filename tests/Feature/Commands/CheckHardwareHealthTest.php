@@ -2,15 +2,15 @@
 
 namespace Taecontrol\Larvis\Tests\Feature\Commands;
 
+use Mockery\MockInterface;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
-use Mockery\MockInterface;
 use Taecontrol\Larvis\Tests\TestCase;
 use Taecontrol\Larvis\Services\HardwareService;
 
 class CheckHardwareHealthTest extends TestCase
 {
-    public function  setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -23,17 +23,17 @@ class CheckHardwareHealthTest extends TestCase
     {
         config()->set('larvis.krater.enabled', false);
 
-        $this->mock(HardwareService::class, function(MockInterface $mock) {
+        $this->mock(HardwareService::class, function (MockInterface $mock) {
             $mock->shouldReceive('getHardwareData')
-                 ->once()
-                 ->andReturn([
+                ->once()
+                ->andReturn([
                     'cpuLoad' => 10,
                     'memory' => 23,
                     'disk' => [
                         'freeSpace' => 79.7,
-                        'totalSpace' => 181.7
+                        'totalSpace' => 181.7,
                     ],
-                 ]);
+                ]);
         });
 
         $data = [
@@ -41,7 +41,7 @@ class CheckHardwareHealthTest extends TestCase
             'memory' => 23,
             'disk' => [
                 'freeSpace' => 79.7,
-                'totalSpace' => 181.7
+                'totalSpace' => 181.7,
             ],
             'api_token' => config('larvis.moonguard.site.api_token'),
         ];
@@ -68,17 +68,17 @@ class CheckHardwareHealthTest extends TestCase
     {
         config()->set('larvis.krater.enabled', false);
 
-        $this->mock(HardwareService::class, function(MockInterface $mock) {
+        $this->mock(HardwareService::class, function (MockInterface $mock) {
             $mock->shouldReceive('getHardwareData')
-                 ->once()
-                 ->andReturn([
+                ->once()
+                ->andReturn([
                     'cpuLoad' => 10,
                     'memory' => 23,
                     'disk' => [
                         'freeSpace' => 79.7,
-                        'totalSpace' => 181.7
+                        'totalSpace' => 181.7,
                     ],
-                 ]);
+                ]);
         });
 
         $data = [
@@ -86,7 +86,7 @@ class CheckHardwareHealthTest extends TestCase
             'memory' => 23,
             'disk' => [
                 'freeSpace' => 79.7,
-                'totalSpace' => 181.7
+                'totalSpace' => 181.7,
             ],
         ];
 

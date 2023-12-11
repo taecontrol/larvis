@@ -4,8 +4,8 @@ namespace Taecontrol\Larvis\Services;
 
 use Taecontrol\Larvis\Exceptions\CpuHealthException;
 use Taecontrol\Larvis\Exceptions\DiskHealthException;
-use Taecontrol\Larvis\Exceptions\MemoryHealthException;
 use Taecontrol\Larvis\ValueObjects\Data\HardwareData;
+use Taecontrol\Larvis\Exceptions\MemoryHealthException;
 
 class HardwareService
 {
@@ -26,17 +26,17 @@ class HardwareService
         $freeSpace = false;
         $totalSpace = false;
 
-        if(function_exists('disk_free_space') && function_exists('disk_total_space')) {
+        if (function_exists('disk_free_space') && function_exists('disk_total_space')) {
             $freeSpace = round((disk_free_space('/') / pow(1024, 3)), 1);
             $totalSpace = round((disk_total_space('/') / pow(1024, 3)), 1);
         }
 
         $result = [
-            "freeSpace" => $freeSpace,
-            "totalSpace" => $totalSpace,
+            'freeSpace' => $freeSpace,
+            'totalSpace' => $totalSpace,
         ];
 
-        if (!$result) {
+        if (! $result) {
             throw DiskHealthException::make();
         }
 
@@ -52,7 +52,7 @@ class HardwareService
             $result = round((float) $memory);
         }
 
-        if (!$result) {
+        if (! $result) {
             throw MemoryHealthException::make();
         }
 
@@ -67,7 +67,7 @@ class HardwareService
             $result = sys_getloadavg();
         }
 
-        if (!$result) {
+        if (! $result) {
             throw CpuHealthException::make();
         }
 

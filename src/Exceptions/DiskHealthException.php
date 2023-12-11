@@ -8,6 +8,6 @@ class DiskHealthException extends Exception
 {
     public static function make(): self
     {
-        return new self("Could not measure the Disk size of your system");
+        return new self('Could not measure the Disk size of your system');
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Taecontrol\Larvis\Commands;
 
-use Illuminate\Console\Command;
 use Taecontrol\Larvis\Larvis;
+use Illuminate\Console\Command;
 use Taecontrol\Larvis\Services\HardwareService;
 
 class CheckHardwareHealthCommand extends Command
@@ -30,4 +30,3 @@ class CheckHardwareHealthCommand extends Command
         $larvis->send($url, $data);
     }
 }
-

@@ -4,11 +4,11 @@ namespace Taecontrol\Larvis\Providers;
 
 use Taecontrol\Larvis\Larvis;
 use Illuminate\Support\ServiceProvider;
-use Taecontrol\Larvis\Commands\CheckHardwareHealthCommand;
 use Taecontrol\Larvis\Watchers\Watcher;
 use Taecontrol\Larvis\Watchers\QueryWatcher;
 use Taecontrol\Larvis\Watchers\RequestWatcher;
 use Taecontrol\Larvis\Watchers\ExceptionWatcher;
+use Taecontrol\Larvis\Commands\CheckHardwareHealthCommand;
 
 class LarvisServiceProvider extends ServiceProvider
 {

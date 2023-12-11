@@ -8,6 +8,6 @@ class MemoryHealthException extends Exception
 {
     public static function make(): self
     {
-        return new self("Could not measure the Memory of your system");
+        return new self('Could not measure the Memory of your system');
     }
 }
