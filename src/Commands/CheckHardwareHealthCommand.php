@@ -10,7 +10,7 @@ class CheckHardwareHealthCommand extends Command
 {
     protected $signature = 'check:hardware';
 
-    protected $description = 'check Cpu Memory and Disk space';
+    protected $description = 'Checks CPU load, RAM usage and Disk space';
 
     public function handle()
     {
@@ -19,14 +19,15 @@ class CheckHardwareHealthCommand extends Command
 
         $hardwareService = app(HardwareService::class);
 
-        $data = $hardwareService->getHardwareData();
+        $hardwareData = $hardwareService->getHardwareData();
 
         $url = config('larvis.moonguard.domain') . config('larvis.moonguard.api.hardware');
 
         $data = array_merge(
-            $data,
+            $hardwareData,
             ['api_token' => config('larvis.moonguard.site.api_token')],
         );
+
         $larvis->send($url, $data);
     }
 }

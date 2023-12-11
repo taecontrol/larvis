@@ -15,9 +15,9 @@ class HardwareService
         $memory = $this->getMemoryUsage();
         $disk = $this->getDiskUsage();
 
-        $hardwareData = new HardwareData($cpuLoad, $memory, $disk);
+        $HardwareData = new HardwareData($cpuLoad, $memory, $disk);
 
-        return $hardwareData;
+        return $HardwareData->toArray();
     }
 
     public function getDiskUsage()

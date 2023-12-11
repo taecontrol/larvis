@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Taecontrol\Larvis\Tests\TestCase;
 use Taecontrol\Larvis\Services\HardwareService;
 use Taecontrol\Larvis\Commands\CheckHardwareHealthCommand;
+use Taecontrol\Larvis\ValueObjects\Data\HardwareData;
 
 class CheckHardwareHealthTest extends TestCase
 {
