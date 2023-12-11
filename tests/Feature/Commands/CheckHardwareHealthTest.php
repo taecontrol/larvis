@@ -26,6 +26,7 @@ class CheckHardwareHealthTest extends TestCase
 
         $this->mock(HardwareService::class, function (MockInterface $mock) {
             $mock->shouldReceive('getHardwareData')
+                ->once()
                 ->andReturn([
                     'cpuLoad' => 10,
                     'memory' => 23,
