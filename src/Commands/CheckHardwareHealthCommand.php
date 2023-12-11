@@ -12,7 +12,7 @@ class CheckHardwareHealthCommand extends Command
 
     protected $description = 'Checks CPU load, RAM usage and Disk space';
 
-    public function handle()
+    public function handle(): void
     {
         /** @var Larvis */
         $larvis = app(Larvis::class);
