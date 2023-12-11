@@ -5,10 +5,9 @@ namespace Taecontrol\Larvis\Services;
 use Taecontrol\Larvis\Exceptions\CpuHealthException;
 use Taecontrol\Larvis\Exceptions\DiskHealthException;
 use Taecontrol\Larvis\Exceptions\MemoryHealthException;
-use Taecontrol\Larvis\Interfaces\HardwareServiceInterface;
 use Taecontrol\Larvis\ValueObjects\Data\HardwareData;
 
-class HardwareService implements HardwareServiceInterface
+class HardwareService
 {
     public function getHardwareData()
     {
