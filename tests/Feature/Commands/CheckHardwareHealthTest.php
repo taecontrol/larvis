@@ -7,6 +7,7 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Taecontrol\Larvis\Tests\TestCase;
 use Taecontrol\Larvis\Services\HardwareService;
+use Taecontrol\Larvis\Commands\CheckHardwareHealthCommand;
 
 class CheckHardwareHealthTest extends TestCase
 {
@@ -48,7 +49,8 @@ class CheckHardwareHealthTest extends TestCase
 
         Http::fake(['https://moonguard.test/*' => Http::response([], 200, [])]);
 
-        $this->artisan('check:hardware');
+        $command = app(CheckHardwareHealthCommand::class);
+        $command->handle();
 
         Http::assertSent(function (Request $request) use ($data) {
             $requestMemory = $request['memory'];

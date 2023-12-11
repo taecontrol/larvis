@@ -8,7 +8,6 @@ use Taecontrol\Larvis\Watchers\Watcher;
 use Taecontrol\Larvis\Watchers\QueryWatcher;
 use Taecontrol\Larvis\Watchers\RequestWatcher;
 use Taecontrol\Larvis\Watchers\ExceptionWatcher;
-use Taecontrol\Larvis\Commands\CheckHardwareHealthCommand;
 
 class LarvisServiceProvider extends ServiceProvider
 {
@@ -30,10 +29,6 @@ class LarvisServiceProvider extends ServiceProvider
         ], 'larvis-config');
 
         $this->bootWatchers();
-
-        $this->commands([
-            CheckHardwareHealthCommand::class,
-        ]);
     }
 
     protected function bootWatchers(): self
