@@ -5,7 +5,6 @@ namespace Taecontrol\Larvis\Commands;
 use Illuminate\Console\Command;
 use Taecontrol\Larvis\Larvis;
 use Taecontrol\Larvis\Services\HardwareService;
-use Taecontrol\Larvis\Services\CheckService;
 
 class CheckHardwareHealthCommand extends Command
 {
@@ -18,15 +17,14 @@ class CheckHardwareHealthCommand extends Command
         /** @var Larvis */
         $larvis = app(Larvis::class);
 
-        $hardwareService = new HardwareService();
-        $checkService = new CheckService($hardwareService);
+        $hardwareService = app(HardwareService::class);
 
-        $data = $checkService->getHardwareData();
+        $data = $hardwareService->getHardwareData();
 
         $url = config('larvis.moonguard.domain') . config('larvis.moonguard.api.hardware');
 
         $data = array_merge(
-            $data->toArray(),
+            $data,
             ['api_token' => config('larvis.moonguard.site.api_token')],
         );
         $larvis->send($url, $data);

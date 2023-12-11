@@ -4,13 +4,9 @@ namespace Taecontrol\Larvis\Tests\Feature\Commands;
 
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
-use Mockery;
 use Mockery\MockInterface;
-use Taecontrol\Larvis\Commands\CheckHardwareHealthCommand;
-use Taecontrol\Larvis\Services\CheckService;
 use Taecontrol\Larvis\Tests\TestCase;
 use Taecontrol\Larvis\Services\HardwareService;
-use Taecontrol\Larvis\Tests\Mock\Services\FakeHardwareService;
 
 class CheckHardwareHealthTest extends TestCase
 {
@@ -20,8 +16,14 @@ class CheckHardwareHealthTest extends TestCase
 
         config()->set('larvis.moonguard.domain', 'http://moonguard.test');
         config()->set('larvis.moonguard.api.hardware', '/moonguard/api/hardware');
+    }
 
-        $mock = Mockery::mock(HardwareService::class, function (MockInterface $mock) {
+    /** @test */
+    public function it_asserts_that_data_its_send_correctly(): void
+    {
+        config()->set('larvis.krater.enabled', false);
+
+        $this->mock(HardwareService::class, function(MockInterface $mock) {
             $mock->shouldReceive('getHardwareData')
                  ->once()
                  ->andReturn([
@@ -33,15 +35,6 @@ class CheckHardwareHealthTest extends TestCase
                     ],
                  ]);
         });
-
-        app()->instance(HardwareService::class, $mock);
-
-    }
-
-    /** @test */
-    public function it_asserts_that_data_its_send_correctly(): void
-    {
-        config()->set('larvis.krater.enabled', false);
 
         $data = [
             'cpuLoad' => 10,
@@ -58,31 +51,48 @@ class CheckHardwareHealthTest extends TestCase
         $this->artisan('check:hardware');
 
         Http::assertSent(function (Request $request) use ($data) {
+            $requestMemory = $request['memory'];
+            $requestCpuLoad = $request['cpuLoad'];
             $requestTotalDisk = $request['disk']['totalSpace'];
-            return $requestTotalDisk === $data['disk']['totalSpace'];
+            $requestFreeDisk = $request['disk']['freeSpace'];
+
+            return $requestCpuLoad === $data['cpuLoad'] &&
+                   $requestMemory === $data['memory'] &&
+                   $requestFreeDisk === $data['disk']['freeSpace'] &&
+                   $requestTotalDisk === $data['disk']['totalSpace'];
         });
     }
-
 
     /** @test */
     public function it_asserts_that_data_has_correct_format(): void
     {
         config()->set('larvis.krater.enabled', false);
 
+        $this->mock(HardwareService::class, function(MockInterface $mock) {
+            $mock->shouldReceive('getHardwareData')
+                 ->once()
+                 ->andReturn([
+                    'cpuLoad' => 10,
+                    'memory' => 23,
+                    'disk' => [
+                        'freeSpace' => 79.7,
+                        'totalSpace' => 181.7
+                    ],
+                 ]);
+        });
+
         $data = [
-            'cpuLoad' => 10.0,
-            'memory' => 23.0,
+            'cpuLoad' => 10,
+            'memory' => 23,
             'disk' => [
                 'freeSpace' => 79.7,
                 'totalSpace' => 181.7
             ],
         ];
 
-        $hardwareService = new FakeHardwareService();
-        $checkService = new CheckService($hardwareService);
+        $hardwareService = app(HardwareService::class);
 
-        $result = $checkService->getHardwareData();
-
-       $this->assertTrue($result->toArray() === $data);
+        $result = $hardwareService->getHardwareData();
+        $this->assertTrue($result === $data);
     }
 }
