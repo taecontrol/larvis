@@ -22,57 +22,58 @@ class HardwareService
 
     public function getDiskUsage(): array
     {
-        $result = false;
-        $freeSpace = false;
-        $totalSpace = false;
+        try {
+            $freeSpace = false;
+            $totalSpace = false;
 
-        if (function_exists('disk_free_space') && function_exists('disk_total_space')) {
-            $freeSpace = round((disk_free_space('/') / pow(1024, 3)), 1);
-            $totalSpace = round((disk_total_space('/') / pow(1024, 3)), 1);
+            if (function_exists('disk_free_space') && function_exists('disk_total_space')) {
+                $freeSpace = round((disk_free_space('/') / pow(1024, 3)), 1);
+                $totalSpace = round((disk_total_space('/') / pow(1024, 3)), 1);
+            }
+
+            $result = [
+                'freeSpace' => $freeSpace,
+                'totalSpace' => $totalSpace,
+            ];
+
+            return $result;
+
+        } catch (DiskHealthException $e) {
+            throw $e->make();
         }
-
-        $result = [
-            'freeSpace' => $freeSpace,
-            'totalSpace' => $totalSpace,
-        ];
-
-        if (! $result) {
-            throw DiskHealthException::make();
-        }
-
-        return $result;
     }
 
     public function getMemoryUsage(): float
     {
-        $result = false;
+        try {
 
-        if (function_exists('exec')) {
-            $memory = shell_exec(" free | grep Mem | awk '{print $3/$2 * 100}' ");
-            $result = round((float) $memory);
+            if (function_exists('exec')) {
+                $memory = shell_exec(" free | grep Mem | awk '{print $3/$2 * 100}' ");
+                $result = round((float) $memory);
+            }
+
+            return $result;
+
+        } catch(MemoryHealthException $e) {
+            throw $e->make();
         }
-
-        if (! $result) {
-            throw MemoryHealthException::make();
-        }
-
-        return $result;
     }
 
     public function getCpuLoadUsage(): float
     {
-        $result = false;
+        try {
+            $result = false;
 
-        if (function_exists('sys_getloadavg')) {
-            $result = sys_getloadavg();
+            if (function_exists('sys_getloadavg')) {
+                $result = sys_getloadavg();
+            }
+
+            $result = array_map(fn ($n) => round($n * 100), $result);
+
+            return $result[1];
+
+        } catch(CpuHealthException $e) {
+            throw $e->make();
         }
-
-        if (! $result) {
-            throw CpuHealthException::make();
-        }
-
-        $result = array_map(fn ($n) => round($n * 100), $result);
-
-        return $result[1];
     }
 }
