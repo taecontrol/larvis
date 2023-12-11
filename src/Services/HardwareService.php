@@ -9,7 +9,7 @@ use Taecontrol\Larvis\Exceptions\MemoryHealthException;
 
 class HardwareService
 {
-    public function getHardwareData()
+    public function getHardwareData(): array
     {
         $cpuLoad = $this->getCpuLoadUsage();
         $memory = $this->getMemoryUsage();
@@ -20,7 +20,7 @@ class HardwareService
         return $HardwareData->toArray();
     }
 
-    public function getDiskUsage()
+    public function getDiskUsage(): array
     {
         $result = false;
         $freeSpace = false;
@@ -43,7 +43,7 @@ class HardwareService
         return $result;
     }
 
-    public function getMemoryUsage()
+    public function getMemoryUsage(): float
     {
         $result = false;
 
@@ -59,7 +59,7 @@ class HardwareService
         return $result;
     }
 
-    public function getCpuLoadUsage()
+    public function getCpuLoadUsage(): float
     {
         $result = false;
 
