@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Http;
 use Taecontrol\Larvis\Tests\TestCase;
 use Taecontrol\Larvis\Services\HardwareService;
 use Taecontrol\Larvis\Commands\CheckHardwareHealthCommand;
-use Taecontrol\Larvis\ValueObjects\Data\HardwareData;
 
 class CheckHardwareHealthTest extends TestCase
 {
@@ -50,6 +49,7 @@ class CheckHardwareHealthTest extends TestCase
 
         Http::fake(['https://moonguard.test/*' => Http::response([], 200, [])]);
 
+        /** @var CheckHardwareHealthCommand */
         $command = app(CheckHardwareHealthCommand::class);
         $command->handle();
 
