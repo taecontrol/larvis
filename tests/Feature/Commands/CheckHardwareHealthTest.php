@@ -23,6 +23,11 @@ class CheckHardwareHealthTest extends TestCase
     public function it_asserts_that_data_its_send_correctly(): void
     {
         config()->set('larvis.krater.enabled', false);
+        config()->set('larvis.moonguard.domain', 'https://moonguard.test');
+        config()->set('larvis.moonguard.api.hardware', '/moonguard/api/hardware');
+
+        dump(config('larvis.moonguard.domain'));
+        dump(config('larvis.moonguard.api.hardware'));
 
         $this->mock(HardwareService::class, function (MockInterface $mock) {
             $mock->shouldReceive('getHardwareData')
