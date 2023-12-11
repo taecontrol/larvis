@@ -4,7 +4,6 @@ namespace Taecontrol\Larvis\Services;
 
 use Taecontrol\Larvis\Exceptions\CpuHealthException;
 use Taecontrol\Larvis\Exceptions\DiskHealthException;
-use Taecontrol\Larvis\ValueObjects\Data\HardwareData;
 use Taecontrol\Larvis\Exceptions\MemoryHealthException;
 
 class HardwareService
@@ -15,9 +14,13 @@ class HardwareService
         $memory = $this->getMemoryUsage();
         $disk = $this->getDiskUsage();
 
-        $HardwareData = new HardwareData($cpuLoad, $memory, $disk);
+        $HardwareData = [
+            'cpuLoad' => $cpuLoad,
+            'memory' => $memory,
+            'disk' => $disk,
+        ];
 
-        return $HardwareData->toArray();
+        return $HardwareData;
     }
 
     public function getDiskUsage(): array
