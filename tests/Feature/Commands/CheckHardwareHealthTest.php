@@ -54,6 +54,7 @@ class CheckHardwareHealthTest extends TestCase
         $command->handle();
 
         Http::assertSent(function (Request $request) use ($data) {
+            dump($request);
             $requestMemory = $request['memory'];
             $requestCpuLoad = $request['cpuLoad'];
             $requestTotalDisk = $request['disk']['totalSpace'];

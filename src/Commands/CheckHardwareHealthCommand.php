@@ -22,7 +22,7 @@ class CheckHardwareHealthCommand extends Command
         $hardwareData = $hardwareService->getHardwareData();
 
         $url = config('larvis.moonguard.domain') . config('larvis.moonguard.api.hardware');
-        dump($hardwareData);
+
         $data = array_merge(
             $hardwareData,
             ['api_token' => config('larvis.moonguard.site.api_token')],
