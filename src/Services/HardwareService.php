@@ -40,7 +40,6 @@ class HardwareService
             ];
 
             return $result;
-
         } catch (DiskHealthException $e) {
             throw $e->make();
         }
@@ -49,14 +48,12 @@ class HardwareService
     public function getMemoryUsage(): float
     {
         try {
-
             if (function_exists('exec')) {
                 $memory = shell_exec(" free | grep Mem | awk '{print $3/$2 * 100}' ");
                 $result = round((float) $memory);
             }
 
             return $result;
-
         } catch(MemoryHealthException $e) {
             throw $e->make();
         }
@@ -74,7 +71,6 @@ class HardwareService
             $result = array_map(fn ($n) => round($n * 100), $result);
 
             return $result[1];
-
         } catch(CpuHealthException $e) {
             throw $e->make();
         }
