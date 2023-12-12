@@ -231,6 +231,29 @@ You can do the same with an Collection from Illuminate:
     ],
 ];
 ```
+## Commands
+
+Larvis allows you to execute commands for different purposes.
+
+* **`CheckHardwareHealthCommand`**
+
+    You can check your last 5 minutes of CPU usage, memory usage, total disk space, free disk space, and send this information to the MoonGuard Filament Plugin to monitor these hardware variables. To use the command, you need to register it in your `console/Kernel.php` file:
+
+    ```php
+
+    protected $commands = [
+        \Taecontrol\Larvis\Commands\CheckHardwareHealthCommand::class,
+    ];
+
+    ```
+
+    Then, you can use it as:
+
+    ```
+    php artisan check:hardware
+    ```
+
+
 
 ## Contributing
 

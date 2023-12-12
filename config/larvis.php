@@ -18,6 +18,7 @@ return [
          */
         'api' => [
             'exceptions' => env('MOONGUARD_API_EXCEPTIONS_ROUTE', '/moonguard/api/exceptions'),
+            'hardware' => env('MOONGUARD_API_HARDWARE_ROUTE', '/moonguard/api/hardware'),
         ],
 
         /**
