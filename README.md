@@ -239,9 +239,9 @@ Larvis allows you to execute commands for different purposes.
 
 - **`CheckHardwareHealthCommand`**
 
-    You can check your last 5 minutes of CPU usage, memory usage, total disk space, free disk space, and send this information to the MoonGuard Filament Plugin to monitor these hardware variables. To use the command, you need to register it in your `console/Kernel.php` file:
+    You can check your last 5 minutes of CPU Load, memory usage, total disk space, free disk space, and send this information to the MoonGuard Filament Plugin to monitor these hardware variables. To use the command, you need to register it in your `console/Kernel.php` file:
 
-run the command every 5 minutes
+the MoonGuard team recommends a frequency of less than 5 minutes:
 
 ```php
 
