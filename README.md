@@ -1,4 +1,6 @@
-# Introduction - Getting to Know Larvis
+# The bridge for Laravel apps to work with MoonGuard Plugin or Krater
+
+<p align="center"><a href="https://moonguard.dev" target="_blank"><img src="https://github.com/taecontrol/larvis/assets/61505019/11f3237c-5ddc-4928-963a-69e029973d01" alt="Larvis Image"></a></p>
 
 Larvis is a PHP package for Laravel that allows a Laravel app to send and report information to MoonGuard or Krater.
 
@@ -8,19 +10,17 @@ Currently, you can use Larvis in the following scenarios:
 
 - To report and send messages, exceptions, database queries, and HTTP requests from a Laravel application to Krater (ideal for a development environment where different information needs to be debugged).
 
-> 💡 **Important:** This version is compatible only with MoonGuard 1.0.0.
-
 ## What is MoonGuard?
 
-- MoonGuard is an open source Filament plugin that aims to provide utilities to monitor your Laravel apps in production.
+MoonGuard is an [open source Filament plugin](https://github.com/taecontrol/moonguard) that aims to provide utilities to monitor your Laravel apps in production.
 
-- MoonGuard helps you track important features like SSL certificates status, uptime, and exceptions on your applications.
+- MoonGuard helps you track important features like SSL certificates status, uptime, exceptions and server data from your applications.
 
 For more information visit the [MoonGuard]( https://moonguard.dev/) official site.
 
 ## What is Krater?
 
-- Krater is a desktop application for debugging Laravel apps, it provides an intuitive and friendly interface to debug exceptions, queries, requests and more.
+Krater is a desktop application for debugging Laravel apps, it provides an intuitive and friendly interface to debug exceptions, queries, requests and more.
 
 For more information visit the [Krater](https://moonguard.dev/krater) official site.
 
@@ -38,12 +38,15 @@ After installation, we recommend publishing the configuration to customize Larvi
 php artisan vendor:publish --tag larvis-config
 ```
 
-That’s it! Larvis is installed in your project and the configuration file must be available at `config/larvis.php`, now you must decide how Larvis should work and behave:
+Great! Larvis is now installed in your project, and the configuration file should be available at `config/larvis.php`. At this point, you need to decide how Larvis should operate and behave. 
 
-1. Setup Larvis to work with MoonGuard.
-2. Setup Larvis to work with Krater.
+You can configure it to work in **Production** with MoonGuard and report every exception and server metric from your application once released and deployed to the world, if you want to use Larvis locally to debug your Laravel application, you can set it up to work with Krater. In summary, Larvis can operate in two ways:
 
-> 💡 **Important:** The default behavior of Larvis is to work with Krater.
+- Larvis working with MoonGuard in **Production**.
+- Larvis working **Locally** with Krater for Debugging.
+
+> [!IMPORTANT]  
+> Larvis default behavior is to work with Krater.
 
 ## Setup Larvis to work with MoonGuard
 
@@ -237,11 +240,12 @@ You can do the same with an Collection from Illuminate:
 
 Larvis allows you to execute commands for different purposes.
 
-- **`CheckHardwareHealthCommand`**
+### CheckHardwareHealthCommand
 
-    You can check your last 5 minutes of CPU Load, memory usage, total disk space, free disk space, and send this information to the MoonGuard Filament Plugin to monitor these hardware variables. To use the command, you need to register it in your `console/Kernel.php` file:
+This command is useful to obtain the CPU load, RAM memory usage and disk usage (disk consumption and total disk capacity) from the server where your application is running and then be sent to MoonGuard Filament Plugin through HTTP protocol. This command is intended to be used with the Laravel Console Scheduler, register it in your `console/Kernel.php` file:
 
-the MoonGuard team recommends a frequency of less than 5 minutes:
+> [!NOTE]  
+> We recommend a frequency of 5 minutes or less
 
 ```php
 
@@ -252,11 +256,18 @@ protected function schedule(Schedule $schedule): void
 }
 ```
 
-Then, you can use it as:
+## Krater: Debugging Evolved
 
-```bash
-php artisan schedule:work
-```
+<p align="center"><a href="https://moonguard.dev/krater" target="_blank"><img src="https://github.com/taecontrol/moonguard/assets/61505019/63c0ca3d-6a91-4c50-a399-a804cdaf71f0" alt="MoonGuard: Krater Image"></a></p>
+
+Krater is a lightweight, cross-platform application that revolutionizes Laravel app debugging on your next major project.
+
+## MoonGuard: The Software Creator's Journey [Book]
+
+The MoonGuard development team has written a book named "MoonGuard: The Software Creator's Journey." In this book, we document and explain the entire process of creating, developing, publishing MoonGuard as a Filament Plugin. Every hard corner and special tricks were registered on this book, you can obtain your own digital copy [here](https://moonguard.dev/book).
+
+<p align="center"><a href="https://moonguard.dev/book" target="_blank"><img src="https://github.com/taecontrol/moonguard/assets/61505019/ecae1c7a-9602-4c43-8ee0-ac684bd636b1" alt="MoonGuard: Book"></a></p>
+
 
 ## Contributing
 
