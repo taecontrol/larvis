@@ -7,7 +7,6 @@ Larvis is a PHP package for Laravel that allows a Laravel app to send and report
 Currently, you can use Larvis in the following scenarios:
 
 - To report exceptions from your application to MoonGuard (ideal for production sites that require tracking).
-
 - To report and send messages, exceptions, database queries, and HTTP requests from a Laravel application to Krater (ideal for a development environment where different information needs to be debugged).
 
 ## What is MoonGuard?
@@ -70,7 +69,8 @@ You can obtain the API token at the MoonGuard admin panel (Site administration).
 
 No extra steps needed. With this setup Larvis can report your app exceptions to MoonGuard.
 
-> 💡 **Important:** Reporting exceptions to MoonGuard only works when the app environment is `production`.
+> [!IMPORTANT]  
+> Reporting exceptions to MoonGuard only works when the app environment is `production`.
 
 ## Setup Larvis to work with Krater
 
@@ -86,7 +86,8 @@ Watchers are components that monitor and record different aspects of your applic
 
 All the watchers can be enabled or disabled from the Larvis configuration file.
 
-> 💡 **Important**: RequestWatcher and QueryWatcher are not compatible with MoonGuard.
+> [!IMPORTANT]  
+> RequestWatcher and QueryWatcher are not compatible with MoonGuard.
 
 ## Sending Messages to Krater
 
