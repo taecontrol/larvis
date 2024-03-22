@@ -57,11 +57,11 @@ MOONGUARD_SITE_API_TOKEN=LDUxazsuq6aYi9bvSMqc6vkMXOjsD7JdrIN2FkWtA4UVNhaPE02gMS2
 KRATER_DEBUG=false
 ```
 
-| Variable                | Description                                        |
-| ----------------------- | -------------------------------------------------- |
-| MOONGUARD_DOMAIN        | The domain where the MoonGuard is located.         |
-| MONGUARD_SITE_API_TOKEN | The app site API Token.                            |
-| KRATER_DEBUG            | Enables or disables Larvis Debug Mode with Krater. |
+| Variable                 | Description                                        |
+| ------------------------ | -------------------------------------------------- |
+| MOONGUARD_DOMAIN         | The domain where the MoonGuard is located.         |
+| MOONGUARD_SITE_API_TOKEN | The app site API Token.                            |
+| KRATER_DEBUG             | Enables or disables Larvis Debug Mode with Krater. |
 
 You can obtain the API token at the MoonGuard admin panel (Site administration). This token is unique to your site and is used to authenticate the site in every request to MoonGuard.
 
