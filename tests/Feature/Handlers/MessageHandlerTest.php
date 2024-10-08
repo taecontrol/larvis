@@ -93,7 +93,7 @@ class MessageHandlerTest extends TestCase
             $messageData->line === 82 &&
             $messageData->file === __FILE__;
 
-            $isAppDataPresent = $appData->name === env('APP_NAME') &&
+            $isAppDataPresent = $appData->name === config('app.name') &&
             $appData->framework === 'Laravel' &&
             $appData->frameworkVersion === app()->version() &&
             $appData->language === 'PHP' &&

@@ -86,7 +86,7 @@ class ExceptionWatcherTest extends TestCase
             $exceptionRequest->params === [] &&
             $exceptionRequest->query === [];
 
-            $isAppDataPresent = $appData->name === env('APP_NAME') &&
+            $isAppDataPresent = $appData->name === config('app.name') &&
             $appData->framework === 'Laravel' &&
             $appData->frameworkVersion === app()->version() &&
             $appData->language === 'PHP' &&

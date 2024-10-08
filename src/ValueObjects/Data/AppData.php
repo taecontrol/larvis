@@ -20,7 +20,7 @@ class AppData implements Arrayable
 
     public static function generate(): AppData
     {
-        $name = env('APP_NAME');
+        $name = config('app.name');
 
         if (! $name || $name === '') {
             throw new MissingAppNameException();
