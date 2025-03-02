@@ -42,8 +42,8 @@ class ExceptionDataTest extends TestCase
         $this->assertEquals($request->params, []);
         $this->assertEquals($request->query, []);
 
-        $this->assertObjectHasAttribute('headers', $request);
-        $this->assertObjectHasAttribute('server', $request);
+        $this->assertObjectHasProperty('headers', $request);
+        $this->assertObjectHasProperty('server', $request);
     }
 
     /** @test */

@@ -82,23 +82,24 @@ class MessageHandlerTest extends TestCase
         larvis($data);
 
         Http::assertSent(function (Request $request) use ($data) {
+            
             /** @var MessageData */
             $messageData = MessageData::fromArray($request['message']);
-
+            
             /** @var AppData */
             $appData = AppData::fromArray($request['app']);
-
+            
             $isMessageDataPresent = $messageData->data === '"Hi from Larvis"' &&
             $messageData->kind === 'string' &&
             $messageData->line === 82 &&
             $messageData->file === __FILE__;
-
+            
             $isAppDataPresent = $appData->name === config('app.name') &&
             $appData->framework === 'Laravel' &&
             $appData->frameworkVersion === app()->version() &&
             $appData->language === 'PHP' &&
             $appData->languageVersion === PHP_VERSION;
-
+            
             $this->assertStringContainsString('larvis', $appData->directory);
 
             return $isMessageDataPresent && $isAppDataPresent;
