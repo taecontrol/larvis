@@ -3,7 +3,6 @@
 namespace Taecontrol\Larvis;
 
 use Throwable;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Log\Events\MessageLogged;
 use Taecontrol\Larvis\Watchers\QueryWatcher;

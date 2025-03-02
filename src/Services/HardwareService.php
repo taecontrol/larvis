@@ -54,7 +54,7 @@ class HardwareService
             }
 
             return $result;
-        } catch(MemoryHealthException $e) {
+        } catch (MemoryHealthException $e) {
             throw $e->make();
         }
     }
@@ -71,7 +71,7 @@ class HardwareService
             $result = array_map(fn ($n) => round($n * 100), $result);
 
             return $result[1];
-        } catch(CpuHealthException $e) {
+        } catch (CpuHealthException $e) {
             throw $e->make();
         }
     }

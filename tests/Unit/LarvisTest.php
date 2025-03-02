@@ -19,7 +19,7 @@ class LarvisTest extends TestCase
         parent::setup();
         $this->larvis = app(Larvis::class);
 
-        config()->set('larvis.moonguard.domain', 'https://moonguard.test');        
+        config()->set('larvis.moonguard.domain', 'https://moonguard.test');
         config()->set('larvis.krater.enabled', false);
     }
 

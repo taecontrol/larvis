@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  This settings handles Larvis behaviour for local debug with Krater and production
  *  report with MoonGuard.
