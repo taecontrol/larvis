@@ -4,6 +4,7 @@ namespace Taecontrol\Larvis;
 
 use Throwable;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Log\Events\MessageLogged;
 use Taecontrol\Larvis\Watchers\QueryWatcher;
 use Taecontrol\Larvis\Handlers\MessageHandler;
 use Taecontrol\Larvis\ValueObjects\Data\AppData;
@@ -67,5 +68,10 @@ class Larvis
                 (new MessageHandler())->handle($arg);
             }
         }
+    }
+
+    public function sendException(Throwable $exception): void
+    {
+        event(new MessageLogged('error', $exception->getMessage(), ['exception' => $exception]));
     }
 }

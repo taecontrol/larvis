@@ -52,8 +52,8 @@ class AppData implements Arrayable
 
     public static function getFramework(): array
     {
-        $framework = null;
-        $version = null;
+        $framework = 'Laravel';
+        $version = app()->version() ?? null;
 
         $composerFileInJson = file_get_contents(base_path('composer.json'));
 
@@ -66,7 +66,11 @@ class AppData implements Arrayable
 
         $composerFile = json_decode($composerFileInJson, true);
 
-        if ($composerFile) {
+        if (
+            $composerFile
+            && is_array($composerFile)
+            && array_key_exists('require', $composerFile)
+        ) {
             if (key_exists('laravel/framework', $composerFile['require'])) {
                 $framework = 'Laravel';
                 $version = app()->version();
